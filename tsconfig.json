@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "umd",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "emitDeclarationOnly": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "typeRoots": [ "node_modules/@types/", "./types/" ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples",
+    "tests",
+    "jest*",
+  ]
+}

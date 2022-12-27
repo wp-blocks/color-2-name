@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>color2name examples</title>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" rel="preload" as="style" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+  <link rel="stylesheet" rel="preload" as="style" href="https://unpkg.com/milligram@1.4.1/dist/milligram.min.css">
+  <style>
+    #grid {
+      width: 100%;
+      display: grid;
+      grid-gap: 4rem;
+      height: 160px;
+      grid-template-columns: repeat(7, 1fr);
+    }
+  </style>
+</head>
+
+<body>
+
+
+<main class="wrapper" style="padding-top:2em">
+  <section class="container" id="app">
+
+    <h1>color2name.js!</h1>
+    <p>This package provides a function to find the closest color to a given one from an array of colors. It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.</p>
+
+    <pre><code>
+      // works with Hex
+      color2name.closest('#123456')
+
+      // works with rgb colors
+      color2name.closest('rgb(1,2,3)')
+
+      // works with rgba color
+      color2name.closest('rgba(1 2 3 / .5)')
+
+      // works with hsl/hsla color
+      color2name.closest('hsla(1 2deg 3% / .001)')
+    </code></pre>
+  </section>
+  <div class="container">
+    <h2 style="text-align: center; padding: 4rem">100 Random Colors (with comparison)!</h2>
+    <div id="grid"></div>
+  </div>
+</main>
+
+<script src="web-component.js"> </script>
+<script src="https://erikyo.github.io/color2name/color2name.js"> </script>
+<script src="index.js"> </script>
+
+</body>
+</html>
