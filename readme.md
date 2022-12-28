@@ -1,4 +1,4 @@
-# color2name
+# color-2-name
 
 Find the name of the color given a hex, rgb and hsl string!
 
@@ -8,8 +8,9 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 ### Features:
 - 🚀 Fast - The distance between colors in the RGB color space is determined with the fastest algorithm and if the distance is 0 the function immediately returns the color name without further calculation
 - 😎 Ally - So that your app is equally useful for everyone
-- 🪶 Lightweight - The script with all the 140 css colors definitions weights 10.3Kb (uncompressed)!
+- 🪶 Lightweight - The module WITH the 140 css colors definitions weights 4kb gzipped!
 - ✅ Umd module - Works with browsers and with nodejs
+- 📦 Bundled - Webpack optimized and minified build!
 - 🪅 Easy tu use - You don't need to convert the color before calling the function! the color format will be found automatically
 - 🎨 Build your scheme - You can use the node script to build your scheme
 - 🪄️ Typed: Written in typescript (with types included)
@@ -21,12 +22,12 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 To install the package, run the following command:
 
 ```
-npm install color2name
+npm install color-2-name
 ```
-Import the findClosestColor function from the color2name package:
+Import the `closest` function from the color-2-name package:
 
 ```js
-import { closest } from 'color2name';
+import { closest } from 'color-2-name';
 ```
 
 ### As script (browser)
@@ -34,7 +35,7 @@ import { closest } from 'color2name';
 include script tag like below in your head/footer:
 
 ```js
-<script src="color2name.js"></script>
+<script src="color-2-name.js"></script>
 ```
 
 then the script will be available using the following command:
@@ -44,7 +45,7 @@ then the script will be available using the following command:
 color2name.closest('#123456')
 
 // with node
-import { closest, distance } from 'color2name';
+import { closest, distance } from 'color-2-name';
 closest('rgb(1,2,3)')
 ```
 

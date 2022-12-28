@@ -1,10 +1,10 @@
 {
-  "name": "color2name",
-  "version": "0.9.0",
+  "name": "color-2-name",
+  "version": "1.0.0",
   "author": "Erik <erik@codekraft.it>",
   "license": "ISC",
   "description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
-  "main": "dist/color2name.js",
+  "main": "dist/color-2-name.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
     "start": "webpack serve --mode=development",
@@ -16,13 +16,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/erikyo/color2name.git"
+    "url": "https://github.com/erikyo/color-2-name.git"
   },
   "keywords": [
     "color",
     "color names",
     "color-names",
-    "a11y"
+    "css",
+    "accessibility",
+    "a11y",
+    "hex",
+    "rgb",
+    "rgba",
+    "hsl",
+    "hsla",
+    "convert colors",
+    "color picker"
   ],
   "devDependencies": {
     "@babel/core": "^7.20.7",
@@ -47,5 +56,8 @@
     "@types/node": "^18.11.18",
     "@types/webpack": "^5.28.0",
     "clean-webpack-plugin": "^4.0.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
   }
 }
