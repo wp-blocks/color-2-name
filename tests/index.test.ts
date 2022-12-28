@@ -1,8 +1,8 @@
 import cssColorSet from '../src/data/cssColorSet'
 
-import { closest, distance } from '../src'
+import { closest, distance, rgbToHex } from '../src'
 import { hexToRgb, parseHex, shortHexToLongHex } from '../src/hex-utils'
-import {convertToInt8, parseColor, RgbToHex} from '../src/common'
+import {convertToInt8, parseColor} from '../src/common'
 import { parseRgb } from "../src/rgb-utils";
 
 describe('Main ColorSet functions', () => {
@@ -77,6 +77,14 @@ describe('COMMON', () => {
     expect(convertToInt8('180deg')).toBe(127.5)
     expect(convertToInt8('360deg')).toBe(255)
   })
+
+  it('Returns convert rgb values to hex', () => {
+    expect(rgbToHex('rgb(255,255,255)')).toBe("#ffffff")
+    expect(rgbToHex('rgb(255, 255, 255,.5)')).toBe("#ffffff")
+    expect(rgbToHex('rgb(255 255 255)')).toBe("#ffffff")
+    expect(rgbToHex('rgb(255 255 255 / .5)')).toBe("#ffffff")
+    expect(rgbToHex('rgba(255 255 255 / 0.1)')).toBe("#ffffff")
+  })
 })
 
 /**
@@ -97,14 +105,6 @@ describe('HEX', () => {
     expect(parseHex('#FF0000')).toMatchObject(['FF', '00', '00'])
     expect(parseHex('#1234ab')).toMatchObject(['12', '34', 'AB'])
     expect(parseHex('#123')).toMatchObject(['11', '22', '33'])
-  })
-
-  it('Returns convert rgb values to hex', () => {
-    expect(RgbToHex('rgb(255,255,255)')).toBe("#ffffff")
-    expect(RgbToHex('rgb(255, 255, 255,.5)')).toBe("#ffffff")
-    expect(RgbToHex('rgb(255 255 255)')).toBe("#ffffff")
-    expect(RgbToHex('rgb(255 255 255 / .5)')).toBe("#ffffff")
-    expect(RgbToHex('rgba(255 255 255 / 0.1)')).toBe("#ffffff")
   })
 
   it('Returns transformation of the hex object into a RGB object', () => {

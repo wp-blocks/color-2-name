@@ -24,4 +24,3 @@ export declare function convertToInt8(value: string, multiplier?: number): numbe
  * @param colorString
  */
 export declare function parseColor(colorString: colorString | string): RGBVALUE | Error;
-export declare function RgbToHex(rgbString: RGB): HEX | Error;

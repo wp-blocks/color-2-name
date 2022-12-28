@@ -84,14 +84,3 @@ export function parseColor (colorString: colorString | string): RGBVALUE | Error
   // If the color string does not match any of the regular expressions, return an error
   throw new Error(`Invalid color: ${colorString}`)
 }
-
-export function RgbToHex (rgbString: RGB): HEX | Error {
-  if (rgbRegex.test(rgbString)) {
-    const rgb = parseRgb(rgbString)
-    if (rgb.length > 0) {
-      const RgbValues = getRgbValues(rgb)
-      return RgbValuesToHex(RgbValues)
-    }
-  }
-  throw new Error(`Invalid color: ${rgbString}`)
-}

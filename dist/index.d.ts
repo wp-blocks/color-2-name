@@ -19,4 +19,12 @@ declare function closest(color: colorString, colorSet?: RGBCOLORDEF[] | undefine
  * @param rgb2
  */
 declare function distance(rgb1: RGBDEF, rgb2: RGBCOLORDEF): number;
-export { cssColorSet, closest, distance };
+/**
+ * Given a color string it returns the hex representation
+ *
+ * @param rgbString
+ *
+ * @return {string} the corresponding color hex
+ */
+declare function rgbToHex(rgbString: RGB): HEX | Error;
+export { cssColorSet, closest, rgbToHex, distance };

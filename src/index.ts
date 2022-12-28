@@ -1,6 +1,7 @@
 import cssColorSet from './data/cssColorSet'
-import { parseColor } from './common'
+import { parseColor, rgbRegex } from './common'
 import { RgbValuesToHex } from './hex-utils'
+import { getRgbValues, parseRgb } from './rgb-utils'
 
 /**
  * Given a color string it returns the closest corresponding name of the color
@@ -67,8 +68,27 @@ function distance (rgb1: RGBDEF, rgb2: RGBCOLORDEF): number {
   )
 }
 
+/**
+ * Given a color string it returns the hex representation
+ *
+ * @param rgbString
+ *
+ * @return {string} the corresponding color hex
+ */
+function rgbToHex (rgbString: RGB): HEX | Error {
+  if (rgbRegex.test(rgbString)) {
+    const rgb = parseRgb(rgbString)
+    if (rgb.length > 0) {
+      const RgbValues = getRgbValues(rgb)
+      return RgbValuesToHex(RgbValues)
+    }
+  }
+  throw new Error(`Invalid color: ${rgbString}`)
+}
+
 export {
   cssColorSet,
   closest,
+  rgbToHex,
   distance
 }
