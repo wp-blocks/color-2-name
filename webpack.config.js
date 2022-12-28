@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const webpackConfig = {
   entry: {
-    color2name: path.resolve(__dirname, 'src/index.ts')
+    'color-2-name': path.resolve(__dirname, 'src/index.ts')
   },
   module: {
     rules: [
