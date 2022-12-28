@@ -27,6 +27,7 @@ npm install color-2-name
 Import the `closest` function from the color-2-name package:
 
 ```js
+// es6 import
 import { closest } from 'color-2-name';
 ```
 
@@ -35,18 +36,21 @@ import { closest } from 'color-2-name';
 include script tag like below in your head/footer:
 
 ```js
+// add the script tag to the head/footer
 <script src="color-2-name.js"></script>
 ```
 
 then the script will be available using the following command:
 
 ```js
-// with browsers
-color2name.closest('#123456')
+// With browsers you can find the packed scripts into window.color2name
+color2name.closest('#123456') // color name
+color2name.rgbToHex('rgb(18 52 86)') // #123456
+color2name.distance([0, 0, 0], [255, 255, 255]) // 431.12
 
-// with node
-import { closest, distance } from 'color-2-name';
-closest('rgb(1,2,3)')
+// With node
+import { closest, distance, rgbToHex } from 'color-2-name';
+closest('hsla(210deg 10% 96%)') // white
 ```
 
 ---
@@ -58,8 +62,11 @@ Returns the closest color name
 
 ```js
 // Here is an example of how to use the findClosestColor function:
-const closestColor = color2name.closest('#ff8800');
+const closestColor = closest('#ff8800');
 console.log(closestColor); // { name: 'red', color: 'rgb(255,0,0)' }
+
+// You can also use your custom set as comparation
+const closestColor = closest('#ff8800');
 ```
 In this example, the hex color '#ff8800' (which is a shade of orange) is compared to the colors in the colors array. The function returns the object with the name and hex value of the color that is closest to it, which in this case is the object for the color red.
 Arguments:
@@ -77,6 +84,7 @@ Arguments:
 Computes the distance between two colors using the euclidean distance formula.
 
 ```js
+// Here is an example on how get the distance between two colors
 const colorDivergence = distance([120, 255, 200], [255, 255, 255])
 console.log(colorDivergence); // 123.465
 ```
@@ -95,6 +103,7 @@ Convert a rgb color into hexadecimal color
 // note: the rgb value is converted without take into account the alpha channel
 const hex = RgbToHex('rgb(255,255,255)')
 const hex2 = RgbToHex('rgb(255 255 255 / .5)')
+// prints the hex result
 console.log(hex); // #FFFFFF
 console.log(hex2); // #FFFFFF
 ```
