@@ -1,5 +1,5 @@
 // Regular expressions to match different color formats
-import {hexToRgb, parseHex} from './hex-utils'
+import { hexToRgb, parseHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 import { hslToRgb, parseHsl } from './hsl-utils'
 
