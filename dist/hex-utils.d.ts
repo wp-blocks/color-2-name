@@ -16,9 +16,10 @@ export declare function parseHex(value: colorString): string[];
  * @param {string} hex without the "#"
  */
 export declare function hexToRgb(hex: string[]): RGBVALUE | Error;
+export declare function toHex(int8: number): string;
 /**
 * Convert rgb values to hex color
 *
 * @param {Object} rgb an object with the rgb values
 */
-export declare function RgbValuesToHex(rgb: RGBVALUE): HEX;
+export declare function valuesToHex(rgb: RGBVALUE): HEX;

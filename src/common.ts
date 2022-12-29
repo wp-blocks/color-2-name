@@ -1,9 +1,11 @@
 // Regular expressions to match different color formats
-import {hexToRgb, parseHex, RgbValuesToHex} from './hex-utils'
+import {hexToRgb, parseHex} from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 import { hslToRgb, parseHsl } from './hsl-utils'
 
-export const hexRegex = /^#([\da-f]{6}|[\da-f]{3})/i
+export const MAXDISTANCE = 441.6729559300637
+
+export const hexRegex = /^#([\da-f]{6,}|[\da-f]{3,})/i
 export const rgbRegex = /^rgba?\(([^)]+)\)/i
 export const hslRegex = /^hsla?\(([^)]+)\)/i
 export const isNumeric = /^[0-9]*$/

@@ -11,3 +11,4 @@ export declare function getHslValues(hsl: string[]): HSLVALUE;
  * @return {Object} rgb value
  */
 export declare function hslToRgb(hsl: string[]): RGBVALUE;
+export declare function valuesToHsl({ r, g, b }: RGBVALUE): string;

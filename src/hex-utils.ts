@@ -22,7 +22,7 @@ export function parseHex (value: colorString): string[] {
    * breakdown the string into an object that contains the r g and b values in hex
    */
   if (hexColor.length > 2) {
-    if (hexColor.length === 3) {
+    if (hexColor.length < 6) { // >=6 is the long notation
       return shortHexToLongHex(hexColor)
     } else {
       const hex = hexColor.match(/../g)
@@ -50,15 +50,19 @@ export function hexToRgb (hex: string[]): RGBVALUE | Error {
   throw new Error(`Invalid Hex color: ${hex.join(', ')}`)
 }
 
+export function toHex (int8: number): string {
+  return int8.toString(16).padStart(2, '0')
+}
+
 /**
 * Convert rgb values to hex color
 *
 * @param {Object} rgb an object with the rgb values
 */
-export function RgbValuesToHex (rgb: RGBVALUE): HEX {
+export function valuesToHex (rgb: RGBVALUE): HEX {
   // Extract the RGB values from the hex string
   if (rgb?.r !== null && rgb?.g !== null && rgb?.b !== null) {
-    return `#${rgb?.r.toString(16)}${rgb?.g.toString(16)}${rgb?.b.toString(16)}`
+    return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`
   }
   return '#errorr'
 }

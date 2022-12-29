@@ -1,4 +1,4 @@
-import cssColorSet from './data/cssColorSet';
+import colorSet from './data/colorSet';
 /**
  * Given a color string it returns the closest corresponding name of the color
  *
@@ -9,16 +9,18 @@ import cssColorSet from './data/cssColorSet';
  *
  * @return {string} the corresponding color name
  */
-declare function closest(color: colorString, colorSet?: RGBCOLORDEF[] | undefined, ...args: any[string | number]): COLORDEF | COLORDEFINFO;
+declare function closest(color: colorString, set?: RGBCOLORDEF[] | undefined, ...args: any[string | number]): COLORDEF | COLORDEFINFO;
 /**
- * Calculate the distance between the two RGB values
- * it's possible to remove the square root but the result will be result^2
- * Since nowadays the difference of time to calc a square root or not is almost indifferent, I preferred to keep the result more accurate.
+ * Compute the distance between the two RGB values
+ * There are two modes:
+ * fast = true -> the distance is calculated without using the Euclidean formula completely, it is reliable but its result is exponential
+ * fast = false -> the distance is calculated with the Euclidean formula, its result is linear
  *
  * @param rgb1
  * @param rgb2
+ * @param fast - whether to calculate the distance without computing the square root, the result will be
  */
-declare function distance(rgb1: RGBDEF, rgb2: RGBCOLORDEF): number;
+declare function distance(rgb1: RGBDEF, rgb2: RGBCOLORDEF, fast?: boolean): number;
 /**
  * Given a color string it returns the hex representation
  *
@@ -27,4 +29,4 @@ declare function distance(rgb1: RGBDEF, rgb2: RGBCOLORDEF): number;
  * @return {string} the corresponding color hex
  */
 declare function rgbToHex(rgbString: RGB): HEX | Error;
-export { cssColorSet, closest, rgbToHex, distance };
+export { colorSet, closest, rgbToHex, distance };

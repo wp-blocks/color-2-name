@@ -28,27 +28,30 @@
     <p>This package provides a function to find the closest color to a given one from an array of colors. It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.</p>
 
     <pre><code>
-      // works with Hex
+      // Find an Hex color name
       color2name.closest('#123456')
 
-      // works with rgb colors
+      // works also with rgb colors
       color2name.closest('rgb(1,2,3)')
 
-      // works with rgba color
+      // rgba color
       color2name.closest('rgba(1 2 3 / .5)')
 
-      // works with hsl/hsla color
+      // and hsl/hsla color 😎
       color2name.closest('hsla(1 2deg 3% / .001)')
     </code></pre>
   </section>
   <div class="container">
+
     <h2 style="text-align: center; padding: 4rem">100 Random Colors (with comparison)!</h2>
+    <button id="reloadButton" onclick="updateColor()"></button>
+    <hr>
     <div id="grid"></div>
   </div>
 </main>
 
 <script src="web-component.js"> </script>
-<script src="https://erikyo.github.io/color-2-name/color-2-name.js"> </script>
+<script type="application/javascript" src="../dist/color-2-name.js"> </script>
 <script src="index.js"> </script>
 
 </body>

@@ -11,7 +11,7 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 - 🪶 Lightweight - The module WITH the 140 css colors definitions weights 4kb gzipped!
 - ✅ Umd module - Works with browsers and with nodejs
 - 📦 Bundled - Webpack optimized and minified build!
-- 🪅 Easy tu use - You don't need to convert the color before calling the function! the color format will be found automatically
+- 🪅 Easy to use - You don't need to convert the color before calling the function! the color format will be found automatically
 - 🎨 Build your scheme - You can use the node script to build your scheme
 - 🪄️ Typed: Written in typescript (with types included)
 - 🎈 No dependencies: dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
@@ -113,6 +113,39 @@ Arguments:
 
 **RETURNS** the hex value of the color
 
+#### 💡 getColor()
+search into ColorSet for the given color
+
+```js
+// note: the rgb value is converted without take into account the alpha channel
+const white = getColor('white') // {"hex": "#ffffff", "hsl": "hsl(0,0%,100%)", "rgb": "rgb(255,255,255)"}
+const alertColor = getColor('red') // {"hex": "#ff0000", "hsl": "hsl(0,100%,50%)", "rgb": "rgb(255,0,0)"}
+
+// prints the hex result
+console.log(alertColor.hsl); // #FFFFFF
+console.log(alertColor.hex); // #FF0000
+console.log("transparent red: " + alertColor.hex+"88"); // #FF000088
+```
+Arguments:
+
+- `colorName`: the name of a color you need find in the colorset
+
+**RETURNS** an Object with the color requested converted into hex, rgb and hsl
+
+---
+
+#### 💡 Build your own color set
+
+In order to build a color set you need a json object with the following properties::
+`name` - the name of the color (like "Orange")
+`color` - the hex color value (like #FFAA00)
+
+then run:
+
+```bash
+node colorSetUtils.mjs myNewColorSet
+```
+A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
 ---
 
 #### 💡 Build your own color set

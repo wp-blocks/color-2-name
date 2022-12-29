@@ -1,14 +1,16 @@
-import cssColorSet from '../src/data/cssColorSet'
+import colorSet from '../src/data/colorSet'
 
 import { closest, distance, rgbToHex } from '../src'
-import { hexToRgb, parseHex, shortHexToLongHex } from '../src/hex-utils'
-import {convertToInt8, parseColor} from '../src/common'
-import { parseRgb } from "../src/rgb-utils";
+import {hexToRgb, parseHex, shortHexToLongHex, toHex} from '../src/hex-utils'
+import {convertToInt8, MAXDISTANCE, parseColor} from '../src/common'
+import {parseRgb, valuesToRgb} from "../src/rgb-utils";
+import {hslToRgb, parseHsl} from "../src/hsl-utils";
+import getColor from "../src/color-utils";
 
 describe('Main ColorSet functions', () => {
 
   it('Returns the correct numbers of color', () => {
-    expect(cssColorSet.length).toBeGreaterThan(140)
+    expect(colorSet.length).toBeGreaterThan(140)
   })
 
   // it('Can rebuild the original Color Set', () => {
@@ -19,8 +21,19 @@ describe('Main ColorSet functions', () => {
 
 describe('Color Conversions functions', () => {
   it('Returns the correct distance between colors', () => {
-    expect(distance([0, 0, 0], [255, 255, 255, 'White'])).toBeGreaterThan(400)
+    // default args
+    expect(distance([0, 0, 0], [255, 255, 255, 'White'])).toBeCloseTo(MAXDISTANCE, 10)
     expect(distance([255, 255, 255], [255, 255, 255, 'White'])).toBe(0)
+    // fast calculation
+    expect(distance([255, 255, 255], [255, 255, 255, 'White'], true)).toBe(0)
+    expect(distance([0, 0, 0], [255, 255, 255, 'White'], true)).toBe(195075)
+
+    // this need to return the same distance as the first test, since the fast mode is exponential
+    expect(
+      Math.sqrt(
+        distance([0, 0, 0], [255, 255, 255, 'White'], true)
+      )
+    ).toBeCloseTo(MAXDISTANCE, 10)
   })
 
   it('Returns the correct name of the color', () => {
@@ -49,6 +62,10 @@ describe('COMMON', () => {
     expect(parseColor('#f00')).toMatchObject({r: 255, g: 0, b: 0})
     expect(parseColor('#ffffff')).toMatchObject({r: 255, g: 255, b: 255})
     expect(parseColor('#fff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(parseColor('#ffff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(parseColor('#fffff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(parseColor('#fffffff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(parseColor('#ffffffffffffffffffffffffffff')).toMatchObject({r: 255, g: 255, b: 255})
   })
 
   // RGB
@@ -98,6 +115,7 @@ describe('HEX', () => {
     expect(shortHexToLongHex('0000')).toMatchObject(['00', '00', '00', '00'])
     expect(shortHexToLongHex('F00')).toMatchObject(['FF', '00', '00'])
     expect(shortHexToLongHex('123')).toMatchObject(['11', '22', '33'])
+    expect(shortHexToLongHex('123')).toMatchObject(['11', '22', '33'])
   })
 
   it('Returns an Object with the HEX values r g b given a color in hex notation', () => {
@@ -105,12 +123,19 @@ describe('HEX', () => {
     expect(parseHex('#FF0000')).toMatchObject(['FF', '00', '00'])
     expect(parseHex('#1234ab')).toMatchObject(['12', '34', 'AB'])
     expect(parseHex('#123')).toMatchObject(['11', '22', '33'])
+    expect(parseHex('#1234')).toMatchObject(['11', '22', '33', '44'])
   })
 
   it('Returns transformation of the hex object into a RGB object', () => {
     expect(hexToRgb(['0', '0', '0'])).toMatchObject({ r: 0, g: 0, b: 0 })
     expect(hexToRgb(['FF', '00', '00'])).toMatchObject({ r: 255, g: 0, b: 0 })
     expect(hexToRgb(['FF', 'FF', 'FF'])).toMatchObject({ r: 255, g: 255, b: 255 })
+  })
+
+  it('Return the int8 to hex conversion', () => {
+    expect(toHex(0)).toBe("00")
+    expect(toHex(127)).toBe("7f")
+    expect(toHex(255)).toBe("ff" )
   })
 })
 
@@ -127,3 +152,54 @@ describe('RGB', () => {
     expect(parseRgb('rgb(50%,100%,100%,1)')).toMatchObject(['50%', '100%', '100%'])
   })
 })
+
+/**
+ * HSL FUNCTIONS TESTING:
+ */
+describe('HSL', () => {
+  it('Returns an Object with the r,g and b color values of a rgb color', () => {
+
+    expect(
+      valuesToRgb(
+        hslToRgb(
+          parseHsl('hsl(0,0%,100%)')
+        )
+      )
+      ).toBe('rgb(255,255,255)')
+
+    expect(
+      valuesToRgb(
+        hslToRgb(
+          parseHsl('hsl(255,100%,100%)')
+        )
+      )
+      ).toBe('rgb(255,255,255)')
+
+    expect(
+      valuesToRgb(
+        hslToRgb(
+          parseHsl('hsl(0,100%,100%)')
+        )
+      )
+      ).toBe('rgb(255,255,255)')
+
+    expect(
+      valuesToRgb(
+        hslToRgb(
+          parseHsl('hsl(127,100%,100%)')
+        )
+      )
+      ).toBe('rgb(255,255,255)')
+  })
+})
+
+describe('name-2-color', () => {
+  it('Returns an Object with the hex, rgb and hsl value of the color (by name)', () => {
+    expect( getColor('white') ).toMatchObject({"hex": "#ffffff", "hsl": "hsl(0,0%,100%)", "rgb": "rgb(255,255,255)"})
+    expect( getColor('red') ).toMatchObject({"hex": "#ff0000", "hsl": "hsl(0,100%,50%)", "rgb": "rgb(255,0,0)"})
+    expect( getColor('tomato') ).toMatchObject({"hex": "#ff6347", "hsl": "hsl(9,100%,63.9%)", "rgb": "rgb(255,99,71)"})
+    expect( getColor('yellowgreen') ).toMatchObject({"hex": "#9acd32", "hsl": "hsl(80,60.8%,50%)", "rgb": "rgb(154,205,50)"})
+    expect( getColor('greenyellow') ).toMatchObject({"hex": "#adff2f", "hsl": "hsl(84,100%,59.2%)", "rgb": "rgb(173,255,47)"})
+    expect( getColor('darkblue') ).toMatchObject({"hex": "#00008b", "hsl": "hsl(240,100%,27.3%)", "rgb": "rgb(0,0,139)"})
+  } )
+} )

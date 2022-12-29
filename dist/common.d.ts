@@ -1,3 +1,4 @@
+export declare const MAXDISTANCE = 441.6729559300637;
 export declare const hexRegex: RegExp;
 export declare const rgbRegex: RegExp;
 export declare const hslRegex: RegExp;

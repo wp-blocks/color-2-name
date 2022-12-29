@@ -34,3 +34,7 @@ export function getRgbValues (rgb: string[]): RGBVALUE {
   }
   throw new Error(`Invalid rgb color: ${rgb.join(', ')}`)
 }
+
+export function valuesToRgb (rgb: RGBVALUE): string {
+  return `rgb(${rgb.r},${rgb.g},${rgb.b})`
+}
