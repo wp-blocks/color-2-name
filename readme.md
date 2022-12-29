@@ -5,6 +5,8 @@ Find the name of the color given a hex, rgb and hsl string!
 This package provides a function to find the closest color to a given one from an array of colors.
 It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
 
+Demo [https://erikyo.github.io/color-2-name/](https://erikyo.github.io/color-2-name/)
+
 ### Features:
 - 🚀 Fast - The distance between colors in the RGB color space is determined with the fastest algorithm and if the distance is 0 the function immediately returns the color name without further calculation
 - 😎 Ally - So that your app is equally useful for everyone
@@ -162,6 +164,12 @@ node colorSetUtils.mjs myNewColorSet
 A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
 
 ---
+### Examples
+This module is meant to be used in conjunction with React's color picker, so that the color name is shown as you select it. It can also be used in other ways of course, such as to determine whether a color is light or dark (using a custom color set with black and white) etc.
+
+![picker](https://user-images.githubusercontent.com/8550908/209803600-81954bea-63a0-4951-ac4c-a965a9d93bca.gif)
+
+
 
 ### Limitations
 This package uses the Euclidean distance formula to calculate the distance between colors in the RGB color space. While this is a simple and widely used method for comparing colors, it may not always give the most accurate results. In particular, it does not take into account the perception of colors by the human eye, which can be affected by factors such as the surrounding colors and the luminance of the colors.
