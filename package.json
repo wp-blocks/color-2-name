@@ -5,7 +5,7 @@
   "license": "ISC",
   "description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
   "main": "dist/color-2-name.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "webpack serve --mode=development",
     "build:js": "webpack --mode=production",
