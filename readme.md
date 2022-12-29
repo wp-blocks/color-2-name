@@ -147,23 +147,10 @@ then run:
 ```bash
 node colorSetUtils.mjs myNewColorSet
 ```
-A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
----
-
-#### 💡 Build your own color set
-
-In order to build a color set you need a json object with the following properties::
-`name` - the name of the color (like "Orange")
-`color` - the hex color value (like #FFAA00)
-
-then run:
-
-```bash
-node colorSetUtils.mjs myNewColorSet
-```
-A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
+**RETURNS** A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
 
 ---
+
 ### Examples
 This module is meant to be used in conjunction with React's color picker, so that the color name is shown as you select it. It can also be used in other ways of course, such as to determine whether a color is light or dark (using a custom color set with black and white) etc.
 
