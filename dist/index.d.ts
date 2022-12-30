@@ -10,6 +10,10 @@ import colorSet from './data/colorSet';
  * @return {string} the corresponding color name
  */
 declare function closest(color: colorString, set?: RGBCOLORDEF[] | undefined, ...args: any[string | number]): COLORDEF | COLORDEFINFO;
+declare function isLight(color: colorString): boolean;
+declare function isDark(color: colorString): boolean;
+declare function isLightOrDark(color: colorString): string;
+declare function closestRGB(color: colorString): string;
 /**
  * Compute the distance between the two RGB values
  * There are two modes:
@@ -29,4 +33,4 @@ declare function distance(rgb1: RGBDEF, rgb2: RGBCOLORDEF, fast?: boolean): numb
  * @return {string} the corresponding color hex
  */
 declare function rgbToHex(rgbString: RGB): HEX | Error;
-export { colorSet, closest, rgbToHex, distance };
+export { colorSet, closest, rgbToHex, distance, isLight, isDark, isLightOrDark, closestRGB };

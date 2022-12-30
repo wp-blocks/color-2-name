@@ -1,5 +1,5 @@
 import colorSet from './data/colorSet'
-import { parseColor, rgbRegex } from './common'
+import {BLACKANDWHITE, parseColor, rgbRegex, RGBSET} from './common'
 import { valuesToHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 
@@ -35,6 +35,7 @@ function closest (
         closestColor.color = `rgb(${tested[0]},${tested[1]},${tested[2]})`
       }
 
+      // TODO: add a minimum acceptable value in order to speed up the calculation. for example #ff0001 should return red since is very very close to red
       if (gap === 0) {
         break
       }
@@ -50,6 +51,21 @@ function closest (
   }
 
   return closestColor
+}
+
+function isLight (color: colorString): boolean {
+  return closest(color, BLACKANDWHITE).name === 'white'
+}
+function isDark (color: colorString): boolean {
+  return closest(color, BLACKANDWHITE).name === 'black'
+}
+
+function isLightOrDark (color: colorString): string {
+  return isLight(color) ? 'light' : 'dark'
+}
+
+function closestRGB (color: colorString): string {
+  return closest(color, RGBSET).name
 }
 
 /**
@@ -82,6 +98,7 @@ function distance (rgb1: RGBDEF, rgb2: RGBCOLORDEF, fast: boolean = false): numb
  * @return {string} the corresponding color hex
  */
 function rgbToHex (rgbString: RGB): HEX | Error {
+  // if is a rgb string
   if (rgbRegex.test(rgbString)) {
     const rgb = parseRgb(rgbString)
     if (rgb.length > 0) {
@@ -96,5 +113,9 @@ export {
   colorSet,
   closest,
   rgbToHex,
-  distance
+  distance,
+  isLight,
+  isDark,
+  isLightOrDark,
+  closestRGB
 }

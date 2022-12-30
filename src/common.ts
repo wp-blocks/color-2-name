@@ -11,6 +11,47 @@ export const hslRegex = /^hsla?\(([^)]+)\)/i
 export const isNumeric = /^[0-9]*$/
 
 /**
+ * This set is used in order to detect if the color is bright or dark
+ *
+ * @note the set has been corrected to get pure RGB values (eg. pure red, pure green) in the "bright" area
+ */
+export const BLACKANDWHITE: RGBCOLORDEF[] = [
+  [
+    255,
+    255,
+    255,
+    'white'
+  ],
+  [
+    1,
+    1,
+    1,
+    'black'
+  ]
+]
+
+export const RGBSET: RGBCOLORDEF[] = [
+  [
+    255,
+    0,
+    0,
+    'red'
+  ],
+  [
+    0,
+    255,
+    0,
+    'green'
+  ],
+  [
+    0,
+    0,
+    255,
+    'blue'
+  ]
+]
+
+/**
  * split the content of rgb and hsl colors depending on the parsed value of the css property
  *
  * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb#syntax

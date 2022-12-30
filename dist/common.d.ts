@@ -4,6 +4,13 @@ export declare const rgbRegex: RegExp;
 export declare const hslRegex: RegExp;
 export declare const isNumeric: RegExp;
 /**
+ * This set is used in order to detect if the color is bright or dark
+ *
+ * @note the set has been corrected to get pure RGB values (eg. pure red, pure green) in the "bright" area
+ */
+export declare const BLACKANDWHITE: RGBCOLORDEF[];
+export declare const RGBSET: RGBCOLORDEF[];
+/**
  * split the content of rgb and hsl colors depending on the parsed value of the css property
  *
  * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb#syntax

@@ -6,7 +6,7 @@
  */
 export function shortHexToLongHex (value: string): string[] {
   // split the string in to an array of digits then return an array that contains that digit doubled for each item
-  return [...value].map((v: string) => (v + v).toUpperCase())
+  return Array.from(value).map((v: string) => (v + v).toUpperCase())
 }
 
 /**
@@ -15,7 +15,7 @@ export function shortHexToLongHex (value: string): string[] {
  */
 export function parseHex (value: colorString): string[] {
   // remove # at the beginning of the hex color
-  const hexColor: string = value.substring(1)
+  const hexColor: string = (Array.from(value)[0] === '#') ? value.substring(1) : value
 
   /**
    * then if the number of digits is greater than 2 (so it's something like 123 or abc456)
@@ -61,7 +61,10 @@ export function toHex (int8: number): string {
 */
 export function valuesToHex (rgb: RGBVALUE): HEX {
   // Extract the RGB values from the hex string
-  if (rgb?.r !== null && rgb?.g !== null && rgb?.b !== null) {
+  if (
+    typeof rgb?.r === 'number' &&
+    typeof rgb?.g === 'number' &&
+    typeof rgb?.b === 'number') {
     return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`
   }
   return '#errorr'
