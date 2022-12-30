@@ -31,6 +31,7 @@
     "hsl",
     "hsla",
     "convert colors",
+    "color name classification",
     "color picker"
   ],
   "devDependencies": {
