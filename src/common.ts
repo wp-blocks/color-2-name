@@ -69,7 +69,28 @@ export function splitValues (rawValues: string): string[] {
 /**
  * takes a string with a css value that could be a number or percentage or an angle in degrees and returns the corresponding 8bit value
  *
- * @param value
+ * @return {number} the converted value
+ */
+export function normalizeDegree (value: string, multiplier: number = 360): number {
+  let angle = parseFloat(value)
+  while (angle < 0) {
+    angle += 360
+  }
+  while (angle > 360) {
+    angle -= 360
+  }
+  return (angle / 360) * multiplier
+}
+
+/**
+ * Takes a string with a css value that could be a number or percentage or an angle in degrees and returns the corresponding 8bit value
+ *
+ * @param {string} value - a valid value for the css color definition (like 255, "100%", "324deg", etc)
+ * @param {string} value - a valid value for the css color definition (like 255, "100%", "324deg", etc)
+ *
+ * @example convertToInt8('100%'); // 255
+ *
+ * @return {string} the corresponding value in 8 bit format
  */
 export function convertToInt8 (value: string, multiplier: number = 255): number {
   value = value.trim()
