@@ -1,58 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Color-2-name Examples</title>
-  <meta charset="UTF-8"/>
-  <link rel="stylesheet" rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-  <link rel="stylesheet" rel="preload" as="style" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
-  <link rel="stylesheet" rel="preload" as="style" href="https://unpkg.com/milligram@1.4.1/dist/milligram.min.css">
-  <style>
-    #grid {
-      width: 100%;
-      display: grid;
-      grid-gap: 4rem;
-      height: 160px;
-      grid-template-columns: repeat(7, 1fr);
-    }
-  </style>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>color-2-name Home</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
 </head>
 
-<body>
 
 
-<main class="wrapper" style="padding-top:2em">
-  <section class="container" id="app">
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
 
-    <h1>color-2-name.js!</h1>
-    <p>This package provides a function to find the closest color to a given one from an array of colors. It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.</p>
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">color-2-name.js!</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="example.html"
+                        >
+                            Example
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#BLACKANDWHITE">BLACKANDWHITE</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestRGB">closestRGB</a></li><li><a href="global.html#convertToInt8">convertToInt8</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getHslValues">getHslValues</a></li><li><a href="global.html#getRgbValues">getRgbValues</a></li><li><a href="global.html#hexRegex">hexRegex</a></li><li><a href="global.html#hexToRgb">hexToRgb</a></li><li><a href="global.html#hslRegex">hslRegex</a></li><li><a href="global.html#hslToRgb">hslToRgb</a></li><li><a href="global.html#isDark">isDark</a></li><li><a href="global.html#isLight">isLight</a></li><li><a href="global.html#isLightOrDark">isLightOrDark</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#MAXDISTANCE">MAXDISTANCE</a></li><li><a href="global.html#normalizeDegree">normalizeDegree</a></li><li><a href="global.html#parseColor">parseColor</a></li><li><a href="global.html#parseHex">parseHex</a></li><li><a href="global.html#parseHsl">parseHsl</a></li><li><a href="global.html#parseRgb">parseRgb</a></li><li><a href="global.html#rgbRegex">rgbRegex</a></li><li><a href="global.html#RGBSET">RGBSET</a></li><li><a href="global.html#rgbToHex">rgbToHex</a></li><li><a href="global.html#shortHexToLongHex">shortHexToLongHex</a></li><li><a href="global.html#splitValues">splitValues</a></li><li><a href="global.html#toHex">toHex</a></li><li><a href="global.html#valuesToHex">valuesToHex</a></li><li><a href="global.html#valuesToHsl">valuesToHsl</a></li><li><a href="global.html#valuesToRgb">valuesToRgb</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p></p>
+                    <h1>Home</h1>
+                </header>
+                
 
-    <pre><code>
-      // Find an Hex color name
-      color2name.closest('#123456')
 
-      // works also with rgb colors
-      color2name.closest('rgb(1,2,3)')
 
-      // rgba color
-      color2name.closest('rgba(1 2 3 / .5)')
+    
 
-      // and hsl/hsla color 😎
-      color2name.closest('hsla(1 2deg 3% / .001)')
-    </code></pre>
-  </section>
-  <div class="container">
 
-    <h2 style="text-align: center; padding: 4rem">100 Random Colors (with comparison)!</h2>
-    <button id="reloadButton" onclick="updateColor()"></button>
-    <hr>
-    <div id="grid"></div>
-  </div>
-</main>
+    <h3> </h3>
 
-<script src="web-component.js"> </script>
-<script type="application/javascript" src="color-2-name.js"> </script>
-<script src="index.js"> </script>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>color-2-name</h1>
+<div>
+  <a href="https://www.npmjs.com/package/color-2-name">
+    <img alt="version" src="https://img.shields.io/npm/v/color-2-name.svg?label=npm%20version" />
+  </a>
+  <a href="https://github.com/erikyo/color-2-name/blob/main/LICENSE">
+    <img alt="version" src="https://img.shields.io/npm/l/color-2-name" />
+  </a>
+  <a href="https://github.com/erikyo/color-2-name/actions">
+    <img alt="build" src="https://img.shields.io/github/actions/workflow/status/erikyo/color-2-name/node.js.yml" />
+  </a>
+  <a href="https://github.com/erikyo/color-2-name/actions">
+    <img alt="workflows" src="https://github.com/erikyo/color-2-name/actions/workflows/node.js.yml/badge.svg" />
+  </a>
+</div>
+<p>Find the name of the color given a hex, rgb and hsl string!</p>
+<p>This package provides a function to find the closest color within an array of colors.
+It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.</p>
+<p><a href="https://erikyo.github.io/color-2-name/example.html">Demo</a></p>
+<h3>Features:</h3>
+<ul>
+<li>🚀 <strong>Fast</strong> - The distance between colors in the RGB color space is provided with the fastest algorithm available</li>
+<li>😎 <strong>Ally</strong> - So that your app is equally useful for everyone</li>
+<li>🪶 <strong>Lightweight</strong> - The module WITH the 140 css colors definitions weights 4kb gzipped!</li>
+<li>✅ <strong>Umd module</strong> - Works with browsers and with nodejs</li>
+<li>📦 <strong>Bundled</strong> - Webpack optimized and minified build!</li>
+<li>🪅 <strong>Easy to use</strong> - You don't need to convert the color before calling the function! the color format will be found automatically</li>
+<li>🎨 <strong>Build your scheme</strong> - You can use the node script to build your scheme</li>
+<li>🪄️ <strong>Typed</strong> - Written in typescript (with types included)</li>
+<li>🎈 <strong>No dependencies</strong> - Dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!</li>
+</ul>
+<h2>Installation</h2>
+<h3>As a Node module</h3>
+<p>To install the package, run the following command:</p>
+<pre class="prettyprint source"><code>npm install color-2-name
+</code></pre>
+<p>Import the <code>closest</code> function from the color-2-name package:</p>
+<pre class="prettyprint source lang-js"><code>// es6 import
+import {closest} from 'color-2-name';
+</code></pre>
+<h3>As script (browser)</h3>
+<p>include script tag like below in your head/footer:</p>
+<pre class="prettyprint source lang-js"><code>// add the script tag to the head/footer
+&lt;script src=&quot;color-2-name.js&quot;>&lt;/script>
+</code></pre>
+<p>Then the color-2-name module will be available using the following command:</p>
+<pre class="prettyprint source lang-js"><code>// With browsers you can find the packed scripts into window.color2name
+color2name.closest('#123456') // color name
+color2name.rgbToHex('rgb(18 52 86)') // #123456
+color2name.distance([0, 0, 0], [255, 255, 255]) // 431.12
+
+// With node / es6 import
+import {closest, distance, rgbToHex} from 'color-2-name';
+closest('hsla(210deg 10% 96%)') // white
+
+// With node / require
+var color2Name = require(&quot;color-2-name&quot;)
+color2Name.closest('#abcdef')
+</code></pre>
+<hr>
+<p>This Package includes the following functions:</p>
+<ul>
+<li>closest()</li>
+<li>distance()</li>
+<li>rgbToHex()</li>
+<li>isLight()</li>
+<li>isDark()</li>
+<li>isLightOrDark()</li>
+<li>closestRGB()</li>
+</ul>
+<h3>💡 closest()</h3>
+<p>Returns the closest color name</p>
+<pre class="prettyprint source lang-js"><code>// Here is an example of how to use the findClosestColor function:
+const closestColor = closest('#ff8800');
+console.log(closestColor); // { name: 'red', color: 'rgb(255,0,0)' }
+
+// You can also use your custom set as comparation
+const closestColor = closest('#ff8800');
+</code></pre>
+<p>In this example, the hex color '#ff8800' (which is a shade of orange) is compared to the colors in the colors array. The function returns the object with the name and hex value of the color that is closest to it, which in this case is the
+object for the color red.</p>
+<p>Arguments:</p>
+<ul>
+<li><code>color</code>: a string representing a color, accepts hexadecimal, rgb and hsl with and without alpha channel (e.g. <code>#ff0000</code> for hex red).</li>
+<li><code>colors</code>: (optional) you can provide to this function a custom list of color names to be used (replaces the default)</li>
+<li><code>args</code>: (optional) an Object that contains setup for this module</li>
+<li><code>args.info</code>: (optional) set to true to display additional information the found color, like the hex value and the distance from the original</li>
+</ul>
+<p><strong>RETURNS</strong> an object with the name and nearest color that is closest to the given color. (eg. <code>{ name: 'red', color: 'rgb(255,0,0)' }</code>)</p>
+<hr>
+<h4>💡distance()</h4>
+<p>Computes the distance between two colors using the euclidean distance formula.</p>
+<pre class="prettyprint source lang-js"><code>// Here is an example on how get the distance between two colors
+const colorDivergence = distance([120, 255, 200], [255, 255, 255])
+console.log(colorDivergence); // 123.465
+</code></pre>
+<p>Arguments:</p>
+<ul>
+<li><code>rgb1</code>: an array of values representing rgb of the first color to be compared</li>
+<li><code>rgb2</code>: an array of values representing rgb of the second color to be compared</li>
+</ul>
+<p><strong>RETURNS</strong> the distance between two colors, the maximum distance is &gt;441 and the color is exactly the same when the value is 0</p>
+<hr>
+<h4>💡 rgbToHex()</h4>
+<p>Convert a rgb color into hexadecimal color</p>
+<pre class="prettyprint source lang-js"><code>// note: the rgb value is converted without take into account the alpha channel
+const hex = rgbToHex('rgb(255,255,255)')
+const hex2 = rgbToHex('rgb(255 255 255 / .5)')
+// prints the hex result
+console.log(hex); // #FFFFFF
+console.log(hex2); // #FFFFFF
+</code></pre>
+<p>Arguments:</p>
+<ul>
+<li><code>rgb</code>: a valid css rgb or rgba value (eg. rgb(1,2,3))</li>
+</ul>
+<p><strong>RETURNS</strong> the hex value of the color</p>
+<hr>
+<h4>💡 getColor()</h4>
+<p>search into ColorSet for the given color</p>
+<pre class="prettyprint source lang-js"><code>// note: the rgb value is converted without take into account the alpha channel
+const white = getColor('white') // {&quot;hex&quot;: &quot;#ffffff&quot;, &quot;hsl&quot;: &quot;hsl(0,0%,100%)&quot;, &quot;rgb&quot;: &quot;rgb(255,255,255)&quot;}
+const alertColor = getColor('red') // {&quot;hex&quot;: &quot;#ff0000&quot;, &quot;hsl&quot;: &quot;hsl(0,100%,50%)&quot;, &quot;rgb&quot;: &quot;rgb(255,0,0)&quot;}
+
+// prints the hex result
+console.log(alertColor.hsl); // #FFFFFF
+console.log(alertColor.hex); // #FF0000
+console.log(&quot;transparent red: &quot; + alertColor.hex + &quot;88&quot;); // #FF000088
+</code></pre>
+<p>Arguments:</p>
+<ul>
+<li><code>colorName</code>: the name of a color you need find in the colorset</li>
+</ul>
+<p><strong>RETURNS</strong> an Object with the color requested converted into hex, rgb and hsl</p>
+<hr>
+<h3>Useful (additional) functions</h3>
+<h4>💡 isLight()</h4>
+<p>Check if the color is light (optically closer to white)</p>
+<h4>💡 isDark()</h4>
+<p>Check if the color is dark (optically closer to black)</p>
+<h4>💡 isLightOrDark()</h4>
+<p>Returns light or dark whether the color is lighter or darker</p>
+<h4>💡 closestRGB()</h4>
+<p>returns the closest RGB color</p>
+<p>Arguments:</p>
+<ul>
+<li><code>color</code>: a valid css color string</li>
+</ul>
+<p>Examples:</p>
+<pre class="prettyprint source lang-js"><code>// note: the rgb value is converted without take into account the alpha channel
+isLight('#fff') // true
+isDark('#fff') // false
+isLightOrDark('#abc') // light
+isLightOrDark('#345') // dark
+closestRGB('#FF1234') // red
+</code></pre>
+<hr>
+<h4>💡 Build your own color set</h4>
+<p>First thing, clone the color-2-name package with <code>git clone https://github.com/erikyo/color-2-name.git</code> then cd into color-2-name folder.</p>
+<p>In order to build a color set you need a json object with the following properties:</p>
+<ul>
+<li><code>name</code> - the name of the color (like &quot;Orange&quot;)</li>
+<li><code>color</code> - the hex color value (like #FFAA00)</li>
+</ul>
+<p>save it into ./src/data/ as &quot;myNewColorSet.json&quot;. the file will contain something like this:</p>
+<pre class="prettyprint source lang-json"><code>[
+    { &quot;name&quot;: &quot;white&quot;, &quot;color&quot;: &quot;#FFFFFF&quot; },
+    { &quot;name&quot;: &quot;black&quot;, &quot;color&quot;: &quot;#000000&quot; },
+    { &quot;name&quot;: &quot;red&quot;, &quot;color&quot;: &quot;#FF0000&quot; },
+    { &quot;name&quot;: &quot;green&quot;, &quot;color&quot;: &quot;#008000&quot; },
+    { &quot;name&quot;: &quot;blue&quot;, &quot;color&quot;: &quot;#0000FF&quot; }
+]
+</code></pre>
+<pre class="prettyprint source lang-bash"><code># then run the following command
+$ node colorSetUtils.mjs myNewColorSet
+</code></pre>
+<p><strong>RETURNS</strong> A new file called &quot;myNewColorSet.ts&quot; containing the data for this module will be written inside the ./src/data/ folder</p>
+<hr>
+<h3>Examples</h3>
+<p>This module is meant to be used in conjunction with React's color picker, so that the color name is shown as you select it. It can also be used in other ways of course, such as to determine whether a color is light or dark (using a custom
+color set with black and white) etc.</p>
+<p><img src="https://user-images.githubusercontent.com/8550908/209803600-81954bea-63a0-4951-ac4c-a965a9d93bca.gif" alt="picker"></p>
+<h3>Limitations</h3>
+<p>This package uses the Euclidean distance formula to calculate the distance between colors in the RGB color space. While this is a simple and widely used method for comparing colors, it may not always give the most accurate results. In
+particular, it does not take into account the perception of colors by the human eye, which can be affected by factors such as the surrounding colors and the luminance of the colors.</p>
+<h3>Contributing</h3>
+<p>If you would like to contribute to this package, please follow the guidelines in the CONTRIBUTING.md file.</p>
+<h3>License</h3>
+<p>This package is licensed under the MIT License. See the LICENSE file for details.</p>
+<h3>Credits</h3>
+<p>The wiki about the euclidean distance formula https://en.wikipedia.org/wiki/Color_difference</p>
+<p>Some useful ideas and codes has been taken from the article on the website css-tricks at https://css-tricks.com/converting-color-spaces-in-javascript/</p></article>
+    </section>
+
+
+
+
+
+
+            </div>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
 
 </body>
 </html>

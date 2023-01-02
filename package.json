@@ -11,8 +11,9 @@
     "build:js": "webpack --mode=production",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "npm run build:js && npm run build:types",
-    "gen-colorSet": "node colorSetUtils.mjs css",
-    "test": "jest --silent=false"
+    "gen-colorSet": "node colorSetUtils.mjs colorSet",
+    "docGen": "jsdoc -c jsdoc.json",
+    "test": "jest --silent=false --coverage"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,9 @@
     "@types/jest": "^29.2.4",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "babel-loader": "^9.1.0",
+    "jsdoc": "^3.6.11",
+    "better-docs": "^2.7.2",
+    "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.30.0",
     "eslint-config-standard-with-typescript": "^24.0.0",
     "eslint-plugin-import": "^2.26.0",

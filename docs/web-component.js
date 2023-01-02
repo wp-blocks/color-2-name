@@ -57,9 +57,9 @@ class colorSwatch extends HTMLElement {
     .swatch__name,
     .swatch__def {
       text-align: center;
-      font-size: 1.5rem;
-      line-height: 1.2;
-      margin: 2.2rem 0 1.1rem;
+      font-size: 1.2rem;
+      line-height: 1;
+      margin: 1.8rem 0 1rem;
       word-break: break-all;
     }
     .swatch__def{
