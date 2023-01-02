@@ -10,8 +10,11 @@ export function shortHexToLongHex (value: string): string[] {
 }
 
 /**
+ * Get the hex value of the color and convert it to an Object of R G And B values (still in hex format)
  *
- * @param value
+ * @param value the string that contains the color in hex format
+ *
+ * @return {string[]} an array of 6 digit hex values in a triplet of R G and B (HEX format)
  */
 export function parseHex (value: colorString): string[] {
   // remove # at the beginning of the hex color
@@ -34,9 +37,11 @@ export function parseHex (value: colorString): string[] {
 }
 
 /**
- * Convert a Hex color to rgb
+ * Converts a Hex color to rgb
  *
  * @param {string} hex without the "#"
+ *
+ * @return {string} the rgb color values for the given hex color
  */
 export function hexToRgb (hex: string[]): RGBVALUE | Error {
   // Extract the RGB values from the hex string
@@ -50,6 +55,13 @@ export function hexToRgb (hex: string[]): RGBVALUE | Error {
   throw new Error(`Invalid Hex color: ${hex.join(', ')}`)
 }
 
+/**
+ * Convert a INT8 value to HEX
+ *
+ * @param {number} int8 - the integer value to convert
+ *
+ * @return {string} the hex string
+ */
 export function toHex (int8: number): string {
   return int8.toString(16).padStart(2, '0')
 }
@@ -58,6 +70,8 @@ export function toHex (int8: number): string {
 * Convert rgb values to hex color
 *
 * @param {Object} rgb an object with the rgb values
+ *
+ * @return {string} the hex string
 */
 export function valuesToHex (rgb: RGBVALUE): HEX {
   // Extract the RGB values from the hex string

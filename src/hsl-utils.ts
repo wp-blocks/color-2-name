@@ -1,8 +1,10 @@
-import { convertToInt8, hslRegex, splitValues } from './common'
+import {hslRegex, normalizeDegree, splitValues} from './common'
 
 /**
+ * Get the values of the hsl string
  *
- * @param value
+ * @param {string} hslAsString - the valid hsl color string
+ * @return {string[]} the values of the hsl string
  */
 export function parseHsl (hslAsString: string): string[] {
   const hslvalue = hslAsString.match(hslRegex)
@@ -20,21 +22,27 @@ export function parseHsl (hslAsString: string): string[] {
   throw new Error(`Can't parse hsl color: ${hslAsString}`)
 }
 
+/**
+ * This function takes an array of strings and returns and object with the hsl values converted into INT8 (0-255)
+ *
+ * @param {string[]} hsl - the hsl values to parse from string to int8 values
+ *
+ */
 export function getHslValues (hsl: string[]): HSLVALUE {
   if (hsl.length >= 2) {
     return {
-      h: convertToInt8(hsl[0]),
-      s: convertToInt8(hsl[1], 100),
-      l: convertToInt8(hsl[2], 100)
+      h: normalizeDegree(hsl[0]),
+      s: parseInt(hsl[1], 10),
+      l: parseInt(hsl[2], 10)
     }
   }
   throw new Error(`Invalid hsl color: ${hsl.join(', ')}`)
 }
 
 /**
- * Parses an array of HSL values and the related RGB value
+ * Given the HSL color it convert the color into RGB
  *
- * @param hsl the HSL value to parse
+ * @param {string[]} hsl the HSL value to parse
  * @return {Object} rgb value
  */
 export function hslToRgb (hsl: string[]): RGBVALUE {
@@ -79,6 +87,15 @@ export function hslToRgb (hsl: string[]): RGBVALUE {
   return { r, g, b }
 }
 
+/**
+ * Given the RGB color it convert the color into HSL
+ *
+ * @param {number} r - red
+ * @param {number} g - green
+ * @param {number} b - blue
+ *
+ * @return {Object} hsl value
+ */
 export function valuesToHsl ({ r, g, b }: RGBVALUE): string {
   // Make r, g, and b fractions of 1
   r /= 255

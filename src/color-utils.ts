@@ -6,8 +6,8 @@ import { valuesToHsl } from './hsl-utils'
 /**
  * This function was the opposite of the name of the repo and returns the color of the colorSet given the name
  *
- * @param searchedColor -the name of the color to search for
- * @param colorSet - the colorSet to search in
+ * @param {string} searchedColor -the name of the color to search for
+ * @param {Array} set - the colorSet to search in
  */
 function getColor (searchedColor: string, set: RGBCOLORDEF[] | undefined = colorSet): Object | Error {
   const found: RGBCOLORDEF | undefined = set.find((color: RGBCOLORDEF) => color[3] === searchedColor)

@@ -1,17 +1,20 @@
 import colorSet from './data/colorSet'
-import {BLACKANDWHITE, parseColor, rgbRegex, RGBSET} from './common'
+import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from './common'
 import { valuesToHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 
 /**
- * Given a color string it returns the closest corresponding name of the color
+ * Given a color string it returns the closest corresponding name of the color.
+ * Uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
  *
- * @param color
- * @param colorSet
- * @param args
- * @param args.colors
+ * @param {string} color - the color string you want to find the closest color name
+ * @param {Array} colorSet - the array of colors you want to find the closest color in. leave empty to use the default css color nameset
+ * @param {Object} args - Optionally you can pass some additional arguments
+ * @param args.info - Set a non nullish value to return some additional information (like the distance between the colors, or the hex color value) about the closest color.
  *
- * @return {string} the corresponding color name
+ * @return {Object} the closest color name and rgb value
+ *
+ * @example closest('#f00'); // { name: 'red', color: 'rgb(255,0,0)' }
  */
 function closest (
   color: colorString,
@@ -53,17 +56,54 @@ function closest (
   return closestColor
 }
 
+/**
+ * Given a color returns if the color is light (by light is meant more mathematically closer to white)
+ *
+ * @param {string} color - The color to check
+ *
+ * @returns {boolean} true when the color is light, false otherwise
+ *
+ * @example isLight('#ddd'); // true
+ */
 function isLight (color: colorString): boolean {
   return closest(color, BLACKANDWHITE).name === 'white'
 }
+
+/**
+ * Given a color returns if the color is dark (by dark is meant more mathematically closer to black)
+ *
+ * @param {string} color - The color to check
+ *
+ * @returns {boolean} true when the color is dark, false otherwise
+ *
+ * @example isDark('#333'); // true
+ */
 function isDark (color: colorString): boolean {
   return closest(color, BLACKANDWHITE).name === 'black'
 }
 
+/**
+ * Given a color returns if the color is light or dark (by dark is meant more mathematically closer to black)
+ *
+ * @param {string} color - The color to check
+ *
+ * @returns {string} light when the color is close to white, dark otherwise
+ *
+ * @example isLightOrDark('#fff'); // 'light'
+ */
 function isLightOrDark (color: colorString): string {
   return isLight(color) ? 'light' : 'dark'
 }
 
+/**
+ * Given a color returns if the color is closer to "red", "green" or "blue".
+ *
+ * @param {string} color - The color to check
+ *
+ * @returns {string} light when the color is close to white, dark otherwise
+ *
+ * @example closestRGB('#f00'); // 'red'
+ */
 function closestRGB (color: colorString): string {
   return closest(color, RGBSET).name
 }
@@ -74,28 +114,29 @@ function closestRGB (color: colorString): string {
  * fast = true -> the distance is calculated without using the Euclidean formula completely, it is reliable but its result is exponential
  * fast = false -> the distance is calculated with the Euclidean formula, its result is linear
  *
- * @param rgb1
- * @param rgb2
- * @param fast - whether to calculate the distance without computing the square root, the result will be
+ * @param rgb1 - The RGB value of the first color to compare
+ * @param rgb2 - The RGB value of the second color to compare
+ * @param fast - If you want to calculate the distance without calculating the square root, the result will be exponential otherwise is linear
+ *
+ * @return {number} the distance between the two RGB values
+ *
+ * @example distance([10, 20, 30], [120, 120, 120]); // 173.78147196982766
  */
-function distance (rgb1: RGBDEF, rgb2: RGBCOLORDEF, fast: boolean = false): number {
-  return fast
-    ? Math.pow(rgb2[0] - rgb1[0], 2) +
-    Math.pow(rgb2[1] - rgb1[1], 2) +
-    Math.pow(rgb2[2] - rgb1[2], 2)
-    : Math.sqrt(
-      Math.pow(rgb2[0] - rgb1[0], 2) +
-        Math.pow(rgb2[1] - rgb1[1], 2) +
-        Math.pow(rgb2[2] - rgb1[2], 2)
-    )
+function distance (rgb1: RGBDEF, rgb2: RGBCOLORDEF | number[], fast: boolean = false): number {
+  const r = Math.pow(rgb2[0] - rgb1[0], 2) +
+  Math.pow(rgb2[1] - rgb1[1], 2) +
+  Math.pow(rgb2[2] - rgb1[2], 2)
+  return fast ? r : Math.sqrt(r)
 }
 
 /**
  * Given a color string it returns the hex representation
  *
- * @param rgbString
+ * @param rgbString - the rgb color string to convert to hex
  *
  * @return {string} the corresponding color hex
+ *
+ * @example rgbToHex("rgba(100% 0 0 / .5)"); // #FF0000
  */
 function rgbToHex (rgbString: RGB): HEX | Error {
   // if is a rgb string
