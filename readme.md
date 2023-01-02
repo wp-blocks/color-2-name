@@ -1,32 +1,38 @@
 # color-2-name
 
 <div>
+  <a href="https://www.npmjs.com/package/color-2-name">
+    <img alt="version" src="https://img.shields.io/npm/v/color-2-name.svg?label=npm%20version" />
+  </a>
+  <a href="https://github.com/erikyo/color-2-name/blob/main/LICENSE">
+    <img alt="version" src="https://img.shields.io/npm/l/color-2-name" />
+  </a>
   <a href="https://github.com/erikyo/color-2-name/actions">
     <img alt="build" src="https://img.shields.io/github/actions/workflow/status/erikyo/color-2-name/node.js.yml" />
   </a>
   <a href="https://github.com/erikyo/color-2-name/actions">
-    <img alt="build" src="https://github.com/erikyo/color-2-name/actions/workflows/node.js.yml/badge.svg" />
+    <img alt="workflows" src="https://github.com/erikyo/color-2-name/actions/workflows/node.js.yml/badge.svg" />
   </a>
 </div>
 
 Find the name of the color given a hex, rgb and hsl string!
 
-This package provides a function to find the closest color to a given one from an array of colors.
+This package provides a function to find the closest color within an array of colors.
 It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
 
-Demo [https://erikyo.github.io/color-2-name/](https://erikyo.github.io/color-2-name/)
+<button class="button">[Demo](https://erikyo.github.io/color-2-name/example.html)</button> <button class="button">[Docs](https://erikyo.github.io/color-2-name/)</button>
 
 ### Features:
 
-- 🚀 Fast - The distance between colors in the RGB color space is determined with the fastest algorithm and if the distance is 0 the function immediately returns the color name without further calculation
-- 😎 Ally - So that your app is equally useful for everyone
-- 🪶 Lightweight - The module WITH the 140 css colors definitions weights 4kb gzipped!
-- ✅ Umd module - Works with browsers and with nodejs
-- 📦 Bundled - Webpack optimized and minified build!
-- 🪅 Easy to use - You don't need to convert the color before calling the function! the color format will be found automatically
-- 🎨 Build your scheme - You can use the node script to build your scheme
-- 🪄️ Typed: Written in typescript (with types included)
-- 🎈 No dependencies: dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
+- 🚀 **Fast** - The distance between colors in the RGB color space is provided with the fastest algorithm available
+- 😎 **Ally** - So that your app is equally useful for everyone
+- 🪶 **Lightweight** - The module WITH the 140 css colors definitions weights 4kb gzipped!
+- ✅ **Umd module** - Works with browsers and with nodejs
+- 📦 **Bundled** - Webpack optimized and minified build!
+- 🪅 **Easy to use** - You don't need to convert the color before calling the function! the color format will be found automatically
+- 🎨 **Build your scheme** - You can use the node script to build your scheme
+- 🪄️ **Typed** - Written in typescript (with types included)
+- 🎈 **No dependencies** - Dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
 
 ## Installation
 
@@ -77,7 +83,7 @@ This Package includes the following functions:
 
 - closest()
 - distance()
-- RgbToHex()
+- rgbToHex()
 - isLight()
 - isDark()
 - isLightOrDark()
@@ -129,14 +135,14 @@ Arguments:
 
 ---
 
-#### 💡 RgbToHex()
+#### 💡 rgbToHex()
 
 Convert a rgb color into hexadecimal color
 
 ```js
 // note: the rgb value is converted without take into account the alpha channel
-const hex = RgbToHex('rgb(255,255,255)')
-const hex2 = RgbToHex('rgb(255 255 255 / .5)')
+const hex = rgbToHex('rgb(255,255,255)')
+const hex2 = rgbToHex('rgb(255 255 255 / .5)')
 // prints the hex result
 console.log(hex); // #FFFFFF
 console.log(hex2); // #FFFFFF
@@ -210,14 +216,27 @@ closestRGB('#FF1234') // red
 
 #### 💡 Build your own color set
 
-In order to build a color set you need a json object with the following properties::
+First thing, clone the color-2-name package with `git clone https://github.com/erikyo/color-2-name.git` then cd into color-2-name folder.
+
+In order to build a color set you need a json object with the following properties:
 - `name` - the name of the color (like "Orange")
 - `color` - the hex color value (like #FFAA00)
 
-then run:
+save it into ./src/data/ as "myNewColorSet.json". the file will contain something like this:
+
+```json
+[
+    { "name": "white", "color": "#FFFFFF" },
+    { "name": "black", "color": "#000000" },
+    { "name": "red", "color": "#FF0000" },
+    { "name": "green", "color": "#008000" },
+    { "name": "blue", "color": "#0000FF" }
+]
+```
 
 ```bash
-node colorSetUtils.mjs myNewColorSet
+# then run the following command
+$ node colorSetUtils.mjs myNewColorSet
 ```
 
 **RETURNS** A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
