@@ -4,7 +4,7 @@
 import {convertToInt8, parseColor} from "../src/common";
 import {hexToRgb, parseHex, shortHexToLongHex, toHex, valuesToHex} from "../src/hex-utils";
 import {getRgbValues, parseRgb, valuesToRgb} from "../src/rgb-utils";
-import {getHslValues, hslToRgb, parseHsl} from "../src/hsl-utils";
+import {getHslValues, hslToRgb, parseHsl, valuesToHsl} from "../src/hsl-utils";
 
 
 describe('COMMON', () => {
@@ -160,8 +160,16 @@ describe('HSL', () => {
     ).toBe('rgb(226,111,226)')
 
     expect(
+      valuesToRgb(hslToRgb(parseHsl('hsl(400,66%,66%)')))
+    ).toBe('rgb(226,187,111)')
+
+    expect(
+      valuesToRgb(hslToRgb(parseHsl('hsl(-150,66%,66%)')))
+    ).toBe('rgb(111,168,226)')
+
+    expect(
       () => valuesToRgb(
-        hslToRgb(parseHsl('rgb(100%,100%,100%)'))
+        hslToRgb(parseHsl('rgb(100,100%,100%)'))
       )
     ).toThrowError()
   })
@@ -184,5 +192,11 @@ describe('HSL', () => {
     expect(
       () => hslToRgb([255])
     ).toThrowError()
+  })
+
+  it('Returns a String with the hsl color values of a rgb color', () => {
+    expect(
+      valuesToHsl({r:255, g:0, b:255})
+    ).toBe('hsl(300,100%,50%)')
   })
 })

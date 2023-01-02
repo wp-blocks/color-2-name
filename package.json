@@ -69,14 +69,11 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
   },
-  "optionalDependencies": {
-    "fsevents": "2.1.2"
-  },
   "jest": {
-  "globals": {
-    "ts-jest": {
-      "tsConfig": "tsconfig.test.json"
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.test.json"
+      }
     }
   }
-}
 }
