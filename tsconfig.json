@@ -10,13 +10,21 @@
     "esModuleInterop": true,
     "outDir": "dist",
     "rootDir": "src",
-    "typeRoots": [ "node_modules/@types/", "./src/types/" ]
+    "typeRoots": [
+      "node_modules/@types/",
+      "./src/types/"
+    ]
   },
-  "include": ["./src/**/*", "./test/**/*"],
+  "include": [
+    "./src/**/*",
+    "./test/**/*",
+    "./colorSetUtils.mjs"
+  ],
   "exclude": [
     "node_modules",
     "coverage",
     "dist",
+    "docs",
     "examples",
     "jest*",
   ]
