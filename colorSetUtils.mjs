@@ -35,13 +35,12 @@ export default ${filename}`
 
   const generatedJson = setName + JSON.stringify(generated, null, 2) + exportName
 
-  console.log('writing into ./src/data/' + filename + '.ts')
+  console.log('Writing into ./src/data/' + filename + '.ts')
 
-  fs.writeFile('./src/data/' + filename + '.ts', generatedJson, (err, data) => {
-    if (err) {
-      console.log(err)
-      return false
-    }
+  fs.writeFileSync('./src/data/' + filename + '.ts', generatedJson, {
+    encoding: 'utf8'
+  }, (err, data) => {
+    if (err) return false;
     console.log(data)
     return true
   })
@@ -60,7 +59,9 @@ export function generateColorSet(filename, fileUri) {
   /** the json with the colorSet */
   const jsonSet = JSON.parse(set)
 
-  return processSet(jsonSet, filename)
+  processSet(jsonSet, filename)
+
+  return true
 }
 
 const filename = process.argv[2].replace(/[^a-z0-9]/gi, '')
