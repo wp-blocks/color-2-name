@@ -1,3 +1,5 @@
+import { COLORSTRING, HEX, RGBVALUE } from './types'
+
 /**
  * It returns an object with the hex values of the 3 digit hex color
  *
@@ -16,7 +18,7 @@ export function shortHexToLongHex (value: string): string[] {
  *
  * @return {string[]} an array of 6 digit hex values in a triplet of R G and B (HEX format)
  */
-export function parseHex (value: colorString): string[] {
+export function parseHex (value: COLORSTRING): string[] {
   // remove # at the beginning of the hex color
   const hexColor: string = (Array.from(value)[0] === '#') ? value.substring(1) : value
 

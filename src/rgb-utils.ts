@@ -1,4 +1,5 @@
 import { convertToInt8, rgbRegex, splitValues } from './common'
+import { RGBVALUE } from './types'
 
 /**
  * Get the values of the rgb string

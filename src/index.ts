@@ -2,25 +2,30 @@ import colorSet from './data/colorSet'
 import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from './common'
 import { valuesToHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
+import { valuesToHsl } from './hsl-utils'
+import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './types'
 
 /**
  * Given a color string it returns the closest corresponding name of the color.
  * Uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
  *
  * @param {string} color - the color string you want to find the closest color name
- * @param {Array} colorSet - the array of colors you want to find the closest color in. leave empty to use the default css color nameset
+ * @param {Object} set - the color set that will be used to find the closest color
  * @param {Object} args - Optionally you can pass some additional arguments
  * @param args.info - Set a non nullish value to return some additional information (like the distance between the colors, or the hex color value) about the closest color.
  *
  * @return {Object} the closest color name and rgb value
  *
- * @example closest('#f00'); // { name: 'red', color: 'rgb(255,0,0)' }
+ * @example // Returns the closest color name and rgb value given a css color string
+ * closest('#f00'); // { name: 'red', color: 'rgb(255,0,0)' }
+ *
+ * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
 function closest (
-  color: colorString,
-  set: RGBCOLORDEF[] | undefined = colorSet,
+  color: COLORSTRING,
+  set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
   ...args: any[ string | number ]
-): COLORDEF | COLORDEFINFO {
+): COLORDEF {
   let closestGap = Number.MAX_SAFE_INTEGER
   const closestColor: COLORDEF = { name: 'error', color: '#F00' }
 
@@ -35,7 +40,7 @@ function closest (
       if (gap < closestGap) {
         closestGap = gap
         closestColor.name = tested[3]
-        closestColor.color = `rgb(${tested[0]},${tested[1]},${tested[2]})`
+        closestColor.color = `rgb(${String(tested[0])},${String(tested[1])},${String(tested[2])})`
       }
 
       // TODO: add a minimum acceptable value in order to speed up the calculation. for example #ff0001 should return red since is very very close to red
@@ -49,7 +54,13 @@ function closest (
     if (args?.info !== null) {
       const rgbValue = parseColor(closestColor.color)
       const hexValue = valuesToHex(rgbValue as RGBVALUE)
-      return { ...closestColor, hex: hexValue, gap: Math.sqrt(closestGap) }
+      const hslValue = valuesToHsl(rgbValue as RGBVALUE)
+      return {
+        ...closestColor,
+        hex: hexValue,
+        hsl: hslValue,
+        gap: Math.sqrt(closestGap)
+      }
     }
   }
 
@@ -65,7 +76,7 @@ function closest (
  *
  * @example isLight('#ddd'); // true
  */
-function isLight (color: colorString): boolean {
+function isLight (color: COLORSTRING): boolean {
   return closest(color, BLACKANDWHITE).name === 'white'
 }
 
@@ -78,7 +89,7 @@ function isLight (color: colorString): boolean {
  *
  * @example isDark('#333'); // true
  */
-function isDark (color: colorString): boolean {
+function isDark (color: COLORSTRING): boolean {
   return closest(color, BLACKANDWHITE).name === 'black'
 }
 
@@ -91,7 +102,7 @@ function isDark (color: colorString): boolean {
  *
  * @example isLightOrDark('#fff'); // 'light'
  */
-function isLightOrDark (color: colorString): string {
+function isLightOrDark (color: COLORSTRING): string {
   return isLight(color) ? 'light' : 'dark'
 }
 
@@ -104,7 +115,7 @@ function isLightOrDark (color: colorString): string {
  *
  * @example closestRGB('#f00'); // 'red'
  */
-function closestRGB (color: colorString): string {
+function closestRGB (color: COLORSTRING): string {
   return closest(color, RGBSET).name
 }
 
@@ -138,7 +149,7 @@ function distance (rgb1: RGBDEF, rgb2: RGBCOLORDEF | number[], fast: boolean = f
  *
  * @example rgbToHex("rgba(100% 0 0 / .5)"); // #FF0000
  */
-function rgbToHex (rgbString: RGB): HEX | Error {
+function rgbToHex (rgbString: string): HEX | Error {
   // if is a rgb string
   if (rgbRegex.test(rgbString)) {
     const rgb = parseRgb(rgbString)

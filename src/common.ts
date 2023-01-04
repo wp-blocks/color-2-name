@@ -1,4 +1,5 @@
 // Regular expressions to match different color formats
+import { COLORSTRING, HEX, HSL, RGB, RGBCOLORDEF, RGBVALUE } from './types'
 import { hexToRgb, parseHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 import { hslToRgb, parseHsl } from './hsl-utils'
@@ -7,13 +8,13 @@ import { hslToRgb, parseHsl } from './hsl-utils'
 export const MAXDISTANCE = 441.6729559300637
 
 /** A regex to match hex colors */
-export const hexRegex = /^#([\da-f]{6,}|[\da-f]{3,})/i
+export const hexRegex: RegExp = /^#([\da-f]{6,}|[\da-f]{3,})/i
 /** A regex to match rgb colors */
-export const rgbRegex = /^rgba?\(([^)]+)\)/i
+export const rgbRegex: RegExp = /^rgba?\(([^)]+)\)/i
 /** A regex to match hsl colors */
-export const hslRegex = /^hsla?\(([^)]+)\)/i
+export const hslRegex: RegExp = /^hsla?\(([^)]+)\)/i
 /** A regex to match strings that are only int numbers */
-export const isNumeric = /^[0-9]*$/
+export const isNumeric: RegExp = /^[0-9]*$/
 
 /**
  * This set is used in order to detect if the color is bright or dark
@@ -106,7 +107,7 @@ export function convertToInt8 (value: string, multiplier: number = 255): number 
  *
  * @return {Object|Error} the object with rgb values of that color
  */
-export function parseColor (colorString: colorString | string): RGBVALUE | Error {
+export function parseColor (colorString: string): RGBVALUE | Error {
   // Check if the color string matches any of the regular expressions
   if (hexRegex.test(colorString)) {
     const hex = parseHex(colorString as HEX)

@@ -1,0 +1,1 @@
+{"version":3,"file":"rgb-utils.d.ts","sourceRoot":"","sources":["../../src/rgb-utils.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAA;AAElC;;;;;;GAMG;AACH,wBAAgB,QAAQ,CAAE,WAAW,EAAE,MAAM,GAAG,MAAM,EAAE,CAcvD;AAED;;;;;;GAMG;AACH,wBAAgB,YAAY,CAAE,GAAG,EAAE,MAAM,EAAE,GAAG,QAAQ,CASrD;AAED;;;;;;GAMG;AACH,wBAAgB,WAAW,CAAE,GAAG,EAAE,QAAQ,GAAG,MAAM,CAElD"}

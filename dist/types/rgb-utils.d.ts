@@ -1,3 +1,4 @@
+import { RGBVALUE } from './types';
 /**
  * Get the values of the rgb string
  *
@@ -22,3 +23,4 @@ export declare function getRgbValues(rgb: string[]): RGBVALUE;
  * @return {string} a string representation of the rgb values
  */
 export declare function valuesToRgb(rgb: RGBVALUE): string;
+//# sourceMappingURL=rgb-utils.d.ts.map

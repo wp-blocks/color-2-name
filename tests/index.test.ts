@@ -48,11 +48,13 @@ describe('Color Conversions functions', () => {
     expect(closest('rgba(255,255,255,.1)')).toMatchObject({ name: 'white'})
     expect(closest('rgba(255 255 255 /.1)')).toMatchObject({ name: 'white'})
     // HSL
-    expect(closest('hsl(255,0deg,100%,.1)')).toMatchObject({ name: 'white'})
+    expect(closest('hsl(255,0%,100%,.1)')).toMatchObject({ name: 'white'})
     // INFO
-    expect(closest('rgb(255,0,255)', undefined, {info: true})).toMatchObject({ name: 'magenta', hex: '#ff00ff' })
+    expect(closest('rgb(255,0,255)', undefined, {info: true})).toMatchObject({ name: 'magenta', hex: '#ff00ff', gap: 0  })
+    // INFO FUNKY CONFIGURATION
     expect(closest('#FFF', undefined, {info: "YES"})).toMatchObject({ name: 'white', hex: '#ffffff' })
-    expect(closest('hsl(255,0deg,100%)', undefined, {info: false})).toMatchObject({ name: 'white' })
+    // INFO DISABLED
+    expect(closest('hsl(255,0%,100%)', undefined, {info: false})).toMatchObject({ name: 'white' })
     // THROW ERR
     expect(closest('#111', [])).toMatchObject({ name: 'error' })
   })

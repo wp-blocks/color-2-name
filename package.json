@@ -1,16 +1,16 @@
 {
   "name": "color-2-name",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Erik <erik@codekraft.it>",
   "license": "ISC",
   "description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
   "main": "dist/color-2-name.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/",
   "homepage": "https://erikyo.github.io/color-2-name/",
   "scripts": {
     "start": "webpack serve --mode=development",
     "build:js": "webpack --mode=production",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build:types": "tsc --project tsconfig.types.json",
     "build": "npm run build:js && npm run build:types",
     "gen-colorSet": "node colorSetUtils.mjs colorSet",
     "docGen": "jsdoc -c jsdoc.json",
@@ -18,7 +18,12 @@
   },
   "files": [
     "dist/",
-    "colorSetUtils.mjs"
+    "tests/",
+    "*.json",
+    ".gitignore",
+    ".eslintrc.js",
+    "LICENSE",
+    "readme.md"
   ],
   "repository": {
     "type": "git",
@@ -32,15 +37,13 @@
     "color names",
     "color-names",
     "css",
+    "css colors",
     "accessibility",
     "a11y",
     "hex",
     "rgb",
-    "rgba",
     "hsl",
-    "hsla",
     "convert colors",
-    "color name classification",
     "color picker"
   ],
   "devDependencies": {

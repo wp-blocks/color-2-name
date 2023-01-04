@@ -228,7 +228,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line21">line 21</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line20">line 20</a>
             </span>
         </p>
     
@@ -301,7 +301,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line9">line 9</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line8">line 8</a>
             </span>
         </p>
     
@@ -374,7 +374,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line13">line 13</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line12">line 12</a>
             </span>
         </p>
     
@@ -447,7 +447,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line15">line 15</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line14">line 14</a>
             </span>
         </p>
     
@@ -520,7 +520,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line7">line 7</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line6">line 6</a>
             </span>
         </p>
     
@@ -593,7 +593,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line11">line 11</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line10">line 10</a>
             </span>
         </p>
     
@@ -666,7 +666,7 @@
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line28">line 28</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line27">line 27</a>
             </span>
         </p>
     
@@ -696,7 +696,7 @@
         
         <span class="code-name">
             
-                closest<span class="signature">(color, colorSet, &hellip;args)</span><span class="type-signature"> &rarr; {Object}</span>
+                closest<span class="signature">(color, set, &hellip;args)</span><span class="type-signature"> &rarr; {Object}</span>
             
         </span>
     </h4>
@@ -779,13 +779,13 @@ Uses the Euclidean distance formula to calculate the distance between colors in 
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>colorSet</code></td>
+      <td class="name"><code>set</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">Array</code>
+<code class="param-type">Object</code>
 
 
   
@@ -803,7 +803,7 @@ Uses the Euclidean distance formula to calculate the distance between colors in 
 
   
 
-  <td class="description last"><p>the array of colors you want to find the closest color in. leave empty to use the default css color nameset</p></td>
+  <td class="description last"><p>the color set that will be used to find the closest color</p></td>
 </tr>
 
 
@@ -915,7 +915,7 @@ Uses the Euclidean distance formula to calculate the distance between colors in 
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line19">line 19</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line23">line 23</a>
             </span>
         </p>
     
@@ -969,7 +969,7 @@ Uses the Euclidean distance formula to calculate the distance between colors in 
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>closest('#f00'); // { name: 'red', color: 'rgb(255,0,0)' }</code></pre>
+        <pre class="prettyprint"><code>// Returns the closest color name and rgb value given a css color stringclosest('#f00'); // { name: 'red', color: 'rgb(255,0,0)' }closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }</code></pre>
     
 
 
@@ -1095,7 +1095,7 @@ Uses the Euclidean distance formula to calculate the distance between colors in 
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line94">line 94</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line104">line 104</a>
             </span>
         </p>
     
@@ -1300,7 +1300,7 @@ Uses the Euclidean distance formula to calculate the distance between colors in 
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line76">line 76</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line75">line 75</a>
             </span>
         </p>
     
@@ -1534,7 +1534,7 @@ fast = false -&gt; the distance is calculated with the Euclidean formula, its re
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line111">line 111</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line121">line 121</a>
             </span>
         </p>
     
@@ -2554,7 +2554,7 @@ fast = false -&gt; the distance is calculated with the Euclidean formula, its re
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line70">line 70</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line80">line 80</a>
             </span>
         </p>
     
@@ -2734,7 +2734,7 @@ fast = false -&gt; the distance is calculated with the Euclidean formula, its re
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line58">line 58</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line68">line 68</a>
             </span>
         </p>
     
@@ -2914,7 +2914,7 @@ fast = false -&gt; the distance is calculated with the Euclidean formula, its re
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line82">line 82</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line92">line 92</a>
             </span>
         </p>
     
@@ -3119,7 +3119,7 @@ fast = false -&gt; the distance is calculated with the Euclidean formula, its re
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line56">line 56</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line55">line 55</a>
             </span>
         </p>
     
@@ -3294,7 +3294,7 @@ If the color string does not match any of the formats, the function throws an er
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line104">line 104</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line103">line 103</a>
             </span>
         </p>
     
@@ -3974,7 +3974,7 @@ If the color string does not match any of the formats, the function throws an er
         <p class="tag-source">
             <a href="index.ts.html" class="button">View Source</a>
             <span>
-                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line126">line 126</a>
+                <a href="index.ts.html">index.ts</a>, <a href="index.ts.html#line136">line 136</a>
             </span>
         </p>
     
@@ -4328,7 +4328,7 @@ If the color string does not match any of the formats, the function throws an er
         <p class="tag-source">
             <a href="common.ts.html" class="button">View Source</a>
             <span>
-                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line42">line 42</a>
+                <a href="common.ts.html">common.ts</a>, <a href="common.ts.html#line41">line 41</a>
             </span>
         </p>
     

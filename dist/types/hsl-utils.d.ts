@@ -1,3 +1,4 @@
+import { HSLVALUE, RGBVALUE } from './types';
 /**
  * Get the values of the hsl string
  *
@@ -29,3 +30,4 @@ export declare function hslToRgb(hsl: string[]): RGBVALUE;
  * @return {Object} hsl value
  */
 export declare function valuesToHsl({ r, g, b }: RGBVALUE): string;
+//# sourceMappingURL=hsl-utils.d.ts.map

@@ -1,31 +1,34 @@
 {
   "compilerOptions": {
-    "module": "ES2015",
-    "moduleResolution": "node",
-    "strict": true,
+    "module": "ES6",
+    "moduleResolution": "node",    // Search under node_modules for non-relative imports.
+    // Process & infer types from .js files.
+    "allowJs": true,
+    // Don't emit; allow Babel to transform files.
+    "noEmit": true,
+    "pretty": true,
+    "strict": true, // Enable strictest settings like strictNullChecks & noImplicitAny.
+    "isolatedModules": true, // Disallow features that require cross-file information for emit.
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true, // Import non-ES modules as default imports.
     "outDir": "dist",
     "rootDir": "src",
     "typeRoots": [
-      "node_modules/@types/",
-      "./src/types/"
-    ]
+      "node_modules/@types/"
+    ],
   },
   "include": [
-    "./src/**/*",
-    "./test/**/*",
-    "./colorSetUtils.mjs"
+    "src"
   ],
   "exclude": [
     "node_modules",
     "coverage",
     "dist",
     "docs",
-    "examples",
-    "jest*",
   ]
 }

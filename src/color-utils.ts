@@ -1,4 +1,5 @@
 import colorSet from './data/colorSet'
+import { RGBCOLORDEF } from './types'
 import { valuesToRgb } from './rgb-utils'
 import { valuesToHex } from './hex-utils'
 import { valuesToHsl } from './hsl-utils'
@@ -9,7 +10,7 @@ import { valuesToHsl } from './hsl-utils'
  * @param {string} searchedColor -the name of the color to search for
  * @param {Array} set - the colorSet to search in
  */
-function getColor (searchedColor: string, set: RGBCOLORDEF[] | undefined = colorSet): Object | Error {
+function getColor (searchedColor: string, set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[]): Object | Error {
   const found: RGBCOLORDEF | undefined = set.find((color: RGBCOLORDEF) => color[3] === searchedColor)
 
   if (typeof found !== 'undefined') {

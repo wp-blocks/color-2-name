@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "declarationMap": true,
+    "isolatedModules": false,
+    "noEmit": false,
+    "allowJs": false,
+    "emitDeclarationOnly": true
+  },
+  "exclude": ["**/*.test.ts"]
+}

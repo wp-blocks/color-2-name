@@ -20,18 +20,18 @@ Find the name of the color given a hex, rgb and hsl string!
 This package provides a function to find the closest color within an array of colors.
 It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
 
-<button class="button">[Demo](https://erikyo.github.io/color-2-name/example.html)</button> <button class="button">[Docs](https://erikyo.github.io/color-2-name/)</button>
-
 ### Features:
 
 - 🚀 **Fast** - The distance between colors in the RGB color space is provided with the fastest algorithm available
 - 😎 **Ally** - So that your app is equally useful for everyone
+- 📒 **Well Documented** - Checkout the [documentation](https://erikyo.github.io/color-2-name/) with examples, demo and code references
 - 🪶 **Lightweight** - The module WITH the 140 css colors definitions weights 4kb gzipped!
 - ✅ **Umd module** - Works with browsers and with nodejs
 - 📦 **Bundled** - Webpack optimized and minified build!
 - 🪅 **Easy to use** - You don't need to convert the color before calling the function! the color format will be found automatically
 - 🎨 **Build your scheme** - You can use the node script to build your scheme
 - 🪄️ **Typed** - Written in typescript (with types included)
+- 🛡️️ **Tested** - Tested (with 100% of coverage)
 - 🎈 **No dependencies** - Dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
 
 ## Installation
@@ -47,49 +47,42 @@ npm install color-2-name
 Import the `closest` function from the color-2-name package:
 
 ```js
-// es6 import
-import {closest} from 'color-2-name';
-```
-
-### As script (browser)
-
-include script tag like below in your head/footer:
-
-```js
-// add the script tag to the head/footer
-<script src="color-2-name.js"></script>
-```
-
-Then the color-2-name module will be available using the following command:
-
-```js
-// With browsers you can find the packed scripts into window.color2name
-color2name.closest('#123456') // color name
-color2name.rgbToHex('rgb(18 52 86)') // #123456
-color2name.distance([0, 0, 0], [255, 255, 255]) // 431.12
-
-// With node / es6 import
+// NodeJS / ES6 import
 import {closest, distance, rgbToHex} from 'color-2-name';
 closest('hsla(210deg 10% 96%)') // white
 
-// With node / require
+// OR with require
 var color2Name = require("color-2-name")
 color2Name.closest('#abcdef')
 ```
 
+### As script (browser)
+
+To load color-2-name add the script tag like below in your head/footer:
+
+```js
+<script src="color-2-name.js"></script>
+<script>
+    // Then the color-2-name module will be available using the following command:
+    // You will find the packed script loaded into window.color2name
+    color2name.closest('#123456') // color name
+    color2name.rgbToHex('rgb(18 52 86)') // #123456
+    color2name.distance([0, 0, 0], [255, 255, 255]) // 431.12
+</script>
+```
 ---
 
 This Package includes the following functions:
 
-- closest()
-- distance()
-- rgbToHex()
-- isLight()
-- isDark()
-- isLightOrDark()
-- closestRGB()
+- [closest()](#closest--)
+- [distance()](#distance--)
+- [rgbToHex()](#rgbToHex)
+- [isLight()](#isLight--)
+- [isDark()](#isDark--)
+- [isLightOrDark()](#isLightOrDark--)
+- [closestRGB()](#closestRGB--)
 
-### 💡 closest()
+### 💡closest()
 
 Returns the closest color name
 
@@ -99,7 +92,20 @@ const closestColor = closest('#ff8800');
 console.log(closestColor); // { name: 'red', color: 'rgb(255,0,0)' }
 
 // You can also use your custom set as comparation
-const closestColor = closest('#ff8800');
+return closest('#ff8800', [
+  [255, 0, 0, 'red'],
+  [0, 255, 0, 'green']
+]); // -> { name: 'red', color: 'rgb(255,0,0)' }
+
+// Alternatively you can also get the closest color in different color spaces in the following way:
+return closest('#ff00ff', undefined, {info: true});
+// {
+//    name: 'magenta',
+//    color: 'rgb(255,0,255),
+//    hex: '#ff00ff',
+//    hsl: 'hsl(300deg 100% 50%)',
+//    distance: 0
+// }
 ```
 
 In this example, the hex color '#ff8800' (which is a shade of orange) is compared to the colors in the colors array. The function returns the object with the name and hex value of the color that is closest to it, which in this case is the
@@ -135,7 +141,7 @@ Arguments:
 
 ---
 
-#### 💡 rgbToHex()
+#### rgbToHex
 
 Convert a rgb color into hexadecimal color
 
@@ -156,7 +162,7 @@ Arguments:
 
 ---
 
-#### 💡 getColor()
+#### 💡getColor()
 
 search into ColorSet for the given color
 
@@ -181,19 +187,19 @@ Arguments:
 
 ### Useful (additional) functions
 
-#### 💡 isLight()
+#### 💡isLight()
 
 Check if the color is light (optically closer to white)
 
-#### 💡 isDark()
+#### 💡isDark()
 
 Check if the color is dark (optically closer to black)
 
-#### 💡 isLightOrDark()
+#### 💡isLightOrDark()
 
 Returns light or dark whether the color is lighter or darker
 
-#### 💡 closestRGB()
+#### 💡closestRGB()
 
 returns the closest RGB color
 
@@ -214,7 +220,7 @@ closestRGB('#FF1234') // red
 
 ---
 
-#### 💡 Build your own color set
+#### 💡Build your own color set
 
 First thing, clone the color-2-name package with `git clone https://github.com/erikyo/color-2-name.git` then cd into color-2-name folder.
 

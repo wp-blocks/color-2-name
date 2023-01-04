@@ -28,7 +28,7 @@ export function buildColorSet (colorSet) {
  */
 export function processSet (newSet, filename) {
   const generated = buildColorSet(newSet)
-  const setName = `const ${filename}: RGBCOLORDEF[] = `
+  const setName = `const ${filename} = `
   const exportName = `
 
 export default ${filename}`

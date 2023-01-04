@@ -1,849 +1,849 @@
-const colorSet: RGBCOLORDEF[] = [
+const colorSet = [
   [
     255,
     255,
     255,
-    "white"
+    'white'
   ],
   [
     0,
     0,
     0,
-    "black"
+    'black'
   ],
   [
     255,
     0,
     0,
-    "red"
+    'red'
   ],
   [
     0,
     128,
     0,
-    "green"
+    'green'
   ],
   [
     0,
     0,
     255,
-    "blue"
+    'blue'
   ],
   [
     255,
     165,
     0,
-    "orange"
+    'orange'
   ],
   [
     128,
     128,
     128,
-    "grey"
+    'grey'
   ],
   [
     255,
     255,
     0,
-    "yellow"
+    'yellow'
   ],
   [
     255,
     0,
     255,
-    "magenta"
+    'magenta'
   ],
   [
     154,
     205,
     50,
-    "yellowgreen"
+    'yellowgreen'
   ],
   [
     192,
     192,
     192,
-    "silver"
+    'silver'
   ],
   [
     0,
     255,
     0,
-    "lime"
+    'lime'
   ],
   [
     128,
     0,
     128,
-    "purple"
+    'purple'
   ],
   [
     255,
     99,
     71,
-    "tomato"
+    'tomato'
   ],
   [
     64,
     224,
     208,
-    "turquoise"
+    'turquoise'
   ],
   [
     255,
     127,
     80,
-    "coral"
+    'coral'
   ],
   [
     0,
     255,
     255,
-    "cyan"
+    'cyan'
   ],
   [
     255,
     250,
     240,
-    "floralwhite"
+    'floralwhite'
   ],
   [
     255,
     192,
     203,
-    "pink"
+    'pink'
   ],
   [
     34,
     139,
     34,
-    "forestgreen"
+    'forestgreen'
   ],
   [
     245,
     245,
     220,
-    "beige"
+    'beige'
   ],
   [
     255,
     0,
     255,
-    "fuchsia"
+    'fuchsia'
   ],
   [
     220,
     220,
     220,
-    "gainsboro"
+    'gainsboro'
   ],
   [
     248,
     248,
     255,
-    "ghostwhite"
+    'ghostwhite'
   ],
   [
     255,
     215,
     0,
-    "gold"
+    'gold'
   ],
   [
     218,
     165,
     32,
-    "goldenrod"
+    'goldenrod'
   ],
   [
     173,
     255,
     47,
-    "greenyellow"
+    'greenyellow'
   ],
   [
     238,
     130,
     238,
-    "violet"
+    'violet'
   ],
   [
     245,
     222,
     179,
-    "wheat"
+    'wheat'
   ],
   [
     245,
     245,
     245,
-    "whitesmoke"
+    'whitesmoke'
   ],
   [
     139,
     0,
     0,
-    "darkred"
+    'darkred'
   ],
   [
     240,
     248,
     255,
-    "aliceblue"
+    'aliceblue'
   ],
   [
     205,
     92,
     92,
-    "indianred"
+    'indianred'
   ],
   [
     75,
     0,
     130,
-    "indigo"
+    'indigo'
   ],
   [
     250,
     235,
     215,
-    "antiquewhite"
+    'antiquewhite'
   ],
   [
     0,
     255,
     255,
-    "aqua"
+    'aqua'
   ],
   [
     127,
     255,
     212,
-    "aquamarine"
+    'aquamarine'
   ],
   [
     240,
     255,
     255,
-    "azure"
+    'azure'
   ],
   [
     255,
     228,
     196,
-    "bisque"
+    'bisque'
   ],
   [
     255,
     235,
     205,
-    "blanchedalmond"
+    'blanchedalmond'
   ],
   [
     138,
     43,
     226,
-    "blueviolet"
+    'blueviolet'
   ],
   [
     165,
     42,
     42,
-    "brown"
+    'brown'
   ],
   [
     222,
     184,
     135,
-    "burlywood"
+    'burlywood'
   ],
   [
     95,
     158,
     160,
-    "cadetblue"
+    'cadetblue'
   ],
   [
     127,
     255,
     0,
-    "chartreuse"
+    'chartreuse'
   ],
   [
     210,
     105,
     30,
-    "chocolate"
+    'chocolate'
   ],
   [
     100,
     149,
     237,
-    "cornflowerblue"
+    'cornflowerblue'
   ],
   [
     255,
     248,
     220,
-    "cornsilk"
+    'cornsilk'
   ],
   [
     220,
     20,
     60,
-    "crimson"
+    'crimson'
   ],
   [
     0,
     0,
     139,
-    "darkblue"
+    'darkblue'
   ],
   [
     0,
     139,
     139,
-    "darkcyan"
+    'darkcyan'
   ],
   [
     184,
     134,
     11,
-    "darkgoldenrod"
+    'darkgoldenrod'
   ],
   [
     169,
     169,
     169,
-    "darkgrey"
+    'darkgrey'
   ],
   [
     0,
     100,
     0,
-    "darkgreen"
+    'darkgreen'
   ],
   [
     189,
     183,
     107,
-    "darkkhaki"
+    'darkkhaki'
   ],
   [
     139,
     0,
     139,
-    "darkmagenta"
+    'darkmagenta'
   ],
   [
     85,
     107,
     47,
-    "darkolivegreen"
+    'darkolivegreen'
   ],
   [
     255,
     140,
     0,
-    "darkorange"
+    'darkorange'
   ],
   [
     153,
     50,
     204,
-    "darkorchid"
+    'darkorchid'
   ],
   [
     233,
     150,
     122,
-    "darksalmon"
+    'darksalmon'
   ],
   [
     143,
     188,
     143,
-    "darkseagreen"
+    'darkseagreen'
   ],
   [
     72,
     61,
     139,
-    "darkslateblue"
+    'darkslateblue'
   ],
   [
     47,
     79,
     79,
-    "darkslategrey"
+    'darkslategrey'
   ],
   [
     0,
     206,
     209,
-    "darkturquoise"
+    'darkturquoise'
   ],
   [
     148,
     0,
     211,
-    "darkviolet"
+    'darkviolet'
   ],
   [
     255,
     20,
     147,
-    "deeppink"
+    'deeppink'
   ],
   [
     0,
     191,
     255,
-    "deepskyblue"
+    'deepskyblue'
   ],
   [
     105,
     105,
     105,
-    "dimgrey"
+    'dimgrey'
   ],
   [
     30,
     144,
     255,
-    "dodgerblue"
+    'dodgerblue'
   ],
   [
     178,
     34,
     34,
-    "firebrick"
+    'firebrick'
   ],
   [
     240,
     255,
     240,
-    "honeydew"
+    'honeydew'
   ],
   [
     255,
     105,
     180,
-    "hotpink"
+    'hotpink'
   ],
   [
     255,
     255,
     240,
-    "ivory"
+    'ivory'
   ],
   [
     240,
     230,
     140,
-    "khaki"
+    'khaki'
   ],
   [
     230,
     230,
     250,
-    "lavender"
+    'lavender'
   ],
   [
     255,
     240,
     245,
-    "lavenderblush"
+    'lavenderblush'
   ],
   [
     124,
     252,
     0,
-    "lawngreen"
+    'lawngreen'
   ],
   [
     255,
     250,
     205,
-    "lemonchiffon"
+    'lemonchiffon'
   ],
   [
     173,
     216,
     230,
-    "lightblue"
+    'lightblue'
   ],
   [
     240,
     128,
     128,
-    "lightcoral"
+    'lightcoral'
   ],
   [
     224,
     255,
     255,
-    "lightcyan"
+    'lightcyan'
   ],
   [
     250,
     250,
     210,
-    "lightgoldenrodyellow"
+    'lightgoldenrodyellow'
   ],
   [
     144,
     238,
     144,
-    "lightgreen"
+    'lightgreen'
   ],
   [
     211,
     211,
     211,
-    "lightgrey"
+    'lightgrey'
   ],
   [
     255,
     182,
     193,
-    "lightpink"
+    'lightpink'
   ],
   [
     255,
     160,
     122,
-    "lightsalmon"
+    'lightsalmon'
   ],
   [
     32,
     178,
     170,
-    "lightseagreen"
+    'lightseagreen'
   ],
   [
     135,
     206,
     250,
-    "lightskyblue"
+    'lightskyblue'
   ],
   [
     119,
     136,
     153,
-    "lightslategrey"
+    'lightslategrey'
   ],
   [
     176,
     196,
     222,
-    "lightsteelblue"
+    'lightsteelblue'
   ],
   [
     255,
     255,
     224,
-    "lightyellow"
+    'lightyellow'
   ],
   [
     50,
     205,
     50,
-    "limegreen"
+    'limegreen'
   ],
   [
     250,
     240,
     230,
-    "linen"
+    'linen'
   ],
   [
     128,
     0,
     0,
-    "maroon"
+    'maroon'
   ],
   [
     102,
     205,
     170,
-    "mediumaquamarine"
+    'mediumaquamarine'
   ],
   [
     0,
     0,
     205,
-    "mediumblue"
+    'mediumblue'
   ],
   [
     186,
     85,
     211,
-    "mediumorchid"
+    'mediumorchid'
   ],
   [
     147,
     112,
     219,
-    "mediumpurple"
+    'mediumpurple'
   ],
   [
     60,
     179,
     113,
-    "mediumseagreen"
+    'mediumseagreen'
   ],
   [
     123,
     104,
     238,
-    "mediumslateblue"
+    'mediumslateblue'
   ],
   [
     0,
     250,
     154,
-    "mediumspringgreen"
+    'mediumspringgreen'
   ],
   [
     72,
     209,
     204,
-    "mediumturquoise"
+    'mediumturquoise'
   ],
   [
     199,
     21,
     133,
-    "mediumvioletred"
+    'mediumvioletred'
   ],
   [
     25,
     25,
     112,
-    "midnightblue"
+    'midnightblue'
   ],
   [
     245,
     255,
     250,
-    "mintcream"
+    'mintcream'
   ],
   [
     255,
     228,
     225,
-    "mistyrose"
+    'mistyrose'
   ],
   [
     255,
     228,
     181,
-    "moccasin"
+    'moccasin'
   ],
   [
     255,
     222,
     173,
-    "navajowhite"
+    'navajowhite'
   ],
   [
     0,
     0,
     128,
-    "navy"
+    'navy'
   ],
   [
     253,
     245,
     230,
-    "oldlace"
+    'oldlace'
   ],
   [
     128,
     128,
     0,
-    "olive"
+    'olive'
   ],
   [
     107,
     142,
     35,
-    "olivedrab"
+    'olivedrab'
   ],
   [
     255,
     69,
     0,
-    "orangered"
+    'orangered'
   ],
   [
     218,
     112,
     214,
-    "orchid"
+    'orchid'
   ],
   [
     238,
     232,
     170,
-    "palegoldenrod"
+    'palegoldenrod'
   ],
   [
     152,
     251,
     152,
-    "palegreen"
+    'palegreen'
   ],
   [
     175,
     238,
     238,
-    "paleturquoise"
+    'paleturquoise'
   ],
   [
     219,
     112,
     147,
-    "palevioletred"
+    'palevioletred'
   ],
   [
     255,
     239,
     213,
-    "papayawhip"
+    'papayawhip'
   ],
   [
     255,
     218,
     185,
-    "peachpuff"
+    'peachpuff'
   ],
   [
     205,
     133,
     63,
-    "peru"
+    'peru'
   ],
   [
     221,
     160,
     221,
-    "plum"
+    'plum'
   ],
   [
     176,
     224,
     230,
-    "powderblue"
+    'powderblue'
   ],
   [
     102,
     51,
     153,
-    "rebeccapurple"
+    'rebeccapurple'
   ],
   [
     188,
     143,
     143,
-    "rosybrown"
+    'rosybrown'
   ],
   [
     65,
     105,
     225,
-    "royalblue"
+    'royalblue'
   ],
   [
     139,
     69,
     19,
-    "saddlebrown"
+    'saddlebrown'
   ],
   [
     250,
     128,
     114,
-    "salmon"
+    'salmon'
   ],
   [
     244,
     164,
     96,
-    "sandybrown"
+    'sandybrown'
   ],
   [
     46,
     139,
     87,
-    "seagreen"
+    'seagreen'
   ],
   [
     255,
     245,
     238,
-    "seashell"
+    'seashell'
   ],
   [
     160,
     82,
     45,
-    "sienna"
+    'sienna'
   ],
   [
     135,
     206,
     235,
-    "skyblue"
+    'skyblue'
   ],
   [
     106,
     90,
     205,
-    "slateblue"
+    'slateblue'
   ],
   [
     112,
     128,
     144,
-    "slategrey"
+    'slategrey'
   ],
   [
     255,
     250,
     250,
-    "snow"
+    'snow'
   ],
   [
     0,
     255,
     127,
-    "springgreen"
+    'springgreen'
   ],
   [
     70,
     130,
     180,
-    "steelblue"
+    'steelblue'
   ],
   [
     210,
     180,
     140,
-    "tan"
+    'tan'
   ],
   [
     0,
     128,
     128,
-    "teal"
+    'teal'
   ],
   [
     216,
     191,
     216,
-    "thistle"
+    'thistle'
   ]
 ]
 

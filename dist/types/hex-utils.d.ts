@@ -1,3 +1,4 @@
+import { COLORSTRING, HEX, RGBVALUE } from './types';
 /**
  * It returns an object with the hex values of the 3 digit hex color
  *
@@ -12,7 +13,7 @@ export declare function shortHexToLongHex(value: string): string[];
  *
  * @return {string[]} an array of 6 digit hex values in a triplet of R G and B (HEX format)
  */
-export declare function parseHex(value: colorString): string[];
+export declare function parseHex(value: COLORSTRING): string[];
 /**
  * Converts a Hex color to rgb
  *
@@ -37,3 +38,4 @@ export declare function toHex(int8: number): string;
  * @return {string} the hex string
 */
 export declare function valuesToHex(rgb: RGBVALUE): HEX;
+//# sourceMappingURL=hex-utils.d.ts.map
