@@ -3,7 +3,7 @@ import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from './common'
 import { valuesToHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 import { valuesToHsl } from './hsl-utils'
-import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './types'
+import { COLORDEF, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './types'
 
 /**
  * Given a color string it returns the closest corresponding name of the color.
@@ -22,8 +22,8 @@ import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './typ
  * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
 function closest (
-  color: COLORSTRING,
-  set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
+  color: string,
+  set: Array<[number, number, number, string]> | undefined = colorSet as RGBCOLORDEF[],
   ...args: any[ string | number ]
 ): COLORDEF {
   let closestGap = Number.MAX_SAFE_INTEGER
@@ -76,7 +76,7 @@ function closest (
  *
  * @example isLight('#ddd'); // true
  */
-function isLight (color: COLORSTRING): boolean {
+function isLight (color: string): boolean {
   return closest(color, BLACKANDWHITE).name === 'white'
 }
 
@@ -89,7 +89,7 @@ function isLight (color: COLORSTRING): boolean {
  *
  * @example isDark('#333'); // true
  */
-function isDark (color: COLORSTRING): boolean {
+function isDark (color: string): boolean {
   return closest(color, BLACKANDWHITE).name === 'black'
 }
 
@@ -102,7 +102,7 @@ function isDark (color: COLORSTRING): boolean {
  *
  * @example isLightOrDark('#fff'); // 'light'
  */
-function isLightOrDark (color: COLORSTRING): string {
+function isLightOrDark (color: string): string {
   return isLight(color) ? 'light' : 'dark'
 }
 
@@ -115,7 +115,7 @@ function isLightOrDark (color: COLORSTRING): string {
  *
  * @example closestRGB('#f00'); // 'red'
  */
-function closestRGB (color: COLORSTRING): string {
+function closestRGB (color: string): string {
   return closest(color, RGBSET).name
 }
 
@@ -133,7 +133,7 @@ function closestRGB (color: COLORSTRING): string {
  *
  * @example distance([10, 20, 30], [120, 120, 120]); // 173.78147196982766
  */
-function distance (rgb1: RGBDEF, rgb2: RGBCOLORDEF | number[], fast: boolean = false): number {
+function distance (rgb1: [number, number, number], rgb2: [number, number, number, string] | number[], fast: boolean = false): number {
   const r = Math.pow(rgb2[0] - rgb1[0], 2) +
   Math.pow(rgb2[1] - rgb1[1], 2) +
   Math.pow(rgb2[2] - rgb1[2], 2)
