@@ -34,6 +34,14 @@
         {
           "label": "Example",
           "href": "example.html"
+        },
+        {
+          "label": "GitHub Project",
+          "href": "https://github.com/erikyo/color-2-name"
+        },
+        {
+          "label": "Playground",
+          "href": "https://codesandbox.io/s/color-2-name-js-playground-b5f9gj"
         }
       ]
     }

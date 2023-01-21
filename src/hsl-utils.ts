@@ -1,4 +1,4 @@
-import {hslRegex, normalizeDegree, RGBSET, splitValues} from './common'
+import { hslRegex, normalizeDegree, splitValues } from './common'
 import { HSLVALUE, RGBVALUE } from './types'
 
 /**

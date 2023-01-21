@@ -61,26 +61,24 @@ color2Name.closest('#abcdef')
 To load color-2-name add the script tag like below in your head/footer:
 
 ```js
-<script src="color-2-name.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/color-2-name/dist/color-2-name.js"></script>
 <script>
     // Then the color-2-name module will be available using the following command:
     // You will find the packed script loaded into window.color2name
-    color2name.closest('#123456') // color name
-    color2name.rgbToHex('rgb(18 52 86)') // #123456
-    color2name.distance([0, 0, 0], [255, 255, 255]) // 431.12
+    color2name.closest('#123456') // returns "name" : "midnightblue" , "color" : "rgb(25,25,112)"
 </script>
 ```
 ---
 
 This Package includes the following functions:
 
-- [closest()](#closest--)
-- [distance()](#distance--)
+- [closest()](#closest)
+- [distance()](#distance)
 - [rgbToHex()](#rgbToHex)
-- [isLight()](#isLight--)
-- [isDark()](#isDark--)
-- [isLightOrDark()](#isLightOrDark--)
-- [closestRGB()](#closestRGB--)
+- [isLight()](#isLight)
+- [isDark()](#isDark)
+- [isLightOrDark()](#isLightOrDark)
+- [closestRGB()](#closestRGB)
 
 ### 💡closest()
 

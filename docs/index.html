@@ -65,6 +65,20 @@
                             Example
                         </a>
                     
+                        <a
+                            class="link user-link "
+                            href="https://github.com/erikyo/color-2-name"
+                        >
+                            GitHub Project
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://codesandbox.io/s/color-2-name-js-playground-b5f9gj"
+                        >
+                            Playground
+                        </a>
+                    
                 
                 
             </div>
@@ -161,13 +175,11 @@ color2Name.closest('#abcdef')
 </code></pre>
 <h3>As script (browser)</h3>
 <p>To load color-2-name add the script tag like below in your head/footer:</p>
-<pre class="prettyprint source lang-js"><code>&lt;script src=&quot;color-2-name.js&quot;>&lt;/script>
+<pre class="prettyprint source lang-js"><code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/color-2-name/dist/color-2-name.js&quot;>&lt;/script>
 &lt;script>
     // Then the color-2-name module will be available using the following command:
     // You will find the packed script loaded into window.color2name
-    color2name.closest('#123456') // color name
-    color2name.rgbToHex('rgb(18 52 86)') // #123456
-    color2name.distance([0, 0, 0], [255, 255, 255]) // 431.12
+    color2name.closest('#123456') // returns -> {name: &quot;midnightblue&quot; , color: &quot;rgb(25,25,112)&quot; }
 &lt;/script>
 </code></pre>
 <hr>

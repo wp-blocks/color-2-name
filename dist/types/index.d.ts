@@ -1,5 +1,5 @@
 import colorSet from './data/colorSet';
-import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF } from './types';
+import { COLORDEF, HEX } from './types';
 /**
  * Given a color string it returns the closest corresponding name of the color.
  * Uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
@@ -16,7 +16,7 @@ import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF } from './types';
  *
  * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
-declare function closest(color: COLORSTRING, set?: RGBCOLORDEF[] | undefined, ...args: any[string | number]): COLORDEF;
+declare function closest(color: string, set?: Array<[number, number, number, string]> | undefined, ...args: any[string | number]): COLORDEF;
 /**
  * Given a color returns if the color is light (by light is meant more mathematically closer to white)
  *
@@ -26,7 +26,7 @@ declare function closest(color: COLORSTRING, set?: RGBCOLORDEF[] | undefined, ..
  *
  * @example isLight('#ddd'); // true
  */
-declare function isLight(color: COLORSTRING): boolean;
+declare function isLight(color: string): boolean;
 /**
  * Given a color returns if the color is dark (by dark is meant more mathematically closer to black)
  *
@@ -36,7 +36,7 @@ declare function isLight(color: COLORSTRING): boolean;
  *
  * @example isDark('#333'); // true
  */
-declare function isDark(color: COLORSTRING): boolean;
+declare function isDark(color: string): boolean;
 /**
  * Given a color returns if the color is light or dark (by dark is meant more mathematically closer to black)
  *
@@ -46,7 +46,7 @@ declare function isDark(color: COLORSTRING): boolean;
  *
  * @example isLightOrDark('#fff'); // 'light'
  */
-declare function isLightOrDark(color: COLORSTRING): string;
+declare function isLightOrDark(color: string): string;
 /**
  * Given a color returns if the color is closer to "red", "green" or "blue".
  *
@@ -56,7 +56,7 @@ declare function isLightOrDark(color: COLORSTRING): string;
  *
  * @example closestRGB('#f00'); // 'red'
  */
-declare function closestRGB(color: COLORSTRING): string;
+declare function closestRGB(color: string): string;
 /**
  * Compute the distance between the two RGB values
  * There are two modes:
@@ -71,7 +71,7 @@ declare function closestRGB(color: COLORSTRING): string;
  *
  * @example distance([10, 20, 30], [120, 120, 120]); // 173.78147196982766
  */
-declare function distance(rgb1: RGBDEF, rgb2: RGBCOLORDEF | number[], fast?: boolean): number;
+declare function distance(rgb1: [number, number, number], rgb2: [number, number, number, string] | number[], fast?: boolean): number;
 /**
  * Given a color string it returns the hex representation
  *
