@@ -265,7 +265,7 @@ If you would like to contribute to this package, please follow the guidelines in
 
 ### License
 
-This package is licensed under the MIT License. See the LICENSE file for details.
+This package is licensed under the ISC License. See the LICENSE file for details.
 
 ### Credits
 
