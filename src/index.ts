@@ -134,10 +134,13 @@ function closestRGB (color: string): string {
  * @example distance([10, 20, 30], [120, 120, 120]); // 173.78147196982766
  */
 function distance (rgb1: [number, number, number], rgb2: [number, number, number, string] | number[], fast: boolean = false): number {
-  const r = Math.pow(rgb2[0] - rgb1[0], 2) +
-  Math.pow(rgb2[1] - rgb1[1], 2) +
-  Math.pow(rgb2[2] - rgb1[2], 2)
-  return fast ? r : Math.sqrt(r)
+  const [rDiff, gDiff, bDiff] = [
+    rgb2[0] - rgb1[0],
+    rgb2[1] - rgb1[1],
+    rgb2[2] - rgb1[2]
+  ];
+  const dist = rDiff * rDiff + gDiff * gDiff + bDiff * bDiff;
+  return fast ? dist : Math.sqrt(dist);
 }
 
 /**
