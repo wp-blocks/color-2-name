@@ -26,7 +26,6 @@
   "homepage": "https://erikyo.github.io/color-2-name/",
   "scripts": {
     "gen-colorSet": "node colorSetUtils.mjs colorSet",
-    "docGen": "jsdoc -c jsdoc.json",
     "benchmark": "tsc --outDir bench --skipLibCheck --esModuleInterop ./tests/benchmark.ts && node ./bench/tests/benchmark.js",
     "test": "jest --silent=false --coverage",
     "lint": "eslint ./src --fix && prettier --write ./src",
@@ -79,8 +78,6 @@
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.4",
     "@typescript-eslint/parser": "^6.14.0",
-    "benny": "^3.7.1",
-    "colord": "^2.9.3",
     "concurrently": "^8.2.2",
     "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0",
