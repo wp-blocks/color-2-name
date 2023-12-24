@@ -73,6 +73,8 @@ describe('HEX', () => {
     expect(parseHex('#000')).toMatchObject(['00', '00', '00'])
     expect(parseHex('#FF0000')).toMatchObject(['FF', '00', '00'])
     expect(parseHex('#1234ab')).toMatchObject(['12', '34', 'AB'])
+    expect(parseHex('123')).toMatchObject(['11', '22', '33'])
+    expect(parseHex('1234ab')).toMatchObject(['12', '34', 'AB'])
     expect(parseHex('#123')).toMatchObject(['11', '22', '33'])
     expect(parseHex('#1234')).toMatchObject(['11', '22', '33', '44'])
     expect(parseHex('#00')).toMatchObject([])
