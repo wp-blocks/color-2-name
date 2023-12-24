@@ -1,9 +1,9 @@
-import colorSet from './data/colorSet'
-import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from './common'
-import { valuesToHex } from './hex-utils'
-import { getRgbValues, parseRgb } from './rgb-utils'
-import { valuesToHsl } from './hsl-utils'
-import {COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE} from './types'
+import colorSet from "./data/colorSet";
+import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from "./common";
+import { valuesToHex } from "./hex-utils";
+import { getRgbValues, parseRgb } from "./rgb-utils";
+import { valuesToHsl } from "./hsl-utils";
+import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
 
 /**
  * Given a color string it returns the closest corresponding name of the color.
@@ -21,48 +21,44 @@ import {COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE} from './types
  *
  * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
-function closest (
-  color: string | COLORSTRING,
-  set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
-  args?: { info?: boolean }
-): COLORDEF {
-  let closestGap = Number.MAX_SAFE_INTEGER
-  const closestColor: COLORDEF = { name: 'error', color: '#F00' }
+function closest(color: string | COLORSTRING, set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[], args?: { info?: boolean }): COLORDEF {
+  let closestGap = Number.MAX_SAFE_INTEGER;
+  const closestColor: COLORDEF = { name: "error", color: "#F00" };
 
   if (set.length < 1) {
-    return closestColor
+    return closestColor;
   }
 
-  const rgbColorValues = Object.values(parseColor(color))
+  const rgbColorValues = Object.values(parseColor(color));
   if (rgbColorValues.length > 2) {
     for (const tested of set) {
-      const gap = distance(rgbColorValues as RGBDEF, tested, true)
+      const gap = distance(rgbColorValues as RGBDEF, tested, true);
       if (gap < closestGap) {
-        closestGap = gap
-        closestColor.name = tested[3]
-        closestColor.color = `rgb(${String(tested[0])},${String(tested[1])},${String(tested[2])})`
+        closestGap = gap;
+        closestColor.name = tested[3];
+        closestColor.color = `rgb(${String(tested[0])},${String(tested[1])},${String(tested[2])})`;
       }
 
       // TODO: add a minimum acceptable value in order to speed up the calculation. for example #ff0001 should return red since is very very close to red
       if (gap === 0) {
-        break
+        break;
       }
     }
   }
 
   if (args?.info) {
-    const rgbValue = parseColor(closestColor.color)
-    const hexValue = valuesToHex(rgbValue as RGBVALUE)
-    const hslValue = valuesToHsl(rgbValue as RGBVALUE)
+    const rgbValue = parseColor(closestColor.color);
+    const hexValue = valuesToHex(rgbValue as RGBVALUE);
+    const hslValue = valuesToHsl(rgbValue as RGBVALUE);
     return {
       ...closestColor,
       hex: hexValue,
       hsl: hslValue,
-      gap: Math.sqrt(closestGap)
-    }
+      gap: Math.sqrt(closestGap),
+    };
   }
 
-  return closestColor
+  return closestColor;
 }
 
 /**
@@ -74,8 +70,8 @@ function closest (
  *
  * @example isLight('#ddd'); // true
  */
-function isLight (color: string): boolean {
-  return closest(color, BLACKANDWHITE).name === 'white'
+function isLight(color: string): boolean {
+  return closest(color, BLACKANDWHITE).name === "white";
 }
 
 /**
@@ -87,8 +83,8 @@ function isLight (color: string): boolean {
  *
  * @example isDark('#333'); // true
  */
-function isDark (color: string): boolean {
-  return closest(color, BLACKANDWHITE).name === 'black'
+function isDark(color: string): boolean {
+  return closest(color, BLACKANDWHITE).name === "black";
 }
 
 /**
@@ -100,8 +96,8 @@ function isDark (color: string): boolean {
  *
  * @example isLightOrDark('#fff'); // 'light'
  */
-function isLightOrDark (color: string): string {
-  return isLight(color) ? 'light' : 'dark'
+function isLightOrDark(color: string): string {
+  return isLight(color) ? "light" : "dark";
 }
 
 /**
@@ -113,8 +109,8 @@ function isLightOrDark (color: string): string {
  *
  * @example closestRGB('#f00'); // 'red'
  */
-function closestRGB (color: string): string {
-  return closest(color, RGBSET).name
+function closestRGB(color: string): string {
+  return closest(color, RGBSET).name;
 }
 
 /**
@@ -131,12 +127,8 @@ function closestRGB (color: string): string {
  *
  * @example distance([10, 20, 30], [120, 120, 120]); // 173.78147196982766
  */
-function distance (rgb1: [number, number, number], rgb2: [number, number, number, string] | number[], fast: boolean = false): number {
-  const [rDiff, gDiff, bDiff] = [
-    rgb2[0] - rgb1[0],
-    rgb2[1] - rgb1[1],
-    rgb2[2] - rgb1[2]
-  ];
+function distance(rgb1: [number, number, number], rgb2: [number, number, number, string] | number[], fast: boolean = false): number {
+  const [rDiff, gDiff, bDiff] = [rgb2[0] - rgb1[0], rgb2[1] - rgb1[1], rgb2[2] - rgb1[2]];
   const dist = rDiff * rDiff + gDiff * gDiff + bDiff * bDiff;
   return fast ? dist : Math.sqrt(dist);
 }
@@ -150,24 +142,16 @@ function distance (rgb1: [number, number, number], rgb2: [number, number, number
  *
  * @example rgbToHex("rgba(100% 0 0 / .5)"); // #FF0000
  */
-function rgbToHex (rgbString: string): HEX | Error {
+function rgbToHex(rgbString: string): HEX | Error {
   // if is a rgb string
   if (rgbRegex.test(rgbString)) {
-    const rgb = parseRgb(rgbString)
+    const rgb = parseRgb(rgbString);
     if (rgb.length > 0) {
-      const RgbValues = getRgbValues(rgb)
-      return valuesToHex(RgbValues)
+      const RgbValues = getRgbValues(rgb);
+      return valuesToHex(RgbValues);
     }
   }
-  throw new Error(`Invalid color: ${rgbString}`)
+  throw new Error(`Invalid color: ${rgbString}`);
 }
 
-export {
-  closest,
-  rgbToHex,
-  distance,
-  isLight,
-  isDark,
-  isLightOrDark,
-  closestRGB
-}
+export { closest, rgbToHex, distance, isLight, isDark, isLightOrDark, closestRGB };

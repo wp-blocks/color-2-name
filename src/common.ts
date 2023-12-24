@@ -1,20 +1,20 @@
 // Regular expressions to match different color formats
-import { COLORSTRING, HEX, HSL, RGB, RGBCOLORDEF, RGBVALUE } from './types'
-import { hexToRgb, parseHex } from './hex-utils'
-import { getRgbValues, parseRgb } from './rgb-utils'
-import { hslToRgb, parseHsl } from './hsl-utils'
+import { COLORSTRING, RGBCOLORDEF, RGBVALUE } from "./types";
+import { hexToRgb, parseHex } from "./hex-utils";
+import { getRgbValues, parseRgb } from "./rgb-utils";
+import { hslToRgb, parseHsl } from "./hsl-utils";
 
 /** The maximum distance possible between colors */
-export const MAXDISTANCE = 441.6729559300637
+export const MAXDISTANCE = 441.6729559300637;
 
 /** A regex to match hex colors */
-export const hexRegex: RegExp = /^#([\da-f]{6,}|[\da-f]{3,})/i
+export const hexRegex: RegExp = /^#([\da-f]{6,}|[\da-f]{3,})/i;
 /** A regex to match rgb colors */
-export const rgbRegex: RegExp = /^rgba?\(([^)]+)\)/i
+export const rgbRegex: RegExp = /^rgba?\(([^)]+)\)/i;
 /** A regex to match hsl colors */
-export const hslRegex: RegExp = /^hsla?\(([^)]+)\)/i
+export const hslRegex: RegExp = /^hsla?\(([^)]+)\)/i;
 /** A regex to match strings that are only int numbers */
-export const isNumeric: RegExp = /^[0-9]*$/
+export const isNumeric: RegExp = /^[0-9]*$/;
 
 /**
  * This set is used in order to detect if the color is bright or dark
@@ -22,18 +22,18 @@ export const isNumeric: RegExp = /^[0-9]*$/
  * @note the set has been corrected to get pure RGB values (eg. pure red, pure green) in the "bright" area
  */
 export const BLACKANDWHITE: RGBCOLORDEF[] = [
-  [255, 255, 255, 'white'],
-  [1, 1, 1, 'black']
-]
+  [255, 255, 255, "white"],
+  [1, 1, 1, "black"],
+];
 
 /**
  * This set is used in order to detect the nearest rgb color
  */
 export const RGBSET: RGBCOLORDEF[] = [
-  [255, 0, 0, 'red'],
-  [0, 255, 0, 'green'],
-  [0, 0, 255, 'blue']
-]
+  [255, 0, 0, "red"],
+  [0, 255, 0, "green"],
+  [0, 0, 255, "blue"],
+];
 
 /**
  * split the content of rgb and hsl colors depending on the parsed value of the css property
@@ -44,12 +44,15 @@ export const RGBSET: RGBCOLORDEF[] = [
  *
  * @return {Array} the array of rgb values finded inside the passed string
  */
-export function splitValues (rawValues: string): string[] {
-  if (rawValues.includes(',')) {
-    return rawValues.split(/[,\\/]/).map(val => val.trim())
+export function splitValues(rawValues: string): string[] {
+  if (rawValues.includes(",")) {
+    return rawValues.split(/[,\\/]/).map((val) => val.trim());
   }
 
-  return rawValues.split(/[ \\/]/).map(val => val.trim()).filter(Boolean)
+  return rawValues
+    .split(/[ \\/]/)
+    .map((val) => val.trim())
+    .filter(Boolean);
 }
 
 /**
@@ -60,15 +63,15 @@ export function splitValues (rawValues: string): string[] {
  *
  * @return {number} the converted value
  */
-export function normalizeDegree (value: string, multiplier: number = 360): number {
-  let angle = parseFloat(value)
+export function normalizeDegree(value: string, multiplier: number = 360): number {
+  let angle = parseFloat(value);
   while (angle < 0) {
-    angle += 360
+    angle += 360;
   }
   while (angle > 360) {
-    angle -= 360
+    angle -= 360;
   }
-  return (angle / 360) * multiplier
+  return (angle / 360) * multiplier;
 }
 
 /**
@@ -81,20 +84,20 @@ export function normalizeDegree (value: string, multiplier: number = 360): numbe
  *
  * @return {string} the corresponding value in 8 bit format
  */
-export function convertToInt8 (value: string, multiplier: number = 255): number {
-  value = value.trim()
+export function convertToInt8(value: string, multiplier: number = 255): number {
+  value = value.trim();
   if (isNumeric.test(value)) {
     // If the value is an int number return it as number
-    return parseInt(value, 10)
-  } else if (value.endsWith('%')) {
+    return parseInt(value, 10);
+  } else if (value.endsWith("%")) {
     // If the value is a percentage, divide it by 100 to get a value from 0 to 1
     // and then multiply it by 255 to get a value from 0 to 255
-    return parseFloat(value) / 100 * multiplier
-  } else if (value.endsWith('deg')) {
-    return normalizeDegree(value, 255)
+    return (parseFloat(value) / 100) * multiplier;
+  } else if (value.endsWith("deg")) {
+    return normalizeDegree(value, 255);
   } else {
     // If the value is not a percentage or an angle in degrees, it is invalid
-    throw new Error(`Invalid value: ${value}`)
+    throw new Error(`Invalid value: ${value}`);
   }
 }
 
@@ -107,12 +110,12 @@ export function convertToInt8 (value: string, multiplier: number = 255): number 
  *
  * @return {Object|Error} the object with rgb values of that color
  */
-export function parseColor (colorString: string): RGBVALUE {
+export function parseColor(colorString: string): RGBVALUE {
   // Check if the color string matches any of the regular expressions
   const colorParsers = [
     { regex: hexRegex, parser: parseHex, converter: hexToRgb },
     { regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
-    { regex: hslRegex, parser: parseHsl, converter: hslToRgb }
+    { regex: hslRegex, parser: parseHsl, converter: hslToRgb },
   ];
   for (const { regex, parser, converter } of colorParsers) {
     if (regex.test(colorString)) {
@@ -124,5 +127,5 @@ export function parseColor (colorString: string): RGBVALUE {
   }
 
   // If the color string does not match any of the regular expressions, return an error
-  throw new Error(`Invalid color: ${colorString}`)
+  throw new Error(`Invalid color: ${colorString}`);
 }
