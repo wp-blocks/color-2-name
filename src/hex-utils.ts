@@ -1,4 +1,4 @@
-import { COLORSTRING, RGBVALUE } from "./types";
+import { COLORSTRING, HEX, RGBVALUE } from "./types";
 
 /**
  * It returns an object with the hex values of the 3 digit hex color
@@ -76,7 +76,7 @@ export function toHex(int8: number): string {
  *
  * @return {string} the hex string
  */
-export function valuesToHex(rgb: RGBVALUE): string {
+export function valuesToHex(rgb: RGBVALUE): HEX {
   // Extract the RGB values from the hex string
   if (typeof rgb?.r === "number" && typeof rgb?.g === "number" && typeof rgb?.b === "number") {
     return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
