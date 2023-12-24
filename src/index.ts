@@ -3,7 +3,7 @@ import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from './common'
 import { valuesToHex } from './hex-utils'
 import { getRgbValues, parseRgb } from './rgb-utils'
 import { valuesToHsl } from './hsl-utils'
-import { COLORDEF, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './types'
+import {COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE} from './types'
 
 /**
  * Given a color string it returns the closest corresponding name of the color.
@@ -11,7 +11,7 @@ import { COLORDEF, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './types'
  *
  * @param {string} color - the color string you want to find the closest color name
  * @param {Object} set - the color set that will be used to find the closest color
- * @param {Object} args - Optionally you can pass some additional arguments
+ * @param {Object} args - Set a non nullish value to return some additional information (like the distance between the colors, or the hex color value)
  * @param args.info - Set a non nullish value to return some additional information (like the distance between the colors, or the hex color value) about the closest color.
  *
  * @return {Object} the closest color name and rgb value
@@ -22,9 +22,9 @@ import { COLORDEF, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from './types'
  * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
 function closest (
-  color: string,
-  set: Array<[number, number, number, string]> | undefined = colorSet as RGBCOLORDEF[],
-  ...args: any[ string | number ]
+  color: string | COLORSTRING,
+  set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
+  args?: { info?: boolean }
 ): COLORDEF {
   let closestGap = Number.MAX_SAFE_INTEGER
   const closestColor: COLORDEF = { name: 'error', color: '#F00' }
@@ -50,17 +50,15 @@ function closest (
     }
   }
 
-  if (args?.length > 0) {
-    if (args?.info !== null) {
-      const rgbValue = parseColor(closestColor.color)
-      const hexValue = valuesToHex(rgbValue as RGBVALUE)
-      const hslValue = valuesToHsl(rgbValue as RGBVALUE)
-      return {
-        ...closestColor,
-        hex: hexValue,
-        hsl: hslValue,
-        gap: Math.sqrt(closestGap)
-      }
+  if (args?.info) {
+    const rgbValue = parseColor(closestColor.color)
+    const hexValue = valuesToHex(rgbValue as RGBVALUE)
+    const hslValue = valuesToHsl(rgbValue as RGBVALUE)
+    return {
+      ...closestColor,
+      hex: hexValue,
+      hsl: hslValue,
+      gap: Math.sqrt(closestGap)
     }
   }
 
@@ -165,7 +163,6 @@ function rgbToHex (rgbString: string): HEX | Error {
 }
 
 export {
-  colorSet,
   closest,
   rgbToHex,
   distance,

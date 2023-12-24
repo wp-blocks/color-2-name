@@ -45,7 +45,7 @@ export function parseHex (value: COLORSTRING): string[] {
  *
  * @return {string} the rgb color values for the given hex color
  */
-export function hexToRgb (hex: string[]): RGBVALUE | Error {
+export function hexToRgb (hex: string[]): RGBVALUE {
   // Extract the RGB values from the hex string
   if (hex.length >= 2) {
     return {

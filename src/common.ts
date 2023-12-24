@@ -107,22 +107,19 @@ export function convertToInt8 (value: string, multiplier: number = 255): number 
  *
  * @return {Object|Error} the object with rgb values of that color
  */
-export function parseColor (colorString: string): RGBVALUE | Error {
+export function parseColor (colorString: string): RGBVALUE {
   // Check if the color string matches any of the regular expressions
-  if (hexRegex.test(colorString)) {
-    const hex = parseHex(colorString as HEX)
-    if (hex.length > 0) {
-      return hexToRgb(hex)
-    }
-  } else if (rgbRegex.test(colorString)) {
-    const rgb = parseRgb(colorString as RGB)
-    if (rgb.length > 0) {
-      return getRgbValues(rgb)
-    }
-  } else if (hslRegex.test(colorString)) {
-    const hsl = parseHsl(colorString as HSL)
-    if (hsl.length > 0) {
-      return hslToRgb(hsl)
+  const colorParsers = [
+    { regex: hexRegex, parser: parseHex, converter: hexToRgb },
+    { regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
+    { regex: hslRegex, parser: parseHsl, converter: hslToRgb }
+  ];
+  for (const { regex, parser, converter } of colorParsers) {
+    if (regex.test(colorString)) {
+      const result = parser(colorString as COLORSTRING);
+      if (result.length > 0) {
+        return converter(result);
+      }
     }
   }
 
