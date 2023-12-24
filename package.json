@@ -25,7 +25,7 @@
   "description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
   "homepage": "https://erikyo.github.io/color-2-name/",
   "scripts": {
-    "gen-colorSet": "node colorSetUtils.mjs colorSet",
+    "gen-colorSet": "node ./lib/colorSetUtils.mjs colorSet",
     "benchmark": "tsc --outDir bench --skipLibCheck --esModuleInterop ./tests/benchmark.ts && node ./bench/tests/benchmark.js",
     "test": "jest --silent=false --coverage",
     "lint": "eslint ./src --fix && prettier --write ./src",
