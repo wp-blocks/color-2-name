@@ -4,8 +4,8 @@
   "author": "Erik <erik@codekraft.it>",
   "license": "ISC",
   "main": "./lib/cjs/index.js",
-  "unpkg": "lib/browser/index.js",
-  "jsdelivr": "lib/browser/index.js",
+  "unpkg": "lib/browser/color-2-name.js",
+  "jsdelivr": "lib/browser/color-2-name.js",
   "exports": {
     ".": {
       "types": "./lib/cjs/@types/index.d.ts",
@@ -17,13 +17,12 @@
         "default": "./lib/esm/index.js",
         "types": "./lib/@types/index.d.ts"
       },
-      "browser": "./lib/browser/index.js",
+      "browser": "./lib/browser/color-2-name.js",
       "umd": "./lib/umd/index.js",
       "node": "./lib/umd/index.js"
     }
   },
   "description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
-  "types": "dist/types/",
   "homepage": "https://erikyo.github.io/color-2-name/",
   "scripts": {
     "gen-colorSet": "node colorSetUtils.mjs colorSet",
@@ -35,7 +34,7 @@
     "module-cjs": "swc src -d lib/cjs -C module.type=commonjs --config-file .swcrc-cjs",
     "module-esm": "swc src -d lib/esm -C module.type=es6 --config-file .swcrc-esm",
     "module-umd": "npx spack",
-    "module-browser": "npx esbuild src/index.ts --outdir=lib/browser --allow-overwrite --bundle --minify --sourcemap",
+    "module-browser": "npx esbuild src/index.ts --outfile=lib/browser/color-2-name.js --allow-overwrite --bundle --minify --sourcemap",
     "types-cjs": "tsc -p tsconfig.json --module commonjs --moduleResolution node --emitDeclarationOnly --declaration --declarationDir ./lib/cjs/@types --skipLibCheck",
     "types-esm": "tsc -p tsconfig.json --module Node16 --moduleResolution Node16 --emitDeclarationOnly --declaration --declarationDir ./lib/@types --skipLibCheck"
   },
