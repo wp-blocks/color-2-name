@@ -22,21 +22,33 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 
 ### Features:
 
-- 🚀 **Fast** - The distance between colors in the RGB color space is provided with the fastest algorithm available
+- 🚀 **Fast** - The distance between colors in the RGB color space is provided with the fastest algorithm available (check below)
 - 😎 **Ally** - So that your app is equally useful for everyone
 - 📒 **Well Documented** - Checkout the [documentation](https://erikyo.github.io/color-2-name/) with examples, demo and code references
-- 🪶 **Lightweight** - The module WITH the 140 css colors definitions weights 4kb gzipped!
-- ✅ **Umd module** - Works with browsers and with nodejs
-- 📦 **Bundled** - Webpack optimized and minified build!
+- 🪶 **Lightweight** - The module WITH the 140 css colors definitions [weights 4kb gzipped](https://bundlephobia.com/package/color-2-name@1.1.1)!
+- 📦 **Bundled** - Optimized and minified build, with ESM, CJS, UMD and browser versions available!
 - 🪅 **Easy to use** - You don't need to convert the color before calling the function! the color format will be found automatically
 - 🎨 **Build your scheme** - You can use the node script to build your scheme
 - 🪄️ **Typed** - Written in typescript (with types included)
 - 🛡️️ **Tested** - Tested (with 100% of coverage)
 - 🎈 **No dependencies** - Dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
 
+## 🚀 Benchmarks
+
+Designed with the performance in mind, it is 20 times faster than the self-proclaimed fastest color conversion plugin!
+
+| Library                             | <nobr>Operations/sec</nobr>                           | Size<br /> (minified)                                                                                                 | Size<br /> (gzipped)                                                                                                     | Dependencies                                                                                                                         | Type declarations                                                                                                |
+|-------------------------------------|-------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| <nobr><b>color-2-name 🚀</b></nobr> | <nobr><b>12 768 ops/s, ±0.49%</b></nobr>              | [![](https://badgen.net/bundlephobia/min/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)       | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)       | [![](https://badgen.net/bundlephobia/dependency-count/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)         | [![](https://badgen.net/npm/types/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)         |
+| <nobr>colord</nobr>                 | <nobr><b>598 ops/s, ±0.55% (95.32% slower)</b></nobr> | [![](https://badgen.net/bundlephobia/min/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord)       | [![](https://badgen.net/bundlephobia/minzip/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord)       | [![](https://badgen.net/bundlephobia/dependency-count/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord)         | [![](https://badgen.net/npm/types/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord)         |
+- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.ts](https://github.com/erikyo/color-2-name/blob/master/tests/benchmark.ts).
+- For the test we are generating 50 random colors to make sure that no internal mechanism is benefited
+- The Size for the `colord` package is meant without the color definitions while `color-2-name` already has everything you need bundled inside
+
+
 ## Installation
 
-### As a Node module
+### As a module
 
 To install the package, run the following command:
 
@@ -47,21 +59,21 @@ npm install color-2-name
 Import the `closest` function from the color-2-name package:
 
 ```js
-// NodeJS / ES6 import
+// ESM (import) - tree shakable
 import {closest, distance, rgbToHex} from 'color-2-name';
 closest('hsla(210deg 10% 96%)') // white
 
-// OR with require
+// CJS (require)
 var color2Name = require("color-2-name")
 color2Name.closest('#abcdef')
 ```
 
-### As script (browser)
+### Browser
 
-To load color-2-name add the script tag like below in your head/footer:
+To load `color-2-name` in as a browser script add it to the header or footer like below
 
 ```js
-<script src="https://cdn.jsdelivr.net/npm/color-2-name/dist/color-2-name.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/color-2-name/lib/browser/color-2-name.js"></script>
 <script>
     // Then the color-2-name module will be available using the following command:
     // You will find the packed script loaded into window.color2name
