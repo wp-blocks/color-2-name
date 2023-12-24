@@ -50,6 +50,9 @@
     "type": "git",
     "url": "https://github.com/erikyo/color-2-name.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "bugs": {
     "url": "https://github.com/erikyo/color-2-name/issues"
   },
