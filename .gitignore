@@ -24,6 +24,9 @@ coverage
 # Dependency directories
 node_modules/
 
+# Builded files
+lib/
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
