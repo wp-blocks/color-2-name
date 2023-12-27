@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node16",    // Search under node_modules for non-relative imports.
+    "module": "ES2015",
+    "moduleResolution": "node",    // Search under node_modules for non-relative imports.
     // Process & infer types from .js files.
     "pretty": true,
     "sourceMap": true,
@@ -13,7 +13,7 @@
     "strictNullChecks": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "lib",
+    "outDir": "./lib/@types",
     "rootDir": "src",
     "esModuleInterop": true,
     // "verbatimModuleSyntax": true,
