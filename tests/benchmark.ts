@@ -2,7 +2,7 @@
 import b from 'benny'
 import { colord, extend } from 'colord'
 import namesPlugin from 'colord/plugins/names'
-import {closest} from "../src";
+import {closest} from "color-2-name";
 import * as fs from "fs";
 
 extend([namesPlugin])
@@ -26,11 +26,12 @@ b.suite(
 
   b.cycle(),
   b.complete()
-)
-
-// get the benchmark folder path
-const path = process.cwd() + '/bench'
-if (fs.existsSync(path)) {
-  console.log('Removing bench folder at ' + path)
-  fs.rmSync(path, {recursive: true})
-}
+).then( () => {
+  // get the benchmark folder path
+  const path = process.cwd() + '/bench'
+  if (fs.existsSync(path)) {
+    console.log('Removing bench folder at ' + path)
+    fs.rmSync(path, {recursive: true})
+  }
+  process.exit()
+} )

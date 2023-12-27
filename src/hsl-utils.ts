@@ -1,4 +1,4 @@
-import { hslRegex, normalizeDegree, splitValues } from "./common";
+import {colorValueFallbacks, convertToInt8, hslRegex, normalizeDegrees, normalizePercentage, splitValues} from "./common";
 import { HSLVALUE, RGBVALUE } from "./types";
 
 /**
@@ -19,6 +19,8 @@ export function parseHsl(hslAsString: string): string[] {
   throw new Error(`Can't parse hsl color: ${hslAsString}`);
 }
 
+const angleError = (value: string): string => `Invalid angle: ${value} - The none keyword is invalid in legacy color syntax `;
+
 /**
  * This function takes an array of strings and returns and object with the hsl values converted into INT8 (0-255)
  *
@@ -28,12 +30,21 @@ export function parseHsl(hslAsString: string): string[] {
 export function getHslValues(hsl: string[]): HSLVALUE {
   if (hsl.length >= 2) {
     return {
-      h: normalizeDegree(hsl[0]),
-      s: parseInt(hsl[1], 10),
-      l: parseInt(hsl[2], 10),
+      h: colorValueFallbacks(hsl[0], angleError(hsl[0]) ) || Math.round(normalizeDegrees(hsl[0])),
+      s: colorValueFallbacks(hsl[1]) || normalizePercentage(hsl[1],  100) || 0,
+      l: colorValueFallbacks(hsl[2]) || convertToInt8(hsl[2], 100),
     };
   }
   throw new Error(`Invalid hsl color: ${hsl.join(", ")}`);
+}
+
+function getHue(c: number, x: number, h: number): [number, number, number] {
+  if (h < 60) return [c, x, 0];
+  if (h < 120) return [x, c, 0];
+  if (h < 180) return [0, c, x];
+  if (h < 240) return [0, x, c];
+  if (h < 300) return [x, 0, c];
+  return [c, 0, x];
 }
 
 /**
@@ -43,48 +54,20 @@ export function getHslValues(hsl: string[]): HSLVALUE {
  * @return {Object} rgb value
  */
 export function hslToRgb(hslColor: string[]): RGBVALUE {
-  if (hslColor === null || hslColor.length < 2) {
-    throw new Error(`Invalid hsl color: ${hslColor.join(", ")}`);
+  if (!hslColor || hslColor.length < 3) {
+    throw new Error(`Invalid HSL color: ${hslColor}`);
   }
 
-  const hsl = getHslValues(hslColor);
+  let hsl = getHslValues(hslColor),
+    s = hsl.s / 100,
+    l = hsl.l  / 100;
 
-  // Must be fractions of 1
-  hsl.s /= 100;
-  hsl.l /= 100;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((hsl.h / 60) % 2 - 1));
+  const m = l - c / 2;
 
-  const c = (1 - Math.abs(2 * hsl.l - 1)) * hsl.s;
-  const x = c * (1 - Math.abs(((hsl.h / 60) % 2) - 1));
-  const m = hsl.l - c / 2;
-  let r = 0;
-  let g = 0;
-  let b = 0;
+  let [r, g, b] = getHue(c, x, hsl.h);
 
-  if (hsl.h >= 0 && hsl.h < 60) {
-    r = c;
-    g = x;
-    b = 0;
-  } else if (hsl.h >= 60 && hsl.h < 120) {
-    r = x;
-    g = c;
-    b = 0;
-  } else if (hsl.h >= 120 && hsl.h < 180) {
-    r = 0;
-    g = c;
-    b = x;
-  } else if (hsl.h >= 180 && hsl.h < 240) {
-    r = 0;
-    g = x;
-    b = c;
-  } else if (hsl.h >= 240 && hsl.h < 300) {
-    r = x;
-    g = 0;
-    b = c;
-  } else if (hsl.h >= 300 && hsl.h < 360) {
-    r = c;
-    g = 0;
-    b = x;
-  }
   r = Math.round((r + m) * 255);
   g = Math.round((g + m) * 255);
   b = Math.round((b + m) * 255);

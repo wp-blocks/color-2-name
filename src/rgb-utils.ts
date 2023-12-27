@@ -1,4 +1,4 @@
-import { convertToInt8, rgbRegex, splitValues } from "./common";
+import {convertToInt8, rgbRegex, splitValues, stripComments} from "./common";
 import { RGBVALUE } from "./types";
 
 /**
@@ -9,7 +9,7 @@ import { RGBVALUE } from "./types";
  * @return {Array} the values of the rgb string as Array of strings that represent the rgb color
  */
 export function parseRgb(rgbAsString: string): string[] {
-  const rgbvalue = rgbAsString.match(rgbRegex);
+  const rgbvalue = rgbAsString.replace(stripComments, '').match(rgbRegex);
   if (rgbvalue != null) {
     const rgb: string[] = splitValues(rgbvalue[1]);
 
@@ -30,9 +30,9 @@ export function parseRgb(rgbAsString: string): string[] {
 export function getRgbValues(rgb: string[]): RGBVALUE {
   if (rgb.length >= 2) {
     return {
-      r: convertToInt8(rgb[0]),
-      g: convertToInt8(rgb[1]),
-      b: convertToInt8(rgb[2]),
+      r: Math.round(convertToInt8(rgb[0])),
+      g: Math.round(convertToInt8(rgb[1])),
+      b: Math.round(convertToInt8(rgb[2])),
     };
   }
   throw new Error(`Invalid rgb color: ${rgb.join(", ")}`);

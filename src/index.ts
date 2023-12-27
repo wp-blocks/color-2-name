@@ -88,19 +88,6 @@ function isDark(color: string): boolean {
 }
 
 /**
- * Given a color returns if the color is light or dark (by dark is meant more mathematically closer to black)
- *
- * @param {string} color - The color to check
- *
- * @returns {string} light when the color is close to white, dark otherwise
- *
- * @example isLightOrDark('#fff'); // 'light'
- */
-function isLightOrDark(color: string): string {
-  return isLight(color) ? "light" : "dark";
-}
-
-/**
  * Given a color returns if the color is closer to "red", "green" or "blue".
  *
  * @param {string} color - The color to check
@@ -154,4 +141,4 @@ function rgbToHex(rgbString: string): HEX | Error {
   throw new Error(`Invalid color: ${rgbString}`);
 }
 
-export { closest, rgbToHex, distance, isLight, isDark, isLightOrDark, closestRGB };
+export { closest, rgbToHex, distance, isLight, isDark, closestRGB };
