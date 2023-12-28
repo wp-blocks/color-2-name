@@ -1,5 +1,10 @@
-import { cleanDefinition, colorValueFallbacks, convertToInt8, normalizeDegrees, splitValues } from "./common";
+import {cleanDefinition, colorValueFallbacks, convertToInt8, limitValue, normalizeDegrees, splitValues} from "./common";
 import { HSLVALUE, RGBVALUE } from "./types";
+
+export function fallbackHSL(hsl: string[], err: string = `Invalid HSL color`): string[] {
+  console.warn(err);
+  return [hsl[0] ?? 0, hsl[1] ?? 0, hsl[2]];
+}
 
 /**
  * Get the values of the hsl string
@@ -10,16 +15,18 @@ import { HSLVALUE, RGBVALUE } from "./types";
 export function parseHsl(hslAsString: string): string[] {
   const hslvalue = cleanDefinition(hslAsString);
   if (hslvalue !== null) {
-    const hsl: string[] = splitValues(hslvalue);
+    let hsl: string[] = splitValues(hslvalue);
 
-    if (hsl.length >= 2) {
-      return [hsl[0], hsl[1], hsl[2]];
+    if (hsl.length !== 3 && hsl.length !== 4) {
+      hsl = fallbackHSL(hsl);
     }
+    return [hsl[0], hsl[1], hsl[2]];
   }
   throw new Error(`Can't parse hsl color: ${hslAsString}`);
 }
 
 const angleError = (value: string): string => `Invalid angle: ${value} - The none keyword is invalid in legacy color syntax `;
+
 
 /**
  * This function takes an array of strings and returns and object with the hsl values converted into INT8 (0-255)
@@ -28,14 +35,14 @@ const angleError = (value: string): string => `Invalid angle: ${value} - The non
  *
  */
 export function getHslValues(hsl: string[]): HSLVALUE {
-  if (hsl.length >= 2) {
-    return {
-      h: colorValueFallbacks(hsl[0], angleError(hsl[0])) || Math.round(normalizeDegrees(hsl[0])),
-      s: colorValueFallbacks(hsl[1]) || convertToInt8(hsl[1], 100) || 0,
-      l: colorValueFallbacks(hsl[2]) || convertToInt8(hsl[2], 100),
-    };
+  if (hsl.length !== 3 && hsl.length !== 4) {
+    hsl = fallbackHSL( hsl,`Invalid hsl color: ${hsl.join(", ") }`);
   }
-  throw new Error(`Invalid hsl color: ${hsl.join(", ")}`);
+  return  {
+    h: colorValueFallbacks(hsl[0], angleError(hsl[0])) || Math.round(normalizeDegrees(hsl[0])) || 0,
+    s: colorValueFallbacks(hsl[1]) || convertToInt8(hsl[1], 100) || 0,
+    l: colorValueFallbacks(hsl[2]) || convertToInt8(hsl[2], 100) || 0,
+  };
 }
 
 function getHue(c: number, x: number, h: number): [number, number, number] {

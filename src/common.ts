@@ -75,7 +75,7 @@ export function normalizeDegrees(angle: string): number {
   return degAngle;
 }
 
-function limitValue(value: number, min: number = 0, max: number = 0): number {
+export function limitValue(value: number, min: number = 0, max: number = 0): number {
   return Math.min(Math.max(Math.round(value), min), max);
 }
 
@@ -114,17 +114,17 @@ export function cleanDefinition(string: string): string {
   }
 }
 
-export function normalizePercentage(value: string, multiplier: number): number {
+export function normalizePercentage(value: string, multiplier: number, limit:boolean = false ): number {
   return (parseFloat(value) / 100) * multiplier;
 }
 
 export function colorValueFallbacks(value: string, err?: string): number {
-  if (value === "none") {
-    throw new TypeError(err ?? "Invalid value " + value);
-  }
+
+  if (value === "none") console.warn(err || `The none keyword is invalid in legacy color syntax: ${value}`);
 
   return 0;
 }
+
 
 /**
  * Takes a string with a css value that could be a number or percentage or an angle in degrees and returns the corresponding 8bit value
@@ -137,7 +137,7 @@ export function colorValueFallbacks(value: string, err?: string): number {
  * @return {string} the corresponding value in 8-bit format
  */
 export function convertToInt8(value: string, multiplier: number = 255): number {
-  value = value.trim();
+  value = value ? value?.trim() : "0"
   if (isNumeric.test(value)) {
     // limit the min and the max value
     return limitValue(parseFloat(value) || 0, 0, multiplier);
@@ -148,7 +148,8 @@ export function convertToInt8(value: string, multiplier: number = 255): number {
   } else if (value.endsWith("deg") || value.endsWith("rad") || value.endsWith("turn")) {
     return normalizeDegrees(value);
   } else if (value === "none" || value === "-infinity" || value === "NaN" || value === "transparent" || value === "currentColor") {
-    return colorValueFallbacks(value);
+    colorValueFallbacks(value, `Invalid color term value: ${value}`);
+    return 0
   } else if (value === "infinity") {
     return 255;
   } else if (value.startsWith("calc")) {
@@ -156,6 +157,6 @@ export function convertToInt8(value: string, multiplier: number = 255): number {
     return limitValue(calculateValue(value, multiplier), 0, multiplier);
   } else {
     // If the value is not a percentage or an angle in degrees, it is invalid
-    throw new Error(`Invalid value: ${value}`);
+    colorValueFallbacks(value, `Invalid value: ${value}`);
   }
 }

@@ -1,5 +1,18 @@
-import { cleanDefinition, convertToInt8, splitValues } from "./common";
+import {cleanDefinition, convertToInt8, limitValue, splitValues} from "./common";
 import { RGBVALUE } from "./types";
+
+export function fallbackRGB(rgb: string[], err?: string = `Invalid RGB color`): string[] {
+  console.warn(err);
+  return [rgb[0] ?? 0, rgb[1] ?? 0, rgb[2]];
+}
+
+export function safeRgbValues(rgb: string[]): RGBVALUE {
+  return {
+    r: Math.round(limitValue(parseFloat(rgb[0]), 0, 255)),
+    g: Math.round(limitValue(parseFloat(rgb[1]), 0, 255)),
+    b: Math.round(limitValue(parseFloat(rgb[2]), 0, 255)),
+  };
+}
 
 /**
  * Get the values of the rgb string
@@ -14,12 +27,13 @@ export function parseRgb(rgbAsString: string): string[] {
   if (rgbvalue !== null) {
     const rgb: string[] = splitValues(rgbvalue);
 
-    if (rgb.length >= 2) {
-      return [rgb[0], rgb[1], rgb[2]];
+    if (rgb.length !== 3 && rgb.length !== 4) {
+      return fallbackRGB(rgb, `Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`)
     } else {
-      throw new Error(`Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`);
+      return [rgb[0], rgb[1], rgb[2]];
     }
   }
+
   throw new Error(`Can't parse rgb color: ${rgbAsString} -> ${rgbvalue}`);
 }
 
@@ -31,14 +45,16 @@ export function parseRgb(rgbAsString: string): string[] {
  * @return {Object} an object that contains the r, g and b values as INT8
  */
 export function getRgbValues(rgb: string[]): RGBVALUE {
-  if (rgb.length >= 2) {
-    return {
-      r: Math.round(convertToInt8(rgb[0])),
-      g: Math.round(convertToInt8(rgb[1])),
-      b: Math.round(convertToInt8(rgb[2])),
-    };
+  if (rgb.length !== 3 && rgb.length !== 4) {
+    rgb = fallbackRGB(rgb, `Invalid rgb color: ${rgb.join(", ")}`)
   }
-  throw new Error(`Invalid rgb color: ${rgb.join(", ")}`);
+
+  // use the channel key as the new array key
+  return {
+    r: limitValue(Math.round(convertToInt8(rgb[0])), 0, 255) || 0,
+    g: limitValue(Math.round(convertToInt8(rgb[1])), 0, 255) || 0,
+    b: limitValue(Math.round(convertToInt8(rgb[2])), 0, 255) || 0,
+  }
 }
 
 /**

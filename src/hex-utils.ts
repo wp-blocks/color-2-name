@@ -51,8 +51,8 @@ export function parseHex(value: COLORSTRING): string[] {
 
     return hexArray;
   }
-
-  throw new Error(`Invalid Hex: ${value}`);
+  console.warn(`Invalid Hex: ${value}`);
+  return rgbFallback(hexArray);
 }
 
 /**
@@ -71,7 +71,7 @@ export function hexToRgb(hex: string[]): RGBVALUE {
       b: parseInt(hex[2], 16),
     };
   }
-  throw new Error(`Invalid Hex color: ${hex.join(", ")}`);
+  console.warn(`Invalid Hex color: ${hex?.join(", ") || hex}`);
 }
 
 /**

@@ -21,5 +21,6 @@ export function getColor(searchedColor: string, set: RGBCOLORDEF[] | undefined =
       hsl: valuesToHsl({ r, g, b }),
     };
   }
+
   throw new Error(`Error: invalid color ${searchedColor} or empty colorSet`);
 }

@@ -4,9 +4,10 @@ import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
 import { getRgbValues, parseRgb } from "./rgb-utils";
 import { hslToRgb, parseHsl, valuesToHsl } from "./hsl-utils";
 import type { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
+import { getColor } from "./color-utils";
 
 /**
- * Given a color string it returns the closest corresponding name of the color.
+ * Given a color string, it returns the closest corresponding name of the color.
  * Uses the Euclidean distance formula to calculate the distance between colors in the RGB color space.
  *
  * @param {string} color - the color string you want to find the closest color name
@@ -47,13 +48,10 @@ function closest(color: string | COLORSTRING, set: RGBCOLORDEF[] | undefined = c
   }
 
   if (args?.info) {
-    const rgbValue = parseColor(closestColor.color);
-    const hexValue = valuesToHex(rgbValue as RGBVALUE);
-    const hslValue = valuesToHsl(rgbValue as RGBVALUE);
+    const colorValue = getColor(closestColor.name, set);
     return {
+      ...colorValue,
       ...closestColor,
-      hex: hexValue,
-      hsl: hslValue,
       gap: Math.sqrt(closestGap),
     };
   }
@@ -170,4 +168,4 @@ export function parseColor(colorString: string): RGBVALUE {
   throw new Error(`Invalid color: ${colorString}`);
 }
 
-export { closest, rgbToHex, distance, isLight, isDark, closestRGB };
+export { closest, rgbToHex, distance, isLight, isDark, closestRGB, getColor };
