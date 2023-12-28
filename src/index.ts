@@ -1,9 +1,9 @@
 import colorSet from "./data/colorSet";
-import { BLACKANDWHITE, parseColor, rgbRegex, RGBSET } from "./common";
-import { valuesToHex } from "./hex-utils";
+import { BLACKANDWHITE, hexRegex, hslRegex, rgbRegex, RGBSET } from "./common";
+import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
 import { getRgbValues, parseRgb } from "./rgb-utils";
-import { valuesToHsl } from "./hsl-utils";
-import { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
+import { hslToRgb, parseHsl, valuesToHsl } from "./hsl-utils";
+import type { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
 
 /**
  * Given a color string it returns the closest corresponding name of the color.
@@ -139,6 +139,35 @@ function rgbToHex(rgbString: string): HEX | Error {
     }
   }
   throw new Error(`Invalid color: ${rgbString}`);
+}
+
+/**
+ * This function takes a string representing a color (color) and uses regular expressions to check if it matches any of the following formats: hex, hex+alpha, RGB, RGBA, HSL, or HSLA.
+ * If the color string matches one of these formats, the function returns an object with the type of color and the value of the color.
+ * If the color string does not match any of the formats, the function throws an error.
+ *
+ * @param {string} colorString - the color string to test and convert to rgb values
+ *
+ * @return {Object|Error} the object with rgb values of that color
+ */
+export function parseColor(colorString: string): RGBVALUE {
+  // Check if the color string matches any of the regular expressions
+  const colorParsers = [
+    { regex: hexRegex, parser: parseHex, converter: hexToRgb },
+    { regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
+    { regex: hslRegex, parser: parseHsl, converter: hslToRgb },
+  ];
+  for (const { regex, parser, converter } of colorParsers) {
+    if (regex.test(colorString)) {
+      const result = parser(colorString as COLORSTRING);
+      if (result.length > 0) {
+        return converter(result);
+      }
+    }
+  }
+
+  // If the color string does not match any of the regular expressions, return an error
+  throw new Error(`Invalid color: ${colorString}`);
 }
 
 export { closest, rgbToHex, distance, isLight, isDark, closestRGB };

@@ -1,4 +1,4 @@
-import {colorValueFallbacks, convertToInt8, hslRegex, normalizeDegrees, normalizePercentage, splitValues} from "./common";
+import { cleanDefinition, colorValueFallbacks, convertToInt8, normalizeDegrees, splitValues } from "./common";
 import { HSLVALUE, RGBVALUE } from "./types";
 
 /**
@@ -8,9 +8,9 @@ import { HSLVALUE, RGBVALUE } from "./types";
  * @return {string[]} the values of the hsl string
  */
 export function parseHsl(hslAsString: string): string[] {
-  const hslvalue = hslAsString.match(hslRegex);
-  if (hslvalue != null) {
-    const hsl: string[] = splitValues(hslvalue[1]);
+  const hslvalue = cleanDefinition(hslAsString);
+  if (hslvalue !== null) {
+    const hsl: string[] = splitValues(hslvalue);
 
     if (hsl.length >= 2) {
       return [hsl[0], hsl[1], hsl[2]];
@@ -30,8 +30,8 @@ const angleError = (value: string): string => `Invalid angle: ${value} - The non
 export function getHslValues(hsl: string[]): HSLVALUE {
   if (hsl.length >= 2) {
     return {
-      h: colorValueFallbacks(hsl[0], angleError(hsl[0]) ) || Math.round(normalizeDegrees(hsl[0])),
-      s: colorValueFallbacks(hsl[1]) || normalizePercentage(hsl[1],  100) || 0,
+      h: colorValueFallbacks(hsl[0], angleError(hsl[0])) || Math.round(normalizeDegrees(hsl[0])),
+      s: colorValueFallbacks(hsl[1]) || convertToInt8(hsl[1], 100) || 0,
       l: colorValueFallbacks(hsl[2]) || convertToInt8(hsl[2], 100),
     };
   }
@@ -58,12 +58,12 @@ export function hslToRgb(hslColor: string[]): RGBVALUE {
     throw new Error(`Invalid HSL color: ${hslColor}`);
   }
 
-  let hsl = getHslValues(hslColor),
+  const hsl = getHslValues(hslColor),
     s = hsl.s / 100,
-    l = hsl.l  / 100;
+    l = hsl.l / 100;
 
   const c = (1 - Math.abs(2 * l - 1)) * s;
-  const x = c * (1 - Math.abs((hsl.h / 60) % 2 - 1));
+  const x = c * (1 - Math.abs(((hsl.h / 60) % 2) - 1));
   const m = l - c / 2;
 
   let [r, g, b] = getHue(c, x, hsl.h);

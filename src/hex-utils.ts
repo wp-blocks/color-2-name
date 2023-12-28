@@ -11,6 +11,10 @@ export function shortHexToLongHex(value: string): string[] {
   return Array.from(value).map((v: string) => (v + v).toUpperCase());
 }
 
+export function isHex(num: string): boolean {
+  return Boolean(num.match(/^[0-9a-f]+$/i));
+}
+
 /**
  * Get the hex value of the color and convert it to an Object of R G And B values (still in hex format)
  *
@@ -26,23 +30,35 @@ export function parseHex(value: COLORSTRING): string[] {
    * then if the number of digits is greater than 2 (so it's something like 123 or abc456)
    * breakdown the string into an object that contains the r g and b values in hex
    */
-  if (hexColor.length > 2) {
-    if (hexColor.length < 6) {
-      // >=6 is the long notation
-      return shortHexToLongHex(hexColor);
-    } else {
-      const hex = hexColor.match(/../g);
-      return hex != null ? [hex[0].toUpperCase(), hex[1].toUpperCase(), hex[2].toUpperCase()] : [];
+  let hexArray: string[] = [];
+  if (hexColor.length) {
+    if (hexColor.length === 3 || hexColor.length === 4) {
+      hexArray = shortHexToLongHex(hexColor);
+    } else if (hexColor.length === 6 || hexColor.length === 8) {
+      // match the hex value in groups of 2
+      hexArray = hexColor.match(/../g)?.map((value) => value) ?? [];
     }
   }
 
-  return [];
+  if (hexArray.length) {
+    hexArray?.forEach((value, index) => {
+      if (isHex(value)) {
+        hexArray[index] = value.toUpperCase();
+      } else {
+        throw new Error(`Invalid Hex value: ${value}`);
+      }
+    });
+
+    return hexArray;
+  }
+
+  throw new Error(`Invalid Hex: ${value}`);
 }
 
 /**
  * Converts a Hex color to rgb
  *
- * @param {string} hex without the "#"
+ * @param {string} hex a tuple of hex values
  *
  * @return {string} the rgb color values for the given hex color
  */

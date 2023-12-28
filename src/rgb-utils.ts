@@ -1,4 +1,4 @@
-import {convertToInt8, rgbRegex, splitValues, stripComments} from "./common";
+import { cleanDefinition, convertToInt8, splitValues } from "./common";
 import { RGBVALUE } from "./types";
 
 /**
@@ -9,15 +9,18 @@ import { RGBVALUE } from "./types";
  * @return {Array} the values of the rgb string as Array of strings that represent the rgb color
  */
 export function parseRgb(rgbAsString: string): string[] {
-  const rgbvalue = rgbAsString.replace(stripComments, '').match(rgbRegex);
-  if (rgbvalue != null) {
-    const rgb: string[] = splitValues(rgbvalue[1]);
+  const rgbvalue = cleanDefinition(rgbAsString);
+
+  if (rgbvalue !== null) {
+    const rgb: string[] = splitValues(rgbvalue);
 
     if (rgb.length >= 2) {
       return [rgb[0], rgb[1], rgb[2]];
+    } else {
+      throw new Error(`Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`);
     }
   }
-  throw new Error(`Can't parse rgb color: ${rgbAsString}`);
+  throw new Error(`Can't parse rgb color: ${rgbAsString} -> ${rgbvalue}`);
 }
 
 /**
@@ -45,6 +48,6 @@ export function getRgbValues(rgb: string[]): RGBVALUE {
  *
  * @return {string} a string representation of the rgb values
  */
-export function valuesToRgb(rgb: RGBVALUE): string {
+export function RGB(rgb: RGBVALUE): string {
   return `rgb(${rgb.r},${rgb.g},${rgb.b})`;
 }

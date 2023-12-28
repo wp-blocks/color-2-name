@@ -1,14 +1,11 @@
 // Regular expressions to match different color formats
-import { COLORSTRING, RGBCOLORDEF, RGBVALUE } from "./types";
-import { hexToRgb, parseHex } from "./hex-utils";
-import { getRgbValues, parseRgb } from "./rgb-utils";
-import { hslToRgb, parseHsl } from "./hsl-utils";
+import { RGBCOLORDEF } from "./types";
 
 /** The maximum distance possible between colors */
 export const MAXDISTANCE = 441.6729559300637;
 
 /** A regex to match hex colors */
-export const hexRegex: RegExp = /^#([\da-f]{6,}|[\da-f]{3,})/i;
+export const hexRegex: RegExp = /^#([\da-f]{3,8})/i;
 /** A regex to match rgb colors */
 export const rgbRegex: RegExp = /^rgba?\(([^)]+)\)/i;
 /** A regex to match hsl colors */
@@ -16,7 +13,7 @@ export const hslRegex: RegExp = /^hsla?\(([^)]+)\)/i;
 /** A regex to match strings that are only valid numbers with and without decimals and the number can be negative and without the 0 in the beginning  */
 export const isNumeric: RegExp = /^-?\d*\.?\d+$/i;
 /** Remove comments from string */
-export const stripComments: RegExp = /(\/\*[^*]*\*\/)|(\/\/[^*]*)/g
+export const stripComments: RegExp = /(\/\*[^*]*\*\/)|(\/\/[^*]*)/g;
 
 /**
  * This set is used to detect if the color is bright or dark
@@ -47,11 +44,7 @@ export const RGBSET: RGBCOLORDEF[] = [
  * @return {Array} the array of rgb values found inside the passed string
  */
 export function splitValues(rawValues: string): string[] {
-  return rawValues.split(
-    rawValues.includes(",") ? "," : " "
-  ).map(
-    s => s.trim()
-  );
+  return rawValues.split(rawValues.includes(",") ? "," : " ").map((s) => s.trim());
 }
 
 /**
@@ -65,11 +58,11 @@ export function normalizeDegrees(angle: string): number {
   // Strip label and convert to degrees (if necessary)
   let degAngle = parseFloat(angle) || 0;
   if (angle.indexOf("deg") > -1) {
-    degAngle = parseFloat( angle.substring(0, angle.length - 3) );
-  }else if (angle.indexOf("rad") > -1) {
-    degAngle = Math.round(parseFloat( angle.substring(0, angle.length - 3)) * (180 / Math.PI));
-  }else if (angle.indexOf("turn") > -1) {
-    degAngle = Math.round(parseFloat( angle.substring(0, angle.length - 4)) * 360);
+    degAngle = parseFloat(angle.substring(0, angle.length - 3));
+  } else if (angle.indexOf("rad") > -1) {
+    degAngle = Math.round(parseFloat(angle.substring(0, angle.length - 3)) * (180 / Math.PI));
+  } else if (angle.indexOf("turn") > -1) {
+    degAngle = Math.round(parseFloat(angle.substring(0, angle.length - 4)) * 360);
   }
 
   while (degAngle < 0) {
@@ -77,19 +70,57 @@ export function normalizeDegrees(angle: string): number {
   }
 
   // Make sure it's a number between 0 and 360
-  if (degAngle >= 360)
-    degAngle %= 360;
+  if (degAngle >= 360) degAngle %= 360;
 
   return degAngle;
 }
 
+function limitValue(value: number, min: number = 0, max: number = 0): number {
+  return Math.min(Math.max(Math.round(value), min), max);
+}
+
+export function calculateValue(valueString: string, multiplier: number): number {
+  // Regular expression to match the calc() function and extract the numerical value
+  const regex = /calc\(([^)]+)\)/;
+
+  // Match the calc() function in the CSS string
+  const match = valueString.match(regex);
+
+  if (match) {
+    // Extract the content inside the calc() function
+    const calcContent = match[1];
+
+    return convertToInt8(calcContent, multiplier);
+  } else {
+    // Return a default value or handle the case where calc() is not found
+    return convertToInt8(valueString, multiplier);
+  }
+}
+
+export function cleanDefinition(string: string): string {
+  // Remove comments from the string
+  const cleanString = string.replace(stripComments, "");
+
+  // Find the positions of the first opening and the last closing parentheses
+  const firstParenthesisIndex = cleanString.indexOf("(");
+  const lastParenthesisIndex = cleanString.lastIndexOf(")");
+
+  // Ensure both parentheses are found
+  if (firstParenthesisIndex !== -1 && lastParenthesisIndex !== -1) {
+    // Extract the content between the parentheses
+    return cleanString.slice(firstParenthesisIndex + 1, lastParenthesisIndex).trim();
+  } else {
+    throw new Error(`Can't get the rgb color values: ${string}`);
+  }
+}
+
 export function normalizePercentage(value: string, multiplier: number): number {
-  return (parseFloat(value) / 100) * multiplier
+  return (parseFloat(value) / 100) * multiplier;
 }
 
 export function colorValueFallbacks(value: string, err?: string): number {
-  if (value === 'none') {
-    console.log(err ?? 'Invalid value ' + value )
+  if (value === "none") {
+    throw new TypeError(err ?? "Invalid value " + value);
   }
 
   return 0;
@@ -109,53 +140,22 @@ export function convertToInt8(value: string, multiplier: number = 255): number {
   value = value.trim();
   if (isNumeric.test(value)) {
     // limit the min and the max value
-    return Math.min(
-      Math.max(
-        Math.round(
-          parseFloat(value) || 0
-        ),
-        0
-      ), multiplier
-    );
+    return limitValue(parseFloat(value) || 0, 0, multiplier);
   } else if (value.endsWith("%")) {
     // If the value is a percentage, divide it by 100 to get a value from 0 to 1
     // and then multiply it by 255 to get a value from 0 to 255
-    return normalizePercentage(value,  multiplier) || 0;
+    return normalizePercentage(value, multiplier) || 0;
   } else if (value.endsWith("deg") || value.endsWith("rad") || value.endsWith("turn")) {
     return normalizeDegrees(value);
-  } else if (value === "none") {
-    return 0
+  } else if (value === "none" || value === "-infinity" || value === "NaN" || value === "transparent" || value === "currentColor") {
+    return colorValueFallbacks(value);
+  } else if (value === "infinity") {
+    return 255;
+  } else if (value.startsWith("calc")) {
+    // get the value from the calc function
+    return limitValue(calculateValue(value, multiplier), 0, multiplier);
   } else {
     // If the value is not a percentage or an angle in degrees, it is invalid
     throw new Error(`Invalid value: ${value}`);
   }
-}
-
-/**
- * This function takes a string representing a color (color) and uses regular expressions to check if it matches any of the following formats: hex, hex+alpha, RGB, RGBA, HSL, or HSLA.
- * If the color string matches one of these formats, the function returns an object with the type of color and the value of the color.
- * If the color string does not match any of the formats, the function throws an error.
- *
- * @param {string} colorString - the color string to test and convert to rgb values
- *
- * @return {Object|Error} the object with rgb values of that color
- */
-export function parseColor(colorString: string): RGBVALUE {
-  // Check if the color string matches any of the regular expressions
-  const colorParsers = [
-    { regex: hexRegex, parser: parseHex, converter: hexToRgb },
-    { regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
-    { regex: hslRegex, parser: parseHsl, converter: hslToRgb },
-  ];
-  for (const { regex, parser, converter } of colorParsers) {
-    if (regex.test(colorString)) {
-      const result = parser(colorString as COLORSTRING);
-      if (result.length > 0) {
-        return converter(result);
-      }
-    }
-  }
-
-  // If the color string does not match any of the regular expressions, return an error
-  throw new Error(`Invalid color: ${colorString}`);
 }
