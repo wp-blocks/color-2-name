@@ -23,6 +23,7 @@ describe('Color Conversions functions', () => {
 
   it('Returns the correct name of the color', () => {
     // HEX
+    expect(closest('#3fdaf4')).toMatchObject({ name: 'turquoise' })
     expect(closest('#000000')).toMatchObject({ name: 'black' })
     expect(closest('#ff0000')).toMatchObject({ name: 'red' })
     expect(closest('#ffffff')).toMatchObject({ name: 'white'})

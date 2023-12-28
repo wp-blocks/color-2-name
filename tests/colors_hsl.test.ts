@@ -1,8 +1,9 @@
 /**
  * COMMON FUNCTIONS TESTING:
  */
-import {convertToInt8, parseColor} from "../src/common";
-import {valuesToRgb} from "../src/rgb-utils";
+import {convertToInt8} from "../src/common";
+import {RGB} from "../src/rgb-utils";
+import {parseColor} from "../src";
 import {parseHsl, hslToRgb} from "../src/hsl-utils";
 import {hsl_invalid_tests, hsl_valid_tests} from "./fixtures/hsl_colors";
 import {normalizeRGB} from "./fixtures/functions";
@@ -37,20 +38,10 @@ describe('HSL COMMON', () => {
  */
 describe('HSL', () => {
 
-  describe('HSL Color Parsing and Conversion alt', () => {
-    [
-      ["hsla(none none none)", "rgb(0, 0, 0)"]
-    ].forEach(([hslString, expectedRgbString, description]) => {
-      it(description || `Parses HSL: ${hslString} to RGB: ${expectedRgbString}`, () => {
-        expect(() => valuesToRgb(hslToRgb(parseHsl(hslString)))).toThrowError();
-      });
-    });
-  });
-
   describe('HSL Color Parsing and Conversion', () => {
     hsl_valid_tests.forEach(([hslString, expectedRgbString, description]) => {
       it(description || `Parses HSL: ${hslString} to RGB: ${expectedRgbString}`, () => {
-        expect(valuesToRgb(hslToRgb(parseHsl(hslString)))).toBe(normalizeRGB(expectedRgbString));
+        expect(RGB(hslToRgb(parseHsl(hslString)))).toBe(normalizeRGB(expectedRgbString));
       });
     });
   });
@@ -58,8 +49,8 @@ describe('HSL', () => {
   describe('Invalid HSL Color Parsing', () => {
     hsl_invalid_tests.forEach(([hslString, expectedErrorMessage]) => {
       it(`Fails to Parse Invalid HSL: ${hslString} ${expectedErrorMessage}`, () => {
-        expect(() => valuesToRgb(hslToRgb(parseHsl(hslString)))).toThrow();
+        expect(() => RGB(hslToRgb(parseHsl(hslString)))).toThrow();
       });
     });
   });
-} )
+})

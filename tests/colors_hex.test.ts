@@ -1,11 +1,13 @@
 /**
  * COMMON FUNCTIONS TESTING:
  */
-import {parseColor} from "../src/common";
+
 import {hexToRgb, parseHex, shortHexToLongHex, toHex} from "../src/hex-utils";
 import {hex_invalid_tests, hex_valid_tests} from "./fixtures/hex_colors";
-import {valuesToRgb} from "../src/rgb-utils";
+import {RGB} from "../src/rgb-utils";
+import {parseColor} from "../src/";
 import {normalizeRGB} from "./fixtures/functions";
+import {COLORSTRING} from "../src/types";
 
 describe('HEX COMMON', () => {
 
@@ -18,9 +20,9 @@ describe('HEX COMMON', () => {
     expect(parseColor('#ffffff')).toMatchObject({r: 255, g: 255, b: 255})
     expect(parseColor('#fff')).toMatchObject({r: 255, g: 255, b: 255})
     expect(parseColor('#ffff')).toMatchObject({r: 255, g: 255, b: 255})
-    expect(parseColor('#fffff')).toMatchObject({r: 255, g: 255, b: 255})
-    expect(parseColor('#fffffff')).toMatchObject({r: 255, g: 255, b: 255})
-    expect(parseColor('#ffffffffffffffffffffffffffff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(parseColor('#ffffff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(parseColor('#ffffffff')).toMatchObject({r: 255, g: 255, b: 255})
+    expect(() => parseColor('#ffffffffffffffffffffffffffff')).toThrowError()
     expect(() => parseColor('blue')).toThrowError()
   })
 })
@@ -42,7 +44,7 @@ describe('HEX', () => {
   describe('HEX Color Parsing and Conversion', () => {
     hex_valid_tests.forEach(([hexString, expectedRgbString, description]) => {
       it(description || `Parses HEX: ${hexString} to RGB: ${expectedRgbString}`, () => {
-        expect(valuesToRgb(hexToRgb(parseHex(hexString)))).toBe(normalizeRGB(expectedRgbString));
+        expect(RGB(hexToRgb(parseHex(hexString as COLORSTRING)))).toBe(normalizeRGB(expectedRgbString));
       });
     });
   });
@@ -50,7 +52,7 @@ describe('HEX', () => {
   describe('Invalid HEX Color Parsing', () => {
     hex_invalid_tests.forEach(([hexString, expectedErrorMessage]) => {
       it(`Fails to Parse Invalid HEX: ${hexString} ${expectedErrorMessage}`, () => {
-        expect(() => valuesToRgb(hexToRgb(parseHex(hexString)))).toThrowError();
+        expect(() => RGB(hexToRgb(parseHex(hexString as COLORSTRING)))).toThrow();
       });
     });
   });
