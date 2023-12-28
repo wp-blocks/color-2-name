@@ -14,5 +14,10 @@
       "statements": 10
     }
   },
-  "collectCoverage": true,
+  "coverageReporters": ["text", "lcov"],
+  "coverageDirectory": "./tests/coverage",
+  "collectCoverageFrom": [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "!**/tests/**"
+  ]
 }

@@ -30,7 +30,7 @@
     "benchmark": "tsc --outDir bench --skipLibCheck --esModuleInterop ./tests/benchmark.ts && node ./bench/benchmark.js",
     "test": "jest --silent=false --coverage",
     "lint": "eslint ./src --fix && prettier --write ./src",
-    "module-tsc": "tsc",
+    "module-tsc": "tsc --declaration --emitDeclarationOnly --outDir lib/@types --rootDir src",
     "module-rollup": "rollup -c",
     "module-browser": "esbuild src/index.ts --outfile=lib/browser/color-2-name.js --allow-overwrite --bundle --minify --sourcemap"
   },
@@ -95,12 +95,5 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.3.3"
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.test.json"
-      }
-    }
   }
 }

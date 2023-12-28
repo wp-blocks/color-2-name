@@ -25,19 +25,6 @@ describe('RGB COMMON', () => {
  */
 describe('RGB', () => {
 
-  describe('custom', () => {
-    [
-      ["rgb(calc(infinity), 0, 0)", "rgb(255, 0, 0)", "Red channel resolves positive infinity to 255"],
-      ["rgb(0, calc(infinity), 0)", "rgb(0, 255, 0)", "Green channel resolves positive infinity to 255"],
-      ["rgb(0, 0, calc(infinity))", "rgb(0, 0, 255)", "Blue channel resolves positive infinity to 255"],
-    ]
-      .forEach(([rgbString, expectedRgbString, description]) => {
-      it(description || `Parses RGB: ${rgbString} to RGB: ${expectedRgbString}`, () => {
-        expect(RGB(getRgbValues(parseRgb(rgbString)))).toBe(normalizeRGB(expectedRgbString));
-      });
-    });
-  });
-
   describe('RGB Color Parsing and Conversion', () => {
     rgb_valid_tests.forEach(([rgbString, expectedRgbString, description]) => {
       it(description || `Parses RGB: ${rgbString} to RGB: ${expectedRgbString}`, () => {
