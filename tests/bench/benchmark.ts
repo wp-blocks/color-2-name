@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import b from 'benny'
 import { colord, extend } from 'colord'
-import namesPlugin from 'colord/plugins/names'
-import {closest} from "color-2-name";
+import namesPlugin from "colord/plugins/names"
+import {closest} from "color-2-name"
 import * as fs from "fs";
 
 extend([namesPlugin])
 
-const randomColor = () => '#' + Math.floor(Math.random() * 16777215).toString(16)
+const randomColor = () => '#' + [1,2,3].map(() => Math.floor(Math.random() * 255 ).toString(16).padStart(2, "0") ).join("")
 
 const randoms = new Array(50).fill(0).map(() => randomColor())
 
