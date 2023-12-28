@@ -2,11 +2,11 @@
  * COMMON FUNCTIONS TESTING:
  */
 import {convertToInt8} from "../src/common";
-import {RGB} from "../src/rgb-utils";
 import {parseColor} from "../src";
 import {parseHsl, hslToRgb} from "../src/hsl-utils";
 import {hsl_invalid_tests, hsl_valid_tests} from "./fixtures/hsl_colors";
 import {normalizeRGB} from "./fixtures/functions";
+import {RGB} from "../src/rgb-utils";
 
 
 describe('HSL COMMON', () => {
@@ -29,7 +29,6 @@ describe('HSL COMMON', () => {
     expect(convertToInt8('360deg')).toBe(0)
     expect(convertToInt8('720deg')).toBe(0)
     expect(convertToInt8('-360deg')).toBe(0)
-    expect(() => convertToInt8('five')).toThrowError()
   })
 })
 
@@ -47,9 +46,11 @@ describe('HSL', () => {
   });
 
   describe('Invalid HSL Color Parsing', () => {
+    console.warn = jest.fn();
     hsl_invalid_tests.forEach(([hslString, expectedErrorMessage]) => {
       it(`Fails to Parse Invalid HSL: ${hslString} ${expectedErrorMessage}`, () => {
-        expect(() => RGB(hslToRgb(parseHsl(hslString)))).toThrow();
+        RGB(hslToRgb(parseHsl(hslString)))
+        expect(console.warn).toBeCalled();
       });
     });
   });

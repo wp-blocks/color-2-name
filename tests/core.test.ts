@@ -38,7 +38,7 @@ describe('Color Conversions functions', () => {
     // INFO
     expect(closest('rgb(255,0,255)', undefined, {info: true})).toMatchObject({ name: 'magenta', hex: '#ff00ff', gap: 0  })
     // INFO FUNKY CONFIGURATION
-    expect(closest('#FFF', undefined, {info: "YES"})).toMatchObject({ name: 'white', hex: '#ffffff' })
+    expect(closest('#FFF', undefined, {info: "YES" as unknown as boolean})).toMatchObject({ name: 'white', hex: '#ffffff' })
     // INFO DISABLED
     expect(closest('hsl(255,0%,100%)', undefined, {info: false})).toMatchObject({ name: 'white' })
     // THROW ERR

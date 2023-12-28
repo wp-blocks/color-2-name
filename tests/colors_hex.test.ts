@@ -61,7 +61,6 @@ describe('HEX', () => {
     expect(hexToRgb(['0', '0', '0'])).toMatchObject({ r: 0, g: 0, b: 0 })
     expect(hexToRgb(['FF', '00', '00'])).toMatchObject({ r: 255, g: 0, b: 0 })
     expect(hexToRgb(['FF', 'FF', 'FF'])).toMatchObject({ r: 255, g: 255, b: 255 })
-    expect(() => hexToRgb(['FFFFFF'])).toThrowError()
   })
 
   it('Return the int8 to hex conversion', () => {

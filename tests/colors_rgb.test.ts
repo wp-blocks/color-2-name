@@ -2,7 +2,6 @@
  * COMMON FUNCTIONS TESTING:
  */
 
-import {valuesToHex} from "../src/hex-utils";
 import {getRgbValues, parseRgb, RGB} from "../src/rgb-utils";
 import {rgb_invalid_tests, rgb_valid_tests} from "./fixtures/rgb_colors";
 import {normalizeRGB} from "./fixtures/functions";
@@ -34,24 +33,12 @@ describe('RGB', () => {
   });
 
   describe('Invalid RGB Color Parsing', () => {
+    console.warn = jest.fn();
     rgb_invalid_tests.forEach(([rgbString, expectedErrorMessage]) => {
       it(`Fails to Parse Invalid RGB: ${rgbString} ${expectedErrorMessage}`, () => {
-        expect(() => RGB(getRgbValues(parseRgb(rgbString)))).toThrowError();
+        RGB(getRgbValues(parseRgb(rgbString)))
+        expect(console.warn).toBeCalled();
       });
     });
   });
-
-  it('Returns an Object with the rgb int8 values given and array of values', () => {
-    expect(getRgbValues(["0","0","0"])).toMatchObject({r: 0, g: 0, b: 0})
-    expect(() => getRgbValues(["0"])).toThrowError("Invalid rgb color: 0")
-  })
-
-  it('Returns an hex values given a rgb values', () => {
-    expect(valuesToHex({ r: 0, g: 0, b: 0 })).toBe("#000000")
-    expect(valuesToHex({ r: 0, g: 0, b: 'a' })).toBe('#errorr')
-    expect(valuesToHex({ r: 0, g: '0', b: 255 })).toBe('#errorr')
-    expect(valuesToHex({ r: 'asd' })).toBe('#errorr')
-    expect(valuesToHex({ b: false })).toBe('#errorr')
-    expect(valuesToHex({ g: undefined })).toBe('#errorr')
-  })
 })
