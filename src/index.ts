@@ -2,7 +2,7 @@ import colorSet from "./data/colorSet";
 import { BLACKANDWHITE, hexRegex, hslRegex, rgbRegex, RGBSET } from "./common";
 import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
 import { getRgbValues, parseRgb } from "./rgb-utils";
-import { hslToRgb, parseHsl, valuesToHsl } from "./hsl-utils";
+import { hslToRgb, parseHsl } from "./hsl-utils";
 import type { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
 import { getColor } from "./color-utils";
 
@@ -31,21 +31,21 @@ function closest(color: string | COLORSTRING, set: RGBCOLORDEF[] | undefined = c
   }
 
   const rgbColorValues = Object.values(parseColor(color));
-  if (rgbColorValues.length > 2) {
-    for (const tested of set) {
-      const gap = distance(rgbColorValues as RGBDEF, tested, true);
-      if (gap < closestGap) {
-        closestGap = gap;
-        closestColor.name = tested[3];
-        closestColor.color = `rgb(${String(tested[0])},${String(tested[1])},${String(tested[2])})`;
-      }
+  // Find the closest color in the color set
+  for (const tested of set) {
+    const gap = distance(rgbColorValues as RGBDEF, tested, true);
+    if (gap < closestGap) {
+      closestGap = gap;
+      closestColor.name = tested[3];
+      closestColor.color = `rgb(${String(tested[0])},${String(tested[1])},${String(tested[2])})`;
+    }
 
-      // TODO: add a minimum acceptable value in order to speed up the calculation. for example #ff0001 should return red since is very very close to red
-      if (gap === 0) {
-        break;
-      }
+    // TODO: add a minimum acceptable value in order to speed up the calculation. for example #ff0001 should return red since is very very close to red
+    if (gap === 0) {
+      break;
     }
   }
+
 
   if (args?.info) {
     const colorValue = getColor(closestColor.name, set);
@@ -131,10 +131,8 @@ function rgbToHex(rgbString: string): HEX | Error {
   // if is a rgb string
   if (rgbRegex.test(rgbString)) {
     const rgb = parseRgb(rgbString);
-    if (rgb.length > 0) {
-      const RgbValues = getRgbValues(rgb);
-      return valuesToHex(RgbValues);
-    }
+    const RgbValues = getRgbValues(rgb);
+    return valuesToHex(RgbValues);
   }
   throw new Error(`Invalid color: ${rgbString}`);
 }
@@ -158,9 +156,7 @@ export function parseColor(colorString: string): RGBVALUE {
   for (const { regex, parser, converter } of colorParsers) {
     if (regex.test(colorString)) {
       const result = parser(colorString as COLORSTRING);
-      if (result.length > 0) {
-        return converter(result);
-      }
+      return converter(result);
     }
   }
 

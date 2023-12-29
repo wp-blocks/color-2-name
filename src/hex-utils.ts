@@ -1,4 +1,5 @@
 import { COLORSTRING, HEX, RGBVALUE } from "./types";
+import {fallbackRGB} from "./rgb-utils";
 
 /**
  * It returns an object with the hex values of the 3 digit hex color
@@ -11,6 +12,12 @@ export function shortHexToLongHex(value: string): string[] {
   return Array.from(value).map((v: string) => (v + v).toUpperCase());
 }
 
+/**
+ * Checks if a given string represents a hexadecimal number.
+ *
+ * @param {string} num - The string to be checked.
+ * @return {boolean} Returns true if the string is a valid hexadecimal number, false otherwise.
+ */
 export function isHex(num: string): boolean {
   return Boolean(num.match(/^[0-9a-f]+$/i));
 }
@@ -24,7 +31,7 @@ export function isHex(num: string): boolean {
  */
 export function parseHex(value: COLORSTRING): string[] {
   // remove # at the beginning of the hex color
-  const hexColor: string = Array.from(value)[0] === "#" ? value.substring(1) : value;
+  const hexColor: string = value.substring(1);
 
   /**
    * then if the number of digits is greater than 2 (so it's something like 123 or abc456)
@@ -36,7 +43,7 @@ export function parseHex(value: COLORSTRING): string[] {
       hexArray = shortHexToLongHex(hexColor);
     } else if (hexColor.length === 6 || hexColor.length === 8) {
       // match the hex value in groups of 2
-      hexArray = hexColor.match(/../g)?.map((value) => value) ?? [];
+      hexArray = hexColor.match(/../g)?.map((value) => value);
     }
   }
 
@@ -45,14 +52,15 @@ export function parseHex(value: COLORSTRING): string[] {
       if (isHex(value)) {
         hexArray[index] = value.toUpperCase();
       } else {
-        throw new Error(`Invalid Hex value: ${value}`);
+        console.warn(`Invalid Hex value: ${value}`);
       }
     });
 
     return hexArray;
   }
+
   console.warn(`Invalid Hex: ${value}`);
-  return rgbFallback(hexArray);
+  return fallbackRGB(hexArray);
 }
 
 /**
@@ -64,14 +72,11 @@ export function parseHex(value: COLORSTRING): string[] {
  */
 export function hexToRgb(hex: string[]): RGBVALUE {
   // Extract the RGB values from the hex string
-  if (hex.length >= 2) {
-    return {
-      r: parseInt(hex[0], 16),
-      g: parseInt(hex[1], 16),
-      b: parseInt(hex[2], 16),
-    };
-  }
-  console.warn(`Invalid Hex color: ${hex?.join(", ") || hex}`);
+  return {
+    r: parseInt(hex[0], 16),
+    g: parseInt(hex[1], 16),
+    b: parseInt(hex[2], 16),
+  };
 }
 
 /**
@@ -94,8 +99,5 @@ export function toHex(int8: number): string {
  */
 export function valuesToHex(rgb: RGBVALUE): HEX {
   // Extract the RGB values from the hex string
-  if (typeof rgb?.r === "number" && typeof rgb?.g === "number" && typeof rgb?.b === "number") {
-    return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
-  }
-  return "#errorr";
+  return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
 }

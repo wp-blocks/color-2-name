@@ -75,10 +75,25 @@ export function normalizeDegrees(angle: string): number {
   return degAngle;
 }
 
+/**
+ * Returns a value that is limited between a minimum and maximum value.
+ *
+ * @param {number} value - The value to be limited.
+ * @param {number} min - The minimum allowed value (default is 0).
+ * @param {number} max - The maximum allowed value (default is 0).
+ * @return {number} The limited value.
+ */
 export function limitValue(value: number, min: number = 0, max: number = 0): number {
   return Math.min(Math.max(Math.round(value), min), max);
 }
 
+/**
+ * Calculates the value based on a given string and multiplier.
+ *
+ * @param {string} valueString - The string representing the value to be calculated.
+ * @param {number} multiplier - The multiplier to be applied to the calculated value.
+ * @return {number} The calculated value.
+ */
 export function calculateValue(valueString: string, multiplier: number): number {
   // Regular expression to match the calc() function and extract the numerical value
   const regex = /calc\(([^)]+)\)/;
@@ -88,15 +103,19 @@ export function calculateValue(valueString: string, multiplier: number): number 
 
   if (match) {
     // Extract the content inside the calc() function
-    const calcContent = match[1];
-
-    return convertToInt8(calcContent, multiplier);
-  } else {
-    // Return a default value or handle the case where calc() is not found
-    return convertToInt8(valueString, multiplier);
+    valueString = match[1];
   }
+
+  // Return a default value or handle the case where calc() is not found
+  return convertToInt8(valueString, multiplier);
 }
 
+/**
+ * Removes comments from the input string and extracts the content between the first opening parenthesis and the last closing parenthesis.
+ *
+ * @param {string} string - The input string.
+ * @return {string} The content between the first opening parenthesis and the last closing parenthesis.
+ */
 export function cleanDefinition(string: string): string {
   // Remove comments from the string
   const cleanString = string.replace(stripComments, "");
@@ -109,19 +128,40 @@ export function cleanDefinition(string: string): string {
   if (firstParenthesisIndex !== -1 && lastParenthesisIndex !== -1) {
     // Extract the content between the parentheses
     return cleanString.slice(firstParenthesisIndex + 1, lastParenthesisIndex).trim();
-  } else {
-    throw new Error(`Can't get the rgb color values: ${string}`);
   }
 }
 
+/**
+ * Normalizes a percentage value by dividing it by 100 and multiplying it by a given multiplier.
+ *
+ * @param {string} value - The percentage value to be normalized.
+ * @param {number} multiplier - The number to multiply the normalized percentage by.
+ * @param {boolean} [limit=false] - Whether or not to limit the result within a range.
+ * @return {number} The normalized percentage value.
+ */
 export function normalizePercentage(value: string, multiplier: number, limit:boolean = false ): number {
   return (parseFloat(value) / 100) * multiplier;
 }
 
+/**
+ * Calculates the color value fallbacks for a given value.
+ *
+ * @param {string} value - The color value to calculate fallbacks for.
+ * @param {string} [err] - An optional error message to display.
+ * @return {number} - The calculated color value fallbacks.
+ */
 export function colorValueFallbacks(value: string, err?: string): number {
 
-  if (value === "none") console.warn(err || `The none keyword is invalid in legacy color syntax: ${value}`);
+  if (value === "infinity") {
+    console.warn(err || `Positive infinity value has been set to 255: ${value}`);
+    return 255;
+  }
 
+  if (value === "currentColor") console.warn(err || `The "currentColor" value has been set to 0: ${value}`);
+  if (value === "transparent") console.warn(err || `The "transparent" value has been set to 0: ${value}`);
+  if (value === "NaN") console.warn(err || `"NaN" value has been set to 0: ${value}`);
+  if (value === "-infinity") console.warn(err || `"Negative" infinity value has been set to 0: ${value}`);
+  if (value === "none") console.warn(err || `The none keyword is invalid in legacy color syntax: ${value}`);
   return 0;
 }
 
@@ -147,16 +187,11 @@ export function convertToInt8(value: string, multiplier: number = 255): number {
     return normalizePercentage(value, multiplier) || 0;
   } else if (value.endsWith("deg") || value.endsWith("rad") || value.endsWith("turn")) {
     return normalizeDegrees(value);
-  } else if (value === "none" || value === "-infinity" || value === "NaN" || value === "transparent" || value === "currentColor") {
-    colorValueFallbacks(value, `Invalid color term value: ${value}`);
-    return 0
-  } else if (value === "infinity") {
-    return 255;
   } else if (value.startsWith("calc")) {
     // get the value from the calc function
     return limitValue(calculateValue(value, multiplier), 0, multiplier);
-  } else {
-    // If the value is not a percentage or an angle in degrees, it is invalid
-    colorValueFallbacks(value, `Invalid value: ${value}`);
   }
+
+  // If the value is not a percentage or an angle in degrees, it is invalid
+  return colorValueFallbacks(value, `Invalid value: ${value}`);
 }

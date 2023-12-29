@@ -1,6 +1,7 @@
-import {closest, closestRGB, distance, isDark, isLight, rgbToHex} from "../src";
+import {closest, closestRGB, distance, getColor, isDark, isLight, rgbToHex} from "../src";
 import {MAXDISTANCE} from "../src/common";
-
+import {valuesToHex} from "../src/hex-utils";
+import {jest} from "@jest/globals";
 
 describe('Color Conversions functions', () => {
   it('Returns the correct distance between colors', () => {
@@ -23,12 +24,16 @@ describe('Color Conversions functions', () => {
 
   it('Returns the correct name of the color', () => {
     // HEX
+    console.warn = jest.fn();
+
+    expect(() => closest('blue')).toThrow()
     expect(closest('#3fdaf4')).toMatchObject({ name: 'turquoise' })
     expect(closest('#000000')).toMatchObject({ name: 'black' })
     expect(closest('#ff0000')).toMatchObject({ name: 'red' })
     expect(closest('#ffffff')).toMatchObject({ name: 'white'})
     expect(closest('#fffffe')).toMatchObject({ name: 'white'})
     //RGB
+    expect(closest('rgb(300,255,255)')).toMatchObject({ name: 'white'})
     expect(closest('rgb(255,255,255)')).toMatchObject({ name: 'white'})
     expect(closest('rgba(255,255,255,0.1)')).toMatchObject({ name: 'white'})
     expect(closest('rgba(255,255,255,.1)')).toMatchObject({ name: 'white'})
@@ -79,5 +84,22 @@ describe('Color Conversions functions', () => {
   it('Fails with error parsing wrong rgb values', () => {
     expect(() => rgbToHex('#AHAHAH')).toThrow("Invalid color: #AHAHAH")
     expect(() => rgbToHex(1)).toThrow("Invalid color: 1")
+  })
+
+  it('Fails with error parsing wrong rgb values', () => {
+    expect(valuesToHex({ r: 255, g: 255, b: 255})).toBe('#ffffff')
+  })
+
+  it('Get color function', () => {
+    expect(getColor('red')).toMatchObject({
+      hex: "#ff0000"
+    })
+    expect(getColor('green')).toMatchObject({
+      hex: "#008000"
+    })
+    expect(getColor('blue')).toMatchObject({
+      hex: "#0000ff"
+    })
+    expect(() => getColor(null)).toThrow("Error: invalid color null or empty colorSet")
   })
 })

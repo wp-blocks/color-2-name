@@ -8,6 +8,9 @@ import {RGB} from "../src/rgb-utils";
 import {parseColor} from "../src/";
 import {normalizeRGB} from "./fixtures/functions";
 import {COLORSTRING} from "../src/types";
+import {normalizeDegrees} from "../src/common";
+import {hsl_invalid_tests} from "./fixtures/hsl_colors";
+import {hslToRgb, parseHsl} from "../src/hsl-utils";
 
 describe('HEX COMMON', () => {
 
@@ -22,8 +25,6 @@ describe('HEX COMMON', () => {
     expect(parseColor('#ffff')).toMatchObject({r: 255, g: 255, b: 255})
     expect(parseColor('#ffffff')).toMatchObject({r: 255, g: 255, b: 255})
     expect(parseColor('#ffffffff')).toMatchObject({r: 255, g: 255, b: 255})
-    expect(() => parseColor('#ffffffffffffffffffffffffffff')).toThrowError()
-    expect(() => parseColor('blue')).toThrowError()
   })
 })
 
@@ -50,9 +51,11 @@ describe('HEX', () => {
   });
 
   describe('Invalid HEX Color Parsing', () => {
+    console.warn = jest.fn();
     hex_invalid_tests.forEach(([hexString, expectedErrorMessage]) => {
       it(`Fails to Parse Invalid HEX: ${hexString} ${expectedErrorMessage}`, () => {
-        expect(() => RGB(hexToRgb(parseHex(hexString as COLORSTRING)))).toThrow();
+        RGB(hexToRgb(parseHex(hexString as COLORSTRING)))
+        expect(console.warn).toBeCalled();
       });
     });
   });
@@ -67,5 +70,11 @@ describe('HEX', () => {
     expect(toHex(0)).toBe("00")
     expect(toHex(127)).toBe("7f")
     expect(toHex(255)).toBe("ff" )
+  })
+
+  it('Return the int8 to hex conversion', () => {
+    expect(normalizeDegrees("90deg")).toBe(90)
+    expect(normalizeDegrees("90rad")).toBe(117)
+    expect(normalizeDegrees("2turn")).toBe(0 )
   })
 })
