@@ -30,7 +30,7 @@
   },
   "files": [
     "lib/",
-    "tests/",
+    "tests/*.ts",
     "*.json",
     ".gitignore",
     ".eslintrc.js",
