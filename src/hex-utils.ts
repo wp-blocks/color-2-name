@@ -38,12 +38,12 @@ export function parseHex(value: COLORSTRING): string[] {
    * breakdown the string into an object that contains the r g and b values in hex
    */
   let hexArray: string[] = [];
-  if (hexColor.length) {
+  if (hexColor) {
     if (hexColor.length === 3 || hexColor.length === 4) {
       hexArray = shortHexToLongHex(hexColor);
     } else if (hexColor.length === 6 || hexColor.length === 8) {
       // match the hex value in groups of 2
-      hexArray = hexColor.match(/../g)?.map((value) => value);
+      hexArray = (hexColor.match(/../g) || []).map((value: string) => value);
     }
   }
 

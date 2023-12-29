@@ -111,7 +111,8 @@ export function calculateValue(valueString: string, multiplier: number): number 
 }
 
 /**
- * Removes comments from the input string and extracts the content between the first opening parenthesis and the last closing parenthesis.
+ * Removes comments from the input string and extracts the content between the first opening parenthesis
+ * and the last closing parenthesis.
  *
  * @param {string} string - The input string.
  * @return {string} The content between the first opening parenthesis and the last closing parenthesis.
@@ -124,11 +125,8 @@ export function cleanDefinition(string: string): string {
   const firstParenthesisIndex = cleanString.indexOf("(");
   const lastParenthesisIndex = cleanString.lastIndexOf(")");
 
-  // Ensure both parentheses are found
-  if (firstParenthesisIndex !== -1 && lastParenthesisIndex !== -1) {
-    // Extract the content between the parentheses
-    return cleanString.slice(firstParenthesisIndex + 1, lastParenthesisIndex).trim();
-  }
+  // Extract the content between the parentheses
+  return cleanString.slice(firstParenthesisIndex + 1, lastParenthesisIndex).trim();
 }
 
 /**

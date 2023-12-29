@@ -14,14 +14,13 @@ export function fallbackHSL(hsl: string[], err: string = `Invalid HSL color`): s
  */
 export function parseHsl(hslAsString: string): string[] {
   const hslvalue = cleanDefinition(hslAsString);
-  if (hslvalue !== null) {
-    let hsl: string[] = splitValues(hslvalue);
 
-    if (hsl.length !== 3 && hsl.length !== 4) {
-      hsl = fallbackHSL(hsl);
-    }
-    return [hsl[0], hsl[1], hsl[2]];
+  let hsl: string[] = splitValues(hslvalue);
+
+  if (hsl.length !== 3 && hsl.length !== 4) {
+    hsl = fallbackHSL(hsl);
   }
+  return [hsl[0], hsl[1], hsl[2]];
 }
 
 const angleError = (value: string): string => `Invalid angle: ${value} - The none keyword is invalid in legacy color syntax `;
