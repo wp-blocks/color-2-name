@@ -19,6 +19,7 @@ function config({plugins = [], output = {}}) {
 export default [
   config({
     output: {
+      input: 'src/color-2-name.ts',
       format: 'umd',
       name: 'color-2-name',
       file: 'lib/umd/color-2-name.js'
@@ -48,6 +49,7 @@ export default [
       format: 'cjs',
       dir: 'lib/cjs/',
       preserveModules: true,
+      entryFileNames: '[name].cjs',
       sourcemap: true
     }
   }),
@@ -56,6 +58,7 @@ export default [
       format: 'esm',
       preserveModules: true,
       sourcemap: true,
+      entryFileNames: '[name].mjs',
       dir: 'lib/esm/'
     }
   })

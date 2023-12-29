@@ -28,5 +28,6 @@
     "coverage",
     "dist",
     "docs",
+    "src/color-2-name.ts"
   ]
 }
