@@ -16,7 +16,7 @@
     }
   },
   "description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
-  "homepage": "https://erikyo.github.io/color-2-name/",
+  "homepage": "https://wp-blocks.github.io/color-2-name/",
   "scripts": {
     "gen-colorSet": "node ./lib/colorSetUtils.mjs colorSet",
     "build": "rimraf lib && concurrently npm:module-*",
@@ -37,13 +37,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/erikyo/color-2-name.git"
+    "url": "https://github.com/wp-blocks/color-2-name.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
   "bugs": {
-    "url": "https://github.com/erikyo/color-2-name/issues"
+    "url": "https://github.com/wp-blocks/color-2-name/issues"
   },
   "engines": {
     "npm": ">=6.0.0",
