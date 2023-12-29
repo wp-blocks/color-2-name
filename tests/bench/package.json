@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "benny": "^3.7.1",
-    "colord": "^2.9.3",
     "color-2-name": "../../"
   },
   "repository": {
