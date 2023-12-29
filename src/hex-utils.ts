@@ -1,5 +1,5 @@
 import { COLORSTRING, HEX, RGBVALUE } from "./types";
-import {fallbackRGB} from "./rgb-utils";
+import { fallbackRGB } from "./rgb-utils";
 
 /**
  * It returns an object with the hex values of the 3 digit hex color

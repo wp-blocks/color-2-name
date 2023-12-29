@@ -136,10 +136,9 @@ export function cleanDefinition(string: string): string {
  *
  * @param {string} value - The percentage value to be normalized.
  * @param {number} multiplier - The number to multiply the normalized percentage by.
- * @param {boolean} [limit=false] - Whether or not to limit the result within a range.
  * @return {number} The normalized percentage value.
  */
-export function normalizePercentage(value: string, multiplier: number, limit:boolean = false ): number {
+export function normalizePercentage(value: string, multiplier: number): number {
   return (parseFloat(value) / 100) * multiplier;
 }
 
@@ -151,7 +150,6 @@ export function normalizePercentage(value: string, multiplier: number, limit:boo
  * @return {number} - The calculated color value fallbacks.
  */
 export function colorValueFallbacks(value: string, err?: string): number {
-
   if (value === "infinity") {
     console.warn(err || `Positive infinity value has been set to 255: ${value}`);
     return 255;
@@ -165,7 +163,6 @@ export function colorValueFallbacks(value: string, err?: string): number {
   return 0;
 }
 
-
 /**
  * Takes a string with a css value that could be a number or percentage or an angle in degrees and returns the corresponding 8bit value
  *
@@ -177,7 +174,7 @@ export function colorValueFallbacks(value: string, err?: string): number {
  * @return {string} the corresponding value in 8-bit format
  */
 export function convertToInt8(value: string, multiplier: number = 255): number {
-  value = value ? value?.trim() : "0"
+  value = value ? value?.trim() : "0";
   if (isNumeric.test(value)) {
     // limit the min and the max value
     return limitValue(parseFloat(value) || 0, 0, multiplier);

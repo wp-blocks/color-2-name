@@ -46,7 +46,6 @@ function closest(color: string | COLORSTRING, set: RGBCOLORDEF[] | undefined = c
     }
   }
 
-
   if (args?.info) {
     const colorValue = getColor(closestColor.name, set);
     return {

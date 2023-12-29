@@ -1,4 +1,4 @@
-import {cleanDefinition, colorValueFallbacks, convertToInt8, limitValue, normalizeDegrees, splitValues} from "./common";
+import { cleanDefinition, colorValueFallbacks, convertToInt8, normalizeDegrees, splitValues } from "./common";
 import { HSLVALUE, RGBVALUE } from "./types";
 
 export function fallbackHSL(hsl: string[], err: string = `Invalid HSL color`): string[] {
@@ -26,7 +26,6 @@ export function parseHsl(hslAsString: string): string[] {
 
 const angleError = (value: string): string => `Invalid angle: ${value} - The none keyword is invalid in legacy color syntax `;
 
-
 /**
  * This function takes an array of strings and returns and object with the hsl values converted into INT8 (0-255)
  *
@@ -34,7 +33,7 @@ const angleError = (value: string): string => `Invalid angle: ${value} - The non
  *
  */
 export function getHslValues(hsl: string[]): HSLVALUE {
-  return  {
+  return {
     h: colorValueFallbacks(hsl[0], angleError(hsl[0])) || Math.round(normalizeDegrees(hsl[0])) || 0,
     s: colorValueFallbacks(hsl[1]) || convertToInt8(hsl[1], 100) || 0,
     l: colorValueFallbacks(hsl[2]) || convertToInt8(hsl[2], 100) || 0,
@@ -140,6 +139,6 @@ export function valuesToHsl({ r, g, b }: RGBVALUE): string {
  * @param {number} hsl.l - The lightness value of the color.
  * @return {string} The HSL color as a string.
  */
-function HSL(hsl:{h: number, s: number, l: number}): string {
+function HSL(hsl: { h: number; s: number; l: number }): string {
   return `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
 }

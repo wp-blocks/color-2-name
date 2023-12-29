@@ -1,4 +1,4 @@
-import {cleanDefinition, convertToInt8, limitValue, splitValues} from "./common";
+import { cleanDefinition, convertToInt8, limitValue, splitValues } from "./common";
 import { RGBVALUE } from "./types";
 
 export function fallbackRGB(rgb: string[], err: string = `Invalid RGB color`): string[] {
@@ -19,11 +19,10 @@ export function parseRgb(rgbAsString: string): string[] {
   const rgb: string[] = splitValues(rgbvalue);
 
   if (rgb.length !== 3 && rgb.length !== 4) {
-    return fallbackRGB(rgb, `Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`)
+    return fallbackRGB(rgb, `Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`);
   } else {
     return [rgb[0], rgb[1], rgb[2]];
   }
-
 }
 
 /**
@@ -39,7 +38,7 @@ export function getRgbValues(rgb: string[]): RGBVALUE {
     r: limitValue(Math.round(convertToInt8(rgb[0])), 0, 255) || 0,
     g: limitValue(Math.round(convertToInt8(rgb[1])), 0, 255) || 0,
     b: limitValue(Math.round(convertToInt8(rgb[2])), 0, 255) || 0,
-  }
+  };
 }
 
 /**
