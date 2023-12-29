@@ -1,23 +1,16 @@
 {
   "name": "color-2-name",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Erik <erik@codekraft.it>",
   "license": "ISC",
-  "main": "./lib/esm/index.js",
-  "types": "./lib/@types/index.d.ts",
+  "main": "./lib/cjs/index.js",
   "unpkg": "lib/browser/color-2-name.js",
   "jsdelivr": "lib/browser/color-2-name.js",
   "type": "module",
   "exports": {
     ".": {
-      "require": {
-        "default": "./lib/cjs/index.js",
-        "types": "./lib/cjs/@types/index.d.ts"
-      },
-      "import": {
-        "default": "./lib/esm/index.js",
-        "types": "./lib/@types/index.d.ts"
-      },
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js",
       "browser": "./lib/browser/color-2-name.js",
       "umd": "./lib/umd/color-2-name.js"
     }
@@ -27,10 +20,9 @@
   "scripts": {
     "gen-colorSet": "node ./lib/colorSetUtils.mjs colorSet",
     "build": "rimraf lib && concurrently npm:module-*",
-    "benchmark": "tsc --outDir bench --skipLibCheck --esModuleInterop ./tests/benchmark.ts && node ./bench/benchmark.js",
     "test": "jest --silent=false --coverage",
     "lint": "eslint ./src --fix && prettier --write ./src",
-    "module-tsc": "tsc",
+    "module-tsc": "tsc --declaration --emitDeclarationOnly --outDir lib/@types --rootDir src",
     "module-rollup": "rollup -c",
     "module-browser": "esbuild src/index.ts --outfile=lib/browser/color-2-name.js --allow-overwrite --bundle --minify --sourcemap"
   },
@@ -78,7 +70,7 @@
     "@jest/globals": "^29.7.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.14.0",
     "babel-jest": "^29.7.0",
@@ -95,12 +87,5 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.3.3"
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.test.json"
-      }
-    }
   }
 }

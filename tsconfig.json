@@ -13,7 +13,6 @@
     "strictNullChecks": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./lib/@types",
     "rootDir": "src",
     "esModuleInterop": true,
     // "verbatimModuleSyntax": true,

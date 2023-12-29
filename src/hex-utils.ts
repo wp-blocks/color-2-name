@@ -1,4 +1,5 @@
 import { COLORSTRING, HEX, RGBVALUE } from "./types";
+import { fallbackRGB } from "./rgb-utils";
 
 /**
  * It returns an object with the hex values of the 3 digit hex color
@@ -12,6 +13,16 @@ export function shortHexToLongHex(value: string): string[] {
 }
 
 /**
+ * Checks if a given string represents a hexadecimal number.
+ *
+ * @param {string} num - The string to be checked.
+ * @return {boolean} Returns true if the string is a valid hexadecimal number, false otherwise.
+ */
+export function isHex(num: string): boolean {
+  return Boolean(num.match(/^[0-9a-f]+$/i));
+}
+
+/**
  * Get the hex value of the color and convert it to an Object of R G And B values (still in hex format)
  *
  * @param value the string that contains the color in hex format
@@ -20,42 +31,52 @@ export function shortHexToLongHex(value: string): string[] {
  */
 export function parseHex(value: COLORSTRING): string[] {
   // remove # at the beginning of the hex color
-  const hexColor: string = Array.from(value)[0] === "#" ? value.substring(1) : value;
+  const hexColor: string = value.substring(1);
 
   /**
    * then if the number of digits is greater than 2 (so it's something like 123 or abc456)
    * breakdown the string into an object that contains the r g and b values in hex
    */
-  if (hexColor.length > 2) {
-    if (hexColor.length < 6) {
-      // >=6 is the long notation
-      return shortHexToLongHex(hexColor);
-    } else {
-      const hex = hexColor.match(/../g);
-      return hex != null ? [hex[0].toUpperCase(), hex[1].toUpperCase(), hex[2].toUpperCase()] : [];
+  let hexArray: string[] = [];
+  if (hexColor) {
+    if (hexColor.length === 3 || hexColor.length === 4) {
+      hexArray = shortHexToLongHex(hexColor);
+    } else if (hexColor.length === 6 || hexColor.length === 8) {
+      // match the hex value in groups of 2
+      hexArray = (hexColor.match(/../g) || []).map((value: string) => value);
     }
   }
 
-  return [];
+  if (hexArray.length) {
+    hexArray?.forEach((value, index) => {
+      if (isHex(value)) {
+        hexArray[index] = value.toUpperCase();
+      } else {
+        console.warn(`Invalid Hex value: ${value}`);
+      }
+    });
+
+    return hexArray;
+  }
+
+  console.warn(`Invalid Hex: ${value}`);
+  return fallbackRGB(hexArray);
 }
 
 /**
  * Converts a Hex color to rgb
  *
- * @param {string} hex without the "#"
+ * @param {string} hex a tuple of hex values
  *
  * @return {string} the rgb color values for the given hex color
  */
 export function hexToRgb(hex: string[]): RGBVALUE {
   // Extract the RGB values from the hex string
-  if (hex.length >= 2) {
-    return {
-      r: parseInt(hex[0], 16),
-      g: parseInt(hex[1], 16),
-      b: parseInt(hex[2], 16),
-    };
-  }
-  throw new Error(`Invalid Hex color: ${hex.join(", ")}`);
+  return {
+    r: parseInt(hex[0], 16),
+    g: parseInt(hex[1], 16),
+    b: parseInt(hex[2], 16),
+  };
 }
 
 /**
@@ -78,8 +99,5 @@ export function toHex(int8: number): string {
  */
 export function valuesToHex(rgb: RGBVALUE): HEX {
   // Extract the RGB values from the hex string
-  if (typeof rgb?.r === "number" && typeof rgb?.g === "number" && typeof rgb?.b === "number") {
-    return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
-  }
-  return "#errorr";
+  return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
 }

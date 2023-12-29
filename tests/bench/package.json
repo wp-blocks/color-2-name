@@ -1,0 +1,19 @@
+{
+  "name": "color-2-name-bench",
+  "version": "1.0.0",
+  "description": "run the color-2-name benchmark",
+  "main": "benchmark.js",
+  "type": "module",
+  "scripts": {
+    "benchmark": "tsc -p ./tsconfig.benchmark.json && node ./bench/benchmark.js"
+  },
+  "dependencies": {
+    "benny": "^3.7.1",
+    "color-2-name": "../../"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erikyo/color2name.git"
+  },
+  "private": true
+}

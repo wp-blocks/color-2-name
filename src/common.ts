@@ -1,23 +1,22 @@
 // Regular expressions to match different color formats
-import { COLORSTRING, RGBCOLORDEF, RGBVALUE } from "./types";
-import { hexToRgb, parseHex } from "./hex-utils";
-import { getRgbValues, parseRgb } from "./rgb-utils";
-import { hslToRgb, parseHsl } from "./hsl-utils";
+import { RGBCOLORDEF } from "./types";
 
 /** The maximum distance possible between colors */
 export const MAXDISTANCE = 441.6729559300637;
 
 /** A regex to match hex colors */
-export const hexRegex: RegExp = /^#([\da-f]{6,}|[\da-f]{3,})/i;
+export const hexRegex: RegExp = /^#([\da-f]{3,8})/i;
 /** A regex to match rgb colors */
 export const rgbRegex: RegExp = /^rgba?\(([^)]+)\)/i;
 /** A regex to match hsl colors */
 export const hslRegex: RegExp = /^hsla?\(([^)]+)\)/i;
-/** A regex to match strings that are only int numbers */
-export const isNumeric: RegExp = /^[0-9]*$/;
+/** A regex to match strings that are only valid numbers with and without decimals and the number can be negative and without the 0 in the beginning  */
+export const isNumeric: RegExp = /^-?\d*\.?\d+$/i;
+/** Remove comments from string */
+export const stripComments: RegExp = /(\/\*[^*]*\*\/)|(\/\/[^*]*)/g;
 
 /**
- * This set is used in order to detect if the color is bright or dark
+ * This set is used to detect if the color is bright or dark
  *
  * @note the set has been corrected to get pure RGB values (eg. pure red, pure green) in the "bright" area
  */
@@ -27,7 +26,7 @@ export const BLACKANDWHITE: RGBCOLORDEF[] = [
 ];
 
 /**
- * This set is used in order to detect the nearest rgb color
+ * This set is used to detect the nearest rgb color
  */
 export const RGBSET: RGBCOLORDEF[] = [
   [255, 0, 0, "red"],
@@ -42,90 +41,152 @@ export const RGBSET: RGBCOLORDEF[] = [
  *
  * @param {string} rawValues - the value inside the rgb(.*) css color definition
  *
- * @return {Array} the array of rgb values finded inside the passed string
+ * @return {Array} the array of rgb values found inside the passed string
  */
 export function splitValues(rawValues: string): string[] {
-  if (rawValues.includes(",")) {
-    return rawValues.split(/[,\\/]/).map((val) => val.trim());
-  }
-
-  return rawValues
-    .split(/[ \\/]/)
-    .map((val) => val.trim())
-    .filter(Boolean);
+  return rawValues.split(rawValues.includes(",") ? "," : " ").map((s) => s.trim());
 }
 
 /**
  * If the value is an angle in degrees, convert it to the 0-360 range
  *
- * @param {string} value - the degrees to convert into a number
- * @param {number} multiplier - the number that represent the maximum - default is 100
+ * @param {string} angle - the degrees to convert into a number
  *
  * @return {number} the converted value
  */
-export function normalizeDegree(value: string, multiplier: number = 360): number {
-  let angle = parseFloat(value);
-  while (angle < 0) {
-    angle += 360;
+export function normalizeDegrees(angle: string): number {
+  // Strip label and convert to degrees (if necessary)
+  let degAngle = parseFloat(angle) || 0;
+  if (angle.indexOf("deg") > -1) {
+    degAngle = parseFloat(angle.substring(0, angle.length - 3));
+  } else if (angle.indexOf("rad") > -1) {
+    degAngle = Math.round(parseFloat(angle.substring(0, angle.length - 3)) * (180 / Math.PI));
+  } else if (angle.indexOf("turn") > -1) {
+    degAngle = Math.round(parseFloat(angle.substring(0, angle.length - 4)) * 360);
   }
-  while (angle > 360) {
-    angle -= 360;
+
+  while (degAngle < 0) {
+    degAngle += 360;
   }
-  return (angle / 360) * multiplier;
+
+  // Make sure it's a number between 0 and 360
+  if (degAngle >= 360) degAngle %= 360;
+
+  return degAngle;
+}
+
+/**
+ * Returns a value that is limited between a minimum and maximum value.
+ *
+ * @param {number} value - The value to be limited.
+ * @param {number} min - The minimum allowed value (default is 0).
+ * @param {number} max - The maximum allowed value (default is 0).
+ * @return {number} The limited value.
+ */
+export function limitValue(value: number, min: number = 0, max: number = 0): number {
+  return Math.min(Math.max(Math.round(value), min), max);
+}
+
+/**
+ * Calculates the value based on a given string and multiplier.
+ *
+ * @param {string} valueString - The string representing the value to be calculated.
+ * @param {number} multiplier - The multiplier to be applied to the calculated value.
+ * @return {number} The calculated value.
+ */
+export function calculateValue(valueString: string, multiplier: number): number {
+  // Regular expression to match the calc() function and extract the numerical value
+  const regex = /calc\(([^)]+)\)/;
+
+  // Match the calc() function in the CSS string
+  const match = valueString.match(regex);
+
+  if (match) {
+    // Extract the content inside the calc() function
+    valueString = match[1];
+  }
+
+  // Return a default value or handle the case where calc() is not found
+  return convertToInt8(valueString, multiplier);
+}
+
+/**
+ * Removes comments from the input string and extracts the content between the first opening parenthesis
+ * and the last closing parenthesis.
+ *
+ * @param {string} string - The input string.
+ * @return {string} The content between the first opening parenthesis and the last closing parenthesis.
+ */
+export function cleanDefinition(string: string): string {
+  // Remove comments from the string
+  const cleanString = string.replace(stripComments, "");
+
+  // Find the positions of the first opening and the last closing parentheses
+  const firstParenthesisIndex = cleanString.indexOf("(");
+  const lastParenthesisIndex = cleanString.lastIndexOf(")");
+
+  // Extract the content between the parentheses
+  return cleanString.slice(firstParenthesisIndex + 1, lastParenthesisIndex).trim();
+}
+
+/**
+ * Normalizes a percentage value by dividing it by 100 and multiplying it by a given multiplier.
+ *
+ * @param {string} value - The percentage value to be normalized.
+ * @param {number} multiplier - The number to multiply the normalized percentage by.
+ * @return {number} The normalized percentage value.
+ */
+export function normalizePercentage(value: string, multiplier: number): number {
+  return (parseFloat(value) / 100) * multiplier;
+}
+
+/**
+ * Calculates the color value fallbacks for a given value.
+ *
+ * @param {string} value - The color value to calculate fallbacks for.
+ * @param {string} [err] - An optional error message to display.
+ * @return {number} - The calculated color value fallbacks.
+ */
+export function colorValueFallbacks(value: string, err?: string): number {
+  if (value === "infinity") {
+    console.warn(err || `Positive infinity value has been set to 255: ${value}`);
+    return 255;
+  }
+
+  if (value === "currentColor") console.warn(err || `The "currentColor" value has been set to 0: ${value}`);
+  if (value === "transparent") console.warn(err || `The "transparent" value has been set to 0: ${value}`);
+  if (value === "NaN") console.warn(err || `"NaN" value has been set to 0: ${value}`);
+  if (value === "-infinity") console.warn(err || `"Negative" infinity value has been set to 0: ${value}`);
+  if (value === "none") console.warn(err || `The none keyword is invalid in legacy color syntax: ${value}`);
+  return 0;
 }
 
 /**
  * Takes a string with a css value that could be a number or percentage or an angle in degrees and returns the corresponding 8bit value
  *
- * @param {string} value - a valid value for the css color definition (like 255, "100%", "324deg", etc)
- * @param {string} value - a valid value for the css color definition (like 255, "100%", "324deg", etc)
+ * @param {string} value - a valid value for the css color definition (like 255, "100%", "324deg", etc.) *
+ * @param multiplier - the number that represent the maximum - default is 255 decimal - 100 hex
  *
  * @example convertToInt8('100%'); // 255
  *
- * @return {string} the corresponding value in 8 bit format
+ * @return {string} the corresponding value in 8-bit format
  */
 export function convertToInt8(value: string, multiplier: number = 255): number {
-  value = value.trim();
+  value = value ? value?.trim() : "0";
   if (isNumeric.test(value)) {
-    // If the value is an int number return it as number
-    return parseInt(value, 10);
+    // limit the min and the max value
+    return limitValue(parseFloat(value) || 0, 0, multiplier);
   } else if (value.endsWith("%")) {
     // If the value is a percentage, divide it by 100 to get a value from 0 to 1
     // and then multiply it by 255 to get a value from 0 to 255
-    return (parseFloat(value) / 100) * multiplier;
-  } else if (value.endsWith("deg")) {
-    return normalizeDegree(value, 255);
-  } else {
-    // If the value is not a percentage or an angle in degrees, it is invalid
-    throw new Error(`Invalid value: ${value}`);
-  }
-}
-
-/**
- * This function takes a string representing a color (color) and uses regular expressions to check if it matches any of the following formats: hex, hex+alpha, RGB, RGBA, HSL, or HSLA.
- * If the color string matches one of these formats, the function returns an object with the type of color and the value of the color.
- * If the color string does not match any of the formats, the function throws an error.
- *
- * @param {string} colorString - the color string to test and convert to rgb values
- *
- * @return {Object|Error} the object with rgb values of that color
- */
-export function parseColor(colorString: string): RGBVALUE {
-  // Check if the color string matches any of the regular expressions
-  const colorParsers = [
-    { regex: hexRegex, parser: parseHex, converter: hexToRgb },
-    { regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
-    { regex: hslRegex, parser: parseHsl, converter: hslToRgb },
-  ];
-  for (const { regex, parser, converter } of colorParsers) {
-    if (regex.test(colorString)) {
-      const result = parser(colorString as COLORSTRING);
-      if (result.length > 0) {
-        return converter(result);
-      }
-    }
+    return normalizePercentage(value, multiplier) || 0;
+  } else if (value.endsWith("deg") || value.endsWith("rad") || value.endsWith("turn")) {
+    return normalizeDegrees(value);
+  } else if (value.startsWith("calc")) {
+    // get the value from the calc function
+    return limitValue(calculateValue(value, multiplier), 0, multiplier);
   }
 
-  // If the color string does not match any of the regular expressions, return an error
-  throw new Error(`Invalid color: ${colorString}`);
+  // If the value is not a percentage or an angle in degrees, it is invalid
+  return colorValueFallbacks(value, `Invalid value: ${value}`);
 }

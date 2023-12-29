@@ -1,19 +1,10 @@
 # color-2-name
 
-<div>
-  <a href="https://www.npmjs.com/package/color-2-name">
-    <img alt="version" src="https://img.shields.io/npm/v/color-2-name.svg?label=npm%20version" />
-  </a>
-  <a href="https://github.com/erikyo/color-2-name/blob/main/LICENSE">
-    <img alt="version" src="https://img.shields.io/npm/l/color-2-name" />
-  </a>
-  <a href="https://github.com/erikyo/color-2-name/actions">
-    <img alt="build" src="https://img.shields.io/github/actions/workflow/status/erikyo/color-2-name/node.js.yml" />
-  </a>
-  <a href="https://github.com/erikyo/color-2-name/actions">
-    <img alt="workflows" src="https://github.com/erikyo/color-2-name/actions/workflows/node.js.yml/badge.svg" />
-  </a>
-</div>
+[![](https://img.shields.io/npm/v/color-2-name.svg?label=npm%20version)](https://www.npmjs.com/package/color-2-name)
+[![](https://badgen.net/npm/types/color-2-name)](https://github.com/erikyo/color-2-name/blob/main/LICENSE)
+![](https://badgen.net/bundlephobia/minzip/color-2-name)
+[![](https://img.shields.io/npm/l/color-2-name)](https://github.com/erikyo/color-2-name/blob/main/LICENSE)
+![](https://github.com/erikyo/color-2-name/actions/workflows/node.js.yml/badge.svg)
 
 Find the name of the color given a hex, rgb and hsl string!
 
@@ -37,14 +28,14 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 
 Designed with the performance in mind, it is 20 times faster than the self-proclaimed fastest color conversion plugin!
 
-| Library                             | <nobr>Operations/sec</nobr>                           | Size<br /> (minified)                                                                                                 | Size<br /> (gzipped)                                                                                                     | Dependencies                                                                                                                         | Type declarations                                                                                                |
-|-------------------------------------|-------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| <nobr><b>color-2-name 🚀</b></nobr> | <nobr><b>12 768 ops/s, ±0.49%</b></nobr>              | [![](https://badgen.net/bundlephobia/min/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)       | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)       | [![](https://badgen.net/bundlephobia/dependency-count/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)         | [![](https://badgen.net/npm/types/color-2-name?color=6ead0a&label=)](https://bundlephobia.com/result?p=color-2-name)         |
-| <nobr>colord</nobr>                 | <nobr><b>598 ops/s, ±0.55% (95.32% slower)</b></nobr> | [![](https://badgen.net/bundlephobia/min/colord?color=orange&label=)](https://bundlephobia.com/result?p=colord)       | [![](https://badgen.net/bundlephobia/minzip/colord?color=orange&label=)](https://bundlephobia.com/result?p=colord)       | [![](https://badgen.net/bundlephobia/dependency-count/colord?color=orange&label=)](https://bundlephobia.com/result?p=colord)         | [![](https://badgen.net/npm/types/colord?color=orange&label=)](https://bundlephobia.com/result?p=colord)         |
-- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.ts](https://github.com/erikyo/color-2-name/blob/master/tests/benchmark.ts).
+| Library                                                            | <nobr>Operations/sec</nobr>                             | Size<br /> (minified)                                                                                                           | Size<br /> (gzipped)                                                                                                                                                                       |
+|--------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <nobr><b>[color-2-name](#color-2-name) v1.3.0 🚀</b></nobr>        | <nobr>🟢 <b>11 955 ops/s,</b> ±0.29%</nobr>             | [![color-2-name](https://snyk.io/advisor/npm-package/color-2-name/badge.svg)](https://snyk.io/advisor/npm-package/color-2-name) | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=yellow&label=)](https://bundlephobia/package/color-2-name)                                                            |
+| <nobr>[colord](https://www.npmjs.com/package/colord) v2.9.3</nobr> | <nobr>🔴 765 ops/s, ±0.39%       ( 93.6% slower)</nobr> | [![colord](https://snyk.io/advisor/npm-package/colord/badge.svg)](https://snyk.io/advisor/npm-package/colord)                   | [![](https://badgen.net/bundlephobia/minzip/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord) + [plugins](https://github.com/omgovich/colord/tree/master/src/plugins) |
+
+- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.testts](https://github.com/erikyo/color-2-name/blob/master/tests/benchmark.testts).
 - For the test we are generating 50 random colors to make sure that no internal mechanism is benefited
 - The Size for the `colord` package is meant without the color definitions while `color-2-name` already has everything you need bundled inside
-
 
 ## Installation
 
@@ -70,16 +61,21 @@ color2Name.closest('#abcdef')
 
 ### Browser
 
-To load `color-2-name` in as a browser script add it to the header or footer like below
+To run the script in the browser, add the `color-2-name` add it to the header or footer like below
 
 ```js
-<script src="https://cdn.jsdelivr.net/npm/color-2-name/lib/browser/color-2-name.js"></script>
+<script src="https://www.unpkg.com/color-2-name"></script>
 <script>
     // Then the color-2-name module will be available using the following command:
     // You will find the packed script loaded into window.color2name
     color2name.closest('#123456') // returns "name" : "midnightblue" , "color" : "rgb(25,25,112)"
 </script>
 ```
+
+#### The script is available at:
+- [unpkg](https://www.unpkg.com/color-2-name) - https://www.unpkg.com/color-2-name
+- [jsdelivr](https://cdn.jsdelivr.net/npm/color-2-name@latest) - https://cdn.jsdelivr.net/npm/color-2-name@latest
+
 ---
 
 This Package includes the following functions:
@@ -89,8 +85,8 @@ This Package includes the following functions:
 - [rgbToHex()](#rgbToHex)
 - [isLight()](#isLight)
 - [isDark()](#isDark)
-- [isLightOrDark()](#isLightOrDark)
 - [closestRGB()](#closestRGB)
+- [getColor()](#getColor)
 
 ### 💡closest()
 
@@ -205,10 +201,6 @@ Check if the color is light (optically closer to white)
 
 Check if the color is dark (optically closer to black)
 
-#### 💡isLightOrDark()
-
-Returns light or dark whether the color is lighter or darker
-
 #### 💡closestRGB()
 
 returns the closest RGB color
@@ -223,8 +215,6 @@ Examples:
 // note: the rgb value is converted without take into account the alpha channel
 isLight('#fff') // true
 isDark('#fff') // false
-isLightOrDark('#abc') // light
-isLightOrDark('#345') // dark
 closestRGB('#FF1234') // red
 ```
 

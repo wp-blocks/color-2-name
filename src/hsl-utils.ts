@@ -1,5 +1,10 @@
-import { hslRegex, normalizeDegree, splitValues } from "./common";
+import { cleanDefinition, colorValueFallbacks, convertToInt8, normalizeDegrees, splitValues } from "./common";
 import { HSLVALUE, RGBVALUE } from "./types";
+
+export function fallbackHSL(hsl: string[], err: string = `Invalid HSL color`): string[] {
+  console.warn(err);
+  return [hsl[0] ?? 0, hsl[1] ?? 0, hsl[2]];
+}
 
 /**
  * Get the values of the hsl string
@@ -8,16 +13,17 @@ import { HSLVALUE, RGBVALUE } from "./types";
  * @return {string[]} the values of the hsl string
  */
 export function parseHsl(hslAsString: string): string[] {
-  const hslvalue = hslAsString.match(hslRegex);
-  if (hslvalue != null) {
-    const hsl: string[] = splitValues(hslvalue[1]);
+  const hslvalue = cleanDefinition(hslAsString);
 
-    if (hsl.length >= 2) {
-      return [hsl[0], hsl[1], hsl[2]];
-    }
+  let hsl: string[] = splitValues(hslvalue);
+
+  if (hsl.length !== 3 && hsl.length !== 4) {
+    hsl = fallbackHSL(hsl);
   }
-  throw new Error(`Can't parse hsl color: ${hslAsString}`);
+  return [hsl[0], hsl[1], hsl[2]];
 }
+
+const angleError = (value: string): string => `Invalid angle: ${value} - The none keyword is invalid in legacy color syntax `;
 
 /**
  * This function takes an array of strings and returns and object with the hsl values converted into INT8 (0-255)
@@ -26,14 +32,20 @@ export function parseHsl(hslAsString: string): string[] {
  *
  */
 export function getHslValues(hsl: string[]): HSLVALUE {
-  if (hsl.length >= 2) {
-    return {
-      h: normalizeDegree(hsl[0]),
-      s: parseInt(hsl[1], 10),
-      l: parseInt(hsl[2], 10),
-    };
-  }
-  throw new Error(`Invalid hsl color: ${hsl.join(", ")}`);
+  return {
+    h: colorValueFallbacks(hsl[0], angleError(hsl[0])) || Math.round(normalizeDegrees(hsl[0])) || 0,
+    s: colorValueFallbacks(hsl[1]) || convertToInt8(hsl[1], 100) || 0,
+    l: colorValueFallbacks(hsl[2]) || convertToInt8(hsl[2], 100) || 0,
+  };
+}
+
+function getHue(c: number, x: number, h: number): [number, number, number] {
+  if (h < 60) return [c, x, 0];
+  if (h < 120) return [x, c, 0];
+  if (h < 180) return [0, c, x];
+  if (h < 240) return [0, x, c];
+  if (h < 300) return [x, 0, c];
+  return [c, 0, x];
 }
 
 /**
@@ -43,48 +55,16 @@ export function getHslValues(hsl: string[]): HSLVALUE {
  * @return {Object} rgb value
  */
 export function hslToRgb(hslColor: string[]): RGBVALUE {
-  if (hslColor === null || hslColor.length < 2) {
-    throw new Error(`Invalid hsl color: ${hslColor.join(", ")}`);
-  }
+  const hsl = getHslValues(hslColor),
+    s = hsl.s / 100,
+    l = hsl.l / 100;
 
-  const hsl = getHslValues(hslColor);
-
-  // Must be fractions of 1
-  hsl.s /= 100;
-  hsl.l /= 100;
-
-  const c = (1 - Math.abs(2 * hsl.l - 1)) * hsl.s;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
   const x = c * (1 - Math.abs(((hsl.h / 60) % 2) - 1));
-  const m = hsl.l - c / 2;
-  let r = 0;
-  let g = 0;
-  let b = 0;
+  const m = l - c / 2;
 
-  if (hsl.h >= 0 && hsl.h < 60) {
-    r = c;
-    g = x;
-    b = 0;
-  } else if (hsl.h >= 60 && hsl.h < 120) {
-    r = x;
-    g = c;
-    b = 0;
-  } else if (hsl.h >= 120 && hsl.h < 180) {
-    r = 0;
-    g = c;
-    b = x;
-  } else if (hsl.h >= 180 && hsl.h < 240) {
-    r = 0;
-    g = x;
-    b = c;
-  } else if (hsl.h >= 240 && hsl.h < 300) {
-    r = x;
-    g = 0;
-    b = c;
-  } else if (hsl.h >= 300 && hsl.h < 360) {
-    r = c;
-    g = 0;
-    b = x;
-  }
+  let [r, g, b] = getHue(c, x, hsl.h);
+
   r = Math.round((r + m) * 255);
   g = Math.round((g + m) * 255);
   b = Math.round((b + m) * 255);
@@ -146,5 +126,18 @@ export function valuesToHsl({ r, g, b }: RGBVALUE): string {
   s = +(s * 100).toFixed(1);
   l = +(l * 100).toFixed(1);
 
-  return `hsl(${h},${s}%,${l}%)`;
+  return HSL({ h, s, l });
+}
+
+/**
+ * Converts an HSL color object to a string representation.
+ *
+ * @param {Object} hsl - Object containing the HSL color values.
+ * @param {number} hsl.h - The hue value of the color.
+ * @param {number} hsl.s - The saturation value of the color.
+ * @param {number} hsl.l - The lightness value of the color.
+ * @return {string} The HSL color as a string.
+ */
+function HSL(hsl: { h: number; s: number; l: number }): string {
+  return `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
 }

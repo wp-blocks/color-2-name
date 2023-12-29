@@ -4,7 +4,7 @@
  */
 export type RGB = `rgb(${string},${string},${string})`;
 export type HSL = `hsl(${string},${string},${string})`;
-export type HEX = `#${string}`;
+export type HEX = `#${string}` | string;
 
 export type WithAlpha<O> = O & { a: number };
 export type RGBA = WithAlpha<RGB>;

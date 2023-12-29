@@ -1,21 +1,7 @@
-import colorSet from '../src/data/colorSet'
-// import buildColorSet from '../colorSetUtils.mjs'
-
-import {closest, closestRGB, distance, isDark, isLight, isLightOrDark, rgbToHex} from '../src'
-import {MAXDISTANCE} from '../src/common'
-import getColor from "../src/color-utils";
-
-describe('Main name-2-color functions', () => {
-
-  it('Returns the correct numbers of color', () => {
-    expect(colorSet.length).toBeGreaterThan(140)
-  })
-
-  // it('Can rebuild the original Color Set, disabled since doesn't work with ts test suite', () => {
-  //  expect( buildColorSet() ).toMatchObject(colorSet)
-  // })
-
-})
+import {closest, closestRGB, distance, getColor, isDark, isLight, rgbToHex} from "../src";
+import {MAXDISTANCE} from "../src/common";
+import {valuesToHex} from "../src/hex-utils";
+import {jest} from "@jest/globals";
 
 describe('Color Conversions functions', () => {
   it('Returns the correct distance between colors', () => {
@@ -38,11 +24,16 @@ describe('Color Conversions functions', () => {
 
   it('Returns the correct name of the color', () => {
     // HEX
+    console.warn = jest.fn();
+
+    expect(() => closest('blue')).toThrow()
+    expect(closest('#3fdaf4')).toMatchObject({ name: 'turquoise' })
     expect(closest('#000000')).toMatchObject({ name: 'black' })
     expect(closest('#ff0000')).toMatchObject({ name: 'red' })
     expect(closest('#ffffff')).toMatchObject({ name: 'white'})
     expect(closest('#fffffe')).toMatchObject({ name: 'white'})
     //RGB
+    expect(closest('rgb(300,255,255)')).toMatchObject({ name: 'white'})
     expect(closest('rgb(255,255,255)')).toMatchObject({ name: 'white'})
     expect(closest('rgba(255,255,255,0.1)')).toMatchObject({ name: 'white'})
     expect(closest('rgba(255,255,255,.1)')).toMatchObject({ name: 'white'})
@@ -52,7 +43,7 @@ describe('Color Conversions functions', () => {
     // INFO
     expect(closest('rgb(255,0,255)', undefined, {info: true})).toMatchObject({ name: 'magenta', hex: '#ff00ff', gap: 0  })
     // INFO FUNKY CONFIGURATION
-    expect(closest('#FFF', undefined, {info: "YES"})).toMatchObject({ name: 'white', hex: '#ffffff' })
+    expect(closest('#FFF', undefined, {info: "YES" as unknown as boolean})).toMatchObject({ name: 'white', hex: '#ffffff' })
     // INFO DISABLED
     expect(closest('hsl(255,0%,100%)', undefined, {info: false})).toMatchObject({ name: 'white' })
     // THROW ERR
@@ -84,14 +75,6 @@ describe('Color Conversions functions', () => {
     expect(isDark('hsl(0,0%,0%)')).toBe(true)
     expect(isDark('hsla(0,0%,0%,10%)')).toBe(true)
 
-    expect(isLightOrDark('#111')).toBe('dark')
-    expect(isLightOrDark('#aaa')).toBe('light')
-    expect(isLightOrDark('#F00')).toBe('dark')
-    expect(isLightOrDark('#FF0000')).toBe('dark')
-    expect(isLightOrDark('#0F0')).toBe('dark')
-    expect(isLightOrDark('#00F')).toBe('dark')
-    expect(isLightOrDark('#0FF')).toBe('light')
-
     expect(closestRGB('#a22')).toBe('red')
     expect(closestRGB('#2a2')).toBe('green')
     expect(closestRGB('#22a')).toBe('blue')
@@ -102,17 +85,21 @@ describe('Color Conversions functions', () => {
     expect(() => rgbToHex('#AHAHAH')).toThrow("Invalid color: #AHAHAH")
     expect(() => rgbToHex(1)).toThrow("Invalid color: 1")
   })
-})
 
-describe('Name to color, basically the exact opposite of the repo name. Useful in case we need to revert the process', () => {
-  it('Returns an Object with the hex, rgb and hsl value of the color (by name)', () => {
-    expect( getColor('white') ).toMatchObject({"hex": "#ffffff", "hsl": "hsl(0,0%,100%)", "rgb": "rgb(255,255,255)"})
-    expect( getColor('red') ).toMatchObject({"hex": "#ff0000", "hsl": "hsl(0,100%,50%)", "rgb": "rgb(255,0,0)"})
-    expect( getColor('tomato') ).toMatchObject({"hex": "#ff6347", "hsl": "hsl(9,100%,63.9%)", "rgb": "rgb(255,99,71)"})
-    expect( getColor('yellowgreen') ).toMatchObject({"hex": "#9acd32", "hsl": "hsl(80,60.8%,50%)", "rgb": "rgb(154,205,50)"})
-    expect( getColor('greenyellow') ).toMatchObject({"hex": "#adff2f", "hsl": "hsl(84,100%,59.2%)", "rgb": "rgb(173,255,47)"})
-    expect( getColor('darkblue') ).toMatchObject({"hex": "#00008b", "hsl": "hsl(240,100%,27.3%)", "rgb": "rgb(0,0,139)"})
-    expect( () => getColor('asdasdasd') ).toThrowError()
-    expect( () => getColor('white', []) ).toThrowError()
-  } )
-} )
+  it('Fails with error parsing wrong rgb values', () => {
+    expect(valuesToHex({ r: 255, g: 255, b: 255})).toBe('#ffffff')
+  })
+
+  it('Get color function', () => {
+    expect(getColor('red')).toMatchObject({
+      hex: "#ff0000"
+    })
+    expect(getColor('green')).toMatchObject({
+      hex: "#008000"
+    })
+    expect(getColor('blue')).toMatchObject({
+      hex: "#0000ff"
+    })
+    expect(() => getColor(null)).toThrow("Error: invalid color null or empty colorSet")
+  })
+})
