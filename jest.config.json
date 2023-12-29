@@ -1,9 +1,7 @@
 {
-  "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.tsx?$",
+  "testRegex": "(/tests/.*(test|spec))\\.tsx?$",
   "globals": {
-    "ts-jest": {
-      "useESM": true
-    }
+    "ts-jest": {}
   },
   "transformIgnorePatterns": ["/node_modules/"],
   "coverageThreshold": {
