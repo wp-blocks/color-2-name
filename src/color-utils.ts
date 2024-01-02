@@ -24,3 +24,15 @@ export function getColor(searchedColor: string, set: RGBCOLORDEF[] | undefined =
 
   throw new Error(`Error: invalid color ${searchedColor} or empty colorSet`);
 }
+
+export function getColors() {
+  const colors = colorSet.map( (colorData) => {
+    const currentColor = {
+      name: colorData[3],
+      ...getColor(colorData[3] as string)
+    };
+    return currentColor;
+  } );
+
+  return colors
+}
