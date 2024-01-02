@@ -2,6 +2,8 @@ import {closest, closestRGB, distance, getColor, isDark, isLight, rgbToHex} from
 import {MAXDISTANCE} from "../src/common";
 import {valuesToHex} from "../src/hex-utils";
 import {jest} from "@jest/globals";
+import {getColors} from "../src/color-utils";
+import ColorSet from "../src/data/colorSet";
 
 describe('Color Conversions functions', () => {
   it('Returns the correct distance between colors', () => {
@@ -101,5 +103,30 @@ describe('Color Conversions functions', () => {
       hex: "#0000ff"
     })
     expect(() => getColor(null)).toThrow("Error: invalid color null or empty colorSet")
+  })
+
+
+
+  it('Get colors function', () => {
+    const expected = [
+      {
+        name: 'white',
+        hex: '#ffffff',
+        rgb: 'rgb(255,255,255)',
+        hsl: 'hsl(0,0%,100%)'
+      },
+      {
+        name: 'black',
+        hex: '#000000',
+        rgb: 'rgb(0,0,0)',
+        hsl: 'hsl(0,0%,0%)'
+      },
+    ]
+    const colors = getColors()
+    // check if the length of the colors is the same as the length of the colorSet
+    expect(colors).toHaveLength(ColorSet.length)
+
+    // check if the colors expected are included in the colors
+    expect(colors).toEqual(expect.arrayContaining(expected))
   })
 })
