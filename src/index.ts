@@ -4,7 +4,7 @@ import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
 import { getRgbValues, parseRgb } from "./rgb-utils";
 import { hslToRgb, parseHsl } from "./hsl-utils";
 import type { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
-import { getColor } from "./color-utils";
+import { getColor, getColors } from "./color-utils";
 
 /**
  * Given a color string, it returns the closest corresponding name of the color.
@@ -163,4 +163,4 @@ export function parseColor(colorString: string): RGBVALUE {
   throw new Error(`Invalid color: ${colorString}`);
 }
 
-export { closest, rgbToHex, distance, isLight, isDark, closestRGB, getColor };
+export { closest, rgbToHex, distance, isLight, isDark, closestRGB, getColor, getColors };

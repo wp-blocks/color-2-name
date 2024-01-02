@@ -138,6 +138,6 @@ export function valuesToHsl({ r, g, b }: RGBVALUE): string {
  * @param {number} hsl.l - The lightness value of the color.
  * @return {string} The HSL color as a string.
  */
-function HSL(hsl: { h: number; s: number; l: number }): string {
+export function HSL(hsl: { h: number; s: number; l: number }): string {
   return `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
 }
