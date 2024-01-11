@@ -2,9 +2,9 @@
 
 [![](https://img.shields.io/npm/v/color-2-name.svg?label=npm%20version)](https://www.npmjs.com/package/color-2-name)
 [![](https://badgen.net/npm/types/color-2-name)](https://github.com/wp-blocks/color-2-name/blob/main/LICENSE)
-![](https://badgen.net/bundlephobia/minzip/color-2-name)
+[![](https://badgen.net/bundlephobia/minzip/color-2-name)](https://badgen.net/bundlephobia/minzip/color-2-name)
 [![](https://img.shields.io/npm/l/color-2-name)](https://github.com/wp-blocks/color-2-name/blob/main/LICENSE)
-![](https://github.com/wp-blocks/color-2-name/actions/workflows/node.js.yml/badge.svg)
+[![](https://github.com/wp-blocks/color-2-name/actions/workflows/node.js.yml/badge.svg)](https://github.com/wp-blocks/color-2-name/actions/workflows/node.js.yml)
 
 Find the name of the color given a hex, rgb and hsl string!
 
@@ -19,7 +19,7 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 - 🪶 **Lightweight** - The module WITH the 140 css colors definitions [weights 4kb gzipped](https://bundlephobia.com/package/color-2-name@1.1.1)!
 - 📦 **Bundled** - Optimized and minified build, with ESM, CJS, UMD and browser versions available!
 - 💪️ **Typed** - Written in typescript (with types included)
-- 🛡️️ **Tested** - Tested with 100% of coverage and over 4000 tests (most of all from [wpt](https://github.com/web-platform-tests/wpt/)) to ensure the full adherence to the css standards
+- 🛡️️ **Tested** - Over 4000 tests (most of all from [wpt](https://github.com/web-platform-tests/wpt/)) with 100% coverage to ensure the full adherence to the css standards
 - 🎈 **No dependencies** - Dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
 
 ## 🚀 Benchmarks
@@ -28,7 +28,7 @@ Designed with the performance in mind, it is 20 times faster than the self-procl
 
 | Library                                                            | <nobr>Operations/sec</nobr>                             | Size<br /> (minified)                                                                                                           | Size<br /> (gzipped)                                                                                                                                                                       |
 |--------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr><b>[color-2-name](#color-2-name) v1.3.0 🚀</b></nobr>        | <nobr>🟢 <b>11 955 ops/s,</b> ±0.29%</nobr>             | [![color-2-name](https://snyk.io/advisor/npm-package/color-2-name/badge.svg)](https://snyk.io/advisor/npm-package/color-2-name) | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=yellow&label=)](https://bundlephobia/package/color-2-name)                                                                  |
+| <nobr><b>[color-2-name](#color-2-name) v1.3.0 🚀</b></nobr>        | <nobr>🟢 <b>11 955 ops/s,</b> ±0.29%</nobr>             | [![color-2-name](https://snyk.io/advisor/npm-package/color-2-name/badge.svg)](https://snyk.io/advisor/npm-package/color-2-name) | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=yellow&label=)](https://bundlephobia.com/result?p=color-2-name)                                                             |
 | <nobr>[colord](https://www.npmjs.com/package/colord) v2.9.3</nobr> | <nobr>🔴 765 ops/s, ±0.39%       ( 93.6% slower)</nobr> | [![colord](https://snyk.io/advisor/npm-package/colord/badge.svg)](https://snyk.io/advisor/npm-package/colord)                   | [![](https://badgen.net/bundlephobia/minzip/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord) + [plugins](https://github.com/omgovich/colord/tree/master/src/plugins) |
 
 - The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.testts](https://github.com/wp-blocks/color-2-name/blob/master/tests/benchmark.testts).

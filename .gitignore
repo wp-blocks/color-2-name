@@ -81,3 +81,4 @@ web_modules/
 .yarn/install-state.gz
 .pnp.*
 
+.npmrc
