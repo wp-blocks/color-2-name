@@ -17,10 +17,10 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 - 😎 **Ally** - So that your app is equally useful for everyone
 - 📒 **Well Documented** - Checkout the [documentation](https://wp-blocks.github.io/color-2-name/) with examples, demo and code references
 - 🪶 **Lightweight** - The module WITH the 140 css colors definitions [weights 4kb gzipped](https://bundlephobia.com/package/color-2-name@1.1.1)!
-- 📦 **Bundled** - Optimized and minified build, with ESM, CJS, UMD and browser versions available!
+- 📦 **Bundled** - Optimized and minified build, with ESM, CJS and iife browser versions available!
 - 💪️ **Typed** - Written in typescript (with types included)
 - 🛡️️ **Tested** - Over 4000 tests (most of all from [wpt](https://github.com/web-platform-tests/wpt/)) with 100% coverage to ensure the full adherence to the css standards
-- 🎈 **No dependencies** - Dependencies tend to have dependencies endlessly and this can lead to security issues. This is a small module, and it doesn't need anything else!
+- 🎈 **No dependencies** - Dependencies tend to have dependencies endlessly, and this can lead to security issues. This is a small module, and it doesn't need anything else!
 
 ## 🚀 Benchmarks
 

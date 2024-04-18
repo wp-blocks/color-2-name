@@ -17,7 +17,7 @@ const terserOptions = {
 function config({ plugins = [], output = {} }) {
 	return {
 		input: "src/index.ts",
-		plugins: [typescript(), nodeResolve(), terser(terserOptions), ...plugins],
+		plugins: [typescript(), nodeResolve(), ...plugins],
 		output: {
 			...output,
 		},
@@ -27,6 +27,7 @@ function config({ plugins = [], output = {} }) {
 
 export default [
 	config({
+		plugins: [terser(terserOptions)],
 		output: {
 			format: "cjs",
 			file: "lib/cjs/index.js",
@@ -36,10 +37,19 @@ export default [
 		output: {
 			format: "iife",
 			name: "color2name",
-			file: "lib/iife/index.js",
+			file: "lib/browser/color-2-name.js",
 		},
 	}),
 	config({
+		plugins: [terser(terserOptions)],
+		output: {
+			format: "iife",
+			name: "color2name",
+			file: "lib/browser/color-2-name.min.js",
+		},
+	}),
+	config({
+		plugins: [terser(terserOptions)],
 		input: "src/index.ts",
 		output: {
 			format: "esm",
