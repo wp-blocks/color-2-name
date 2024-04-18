@@ -7,11 +7,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "outDir": "./bench",
-    "rootDir": ".",
+    "rootDir": "./src",
     "esModuleInterop": true,
   },
   "include": [
-    "*.ts",
-    "node_modules/@types"
-  ]
+    "src/benchmark.ts"
+  ],
 }
