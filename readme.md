@@ -31,7 +31,7 @@ Designed with the performance in mind, it is 10 times faster than the self-procl
 | <nobr><b>[color-2-name](#color-2-name) v1.3.2 🚀</b></nobr>        | <nobr>🟢 <b>7 516 ops/s,</b> ±0.55%%</nobr>                | [![color-2-name](https://snyk.io/advisor/npm-package/color-2-name/badge.svg)](https://snyk.io/advisor/npm-package/color-2-name) | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=yellow&label=)](https://bundlephobia.com/result?p=color-2-name)                                                             |
 | <nobr>[colord](https://www.npmjs.com/package/colord) v2.9.3</nobr> | <nobr>🔴 736 ops/s, ±0.29%        ( 90.21%% slower)</nobr> | [![colord](https://snyk.io/advisor/npm-package/colord/badge.svg)](https://snyk.io/advisor/npm-package/colord)                   | [![](https://badgen.net/bundlephobia/minzip/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord) + [plugins](https://github.com/omgovich/colord/tree/master/src/plugins) |
 
-- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.test.ts](https://github.com/wp-blocks/color-2-name/blob/main/tests/bench/benchmark.ts).
+- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [benchmarks](https://github.com/wp-blocks/color-2-name/blob/main/tests/bench/src/benchmark.ts).
 - For the test we are generating 50 random colors to make sure that no internal mechanism is benefited
 - The Size for the `colord` package is meant without the color definitions while `color-2-name` already has everything you need bundled inside
 
