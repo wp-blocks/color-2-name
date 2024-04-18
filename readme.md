@@ -28,10 +28,10 @@ Designed with the performance in mind, it is 20 times faster than the self-procl
 
 | Library                                                            | <nobr>Operations/sec</nobr>                             | Size<br /> (minified)                                                                                                           | Size<br /> (gzipped)                                                                                                                                                                       |
 |--------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr><b>[color-2-name](#color-2-name) v1.3.0 🚀</b></nobr>        | <nobr>🟢 <b>11 955 ops/s,</b> ±0.29%</nobr>             | [![color-2-name](https://snyk.io/advisor/npm-package/color-2-name/badge.svg)](https://snyk.io/advisor/npm-package/color-2-name) | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=yellow&label=)](https://bundlephobia.com/result?p=color-2-name)                                                             |
+| <nobr><b>[color-2-name](#color-2-name) v1.3.2 🚀</b></nobr>        | <nobr>🟢 <b>11 955 ops/s,</b> ±0.29%</nobr>             | [![color-2-name](https://snyk.io/advisor/npm-package/color-2-name/badge.svg)](https://snyk.io/advisor/npm-package/color-2-name) | [![](https://badgen.net/bundlephobia/minzip/color-2-name?color=yellow&label=)](https://bundlephobia.com/result?p=color-2-name)                                                             |
 | <nobr>[colord](https://www.npmjs.com/package/colord) v2.9.3</nobr> | <nobr>🔴 765 ops/s, ±0.39%       ( 93.6% slower)</nobr> | [![colord](https://snyk.io/advisor/npm-package/colord/badge.svg)](https://snyk.io/advisor/npm-package/colord)                   | [![](https://badgen.net/bundlephobia/minzip/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord) + [plugins](https://github.com/omgovich/colord/tree/master/src/plugins) |
 
-- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.testts](https://github.com/wp-blocks/color-2-name/blob/master/tests/benchmark.testts).
+- The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [tests/benchmark.test.ts](https://github.com/wp-blocks/color-2-name/blob/main/tests/bench/benchmark.ts).
 - For the test we are generating 50 random colors to make sure that no internal mechanism is benefited
 - The Size for the `colord` package is meant without the color definitions while `color-2-name` already has everything you need bundled inside
 
@@ -269,6 +269,6 @@ This package is licensed under the ISC License. See the LICENSE file for details
 
 ### Credits
 
-The wiki about the euclidean distance formula https://en.wikipedia.org/wiki/Color_difference
+The wiki about the Euclidean distance formula https://en.wikipedia.org/wiki/Color_difference
 
 Some useful ideas and codes has been taken from the article on the website css-tricks at https://css-tricks.com/converting-color-spaces-in-javascript/
