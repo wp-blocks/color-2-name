@@ -1,5 +1,5 @@
-import { COLORSTRING, HEX, RGBVALUE } from "./types";
 import { fallbackRGB } from "./rgb-utils";
+import type { COLORSTRING, HEX, RGBVALUE } from "./types";
 
 /**
  * It returns an object with the hex values of the 3 digit hex color
@@ -8,8 +8,8 @@ import { fallbackRGB } from "./rgb-utils";
  * @return {string[]} 6 digit hex
  */
 export function shortHexToLongHex(value: string): string[] {
-  // split the string in to an array of digits then return an array that contains that digit doubled for each item
-  return Array.from(value).map((v: string) => (v + v).toUpperCase());
+	// split the string in to an array of digits then return an array that contains that digit doubled for each item
+	return Array.from(value).map((v: string) => (v + v).toUpperCase());
 }
 
 /**
@@ -19,7 +19,7 @@ export function shortHexToLongHex(value: string): string[] {
  * @return {boolean} Returns true if the string is a valid hexadecimal number, false otherwise.
  */
 export function isHex(num: string): boolean {
-  return Boolean(num.match(/^[0-9a-f]+$/i));
+	return Boolean(num.match(/^[0-9a-f]+$/i));
 }
 
 /**
@@ -30,37 +30,37 @@ export function isHex(num: string): boolean {
  * @return {string[]} an array of 6 digit hex values in a triplet of R G and B (HEX format)
  */
 export function parseHex(value: COLORSTRING): string[] {
-  // remove # at the beginning of the hex color
-  const hexColor: string = value.substring(1);
+	// remove # at the beginning of the hex color
+	const hexColor: string = value.substring(1);
 
-  /**
-   * then if the number of digits is greater than 2 (so it's something like 123 or abc456)
-   * breakdown the string into an object that contains the r g and b values in hex
-   */
-  let hexArray: string[] = [];
-  if (hexColor) {
-    if (hexColor.length === 3 || hexColor.length === 4) {
-      hexArray = shortHexToLongHex(hexColor);
-    } else if (hexColor.length === 6 || hexColor.length === 8) {
-      // match the hex value in groups of 2
-      hexArray = (hexColor.match(/../g) || []).map((value: string) => value);
-    }
-  }
+	/**
+	 * then if the number of digits is greater than 2 (so it's something like 123 or abc456)
+	 * breakdown the string into an object that contains the r g and b values in hex
+	 */
+	let hexArray: string[] = [];
+	if (hexColor) {
+		if (hexColor.length === 3 || hexColor.length === 4) {
+			hexArray = shortHexToLongHex(hexColor);
+		} else if (hexColor.length === 6 || hexColor.length === 8) {
+			// match the hex value in groups of 2
+			hexArray = (hexColor.match(/../g) || []).map((value: string) => value);
+		}
+	}
 
-  if (hexArray.length) {
-    hexArray?.forEach((value, index) => {
-      if (isHex(value)) {
-        hexArray[index] = value.toUpperCase();
-      } else {
-        console.warn(`Invalid Hex value: ${value}`);
-      }
-    });
+	if (hexArray.length) {
+		hexArray?.forEach((value, index) => {
+			if (isHex(value)) {
+				hexArray[index] = value.toUpperCase();
+			} else {
+				console.warn(`Invalid Hex value: ${value}`);
+			}
+		});
 
-    return hexArray;
-  }
+		return hexArray;
+	}
 
-  console.warn(`Invalid Hex: ${value}`);
-  return fallbackRGB(hexArray);
+	console.warn(`Invalid Hex: ${value}`);
+	return fallbackRGB(hexArray);
 }
 
 /**
@@ -71,12 +71,12 @@ export function parseHex(value: COLORSTRING): string[] {
  * @return {string} the rgb color values for the given hex color
  */
 export function hexToRgb(hex: string[]): RGBVALUE {
-  // Extract the RGB values from the hex string
-  return {
-    r: parseInt(hex[0], 16),
-    g: parseInt(hex[1], 16),
-    b: parseInt(hex[2], 16),
-  };
+	// Extract the RGB values from the hex string
+	return {
+		r: Number.parseInt(hex[0], 16),
+		g: Number.parseInt(hex[1], 16),
+		b: Number.parseInt(hex[2], 16),
+	};
 }
 
 /**
@@ -87,7 +87,7 @@ export function hexToRgb(hex: string[]): RGBVALUE {
  * @return {string} the hex string
  */
 export function toHex(int8: number): string {
-  return int8.toString(16).padStart(2, "0");
+	return int8.toString(16).padStart(2, "0");
 }
 
 /**
@@ -98,6 +98,6 @@ export function toHex(int8: number): string {
  * @return {string} the hex string
  */
 export function valuesToHex(rgb: RGBVALUE): HEX {
-  // Extract the RGB values from the hex string
-  return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
+	// Extract the RGB values from the hex string
+	return `#${toHex(rgb?.r)}${toHex(rgb?.g)}${toHex(rgb?.b)}`;
 }

@@ -1,9 +1,17 @@
-import { cleanDefinition, convertToInt8, limitValue, splitValues } from "./common";
-import { RGBVALUE } from "./types";
+import {
+	cleanDefinition,
+	convertToInt8,
+	limitValue,
+	splitValues,
+} from "./common";
+import type { RGBVALUE } from "./types";
 
-export function fallbackRGB(rgb: string[], err: string = `Invalid RGB color`): string[] {
-  console.warn(err);
-  return [rgb[0] ?? 0, rgb[1] ?? 0, rgb[2]];
+export function fallbackRGB(
+	rgb: string[],
+	err = "Invalid RGB color",
+): string[] {
+	console.warn(err);
+	return [rgb[0] ?? 0, rgb[1] ?? 0, rgb[2]];
 }
 
 /**
@@ -14,15 +22,17 @@ export function fallbackRGB(rgb: string[], err: string = `Invalid RGB color`): s
  * @return {Array} the values of the rgb string as Array of strings that represent the rgb color
  */
 export function parseRgb(rgbAsString: string): string[] {
-  const rgbvalue = cleanDefinition(rgbAsString);
+	const rgbvalue = cleanDefinition(rgbAsString);
 
-  const rgb: string[] = splitValues(rgbvalue);
+	const rgb: string[] = splitValues(rgbvalue);
 
-  if (rgb.length !== 3 && rgb.length !== 4) {
-    return fallbackRGB(rgb, `Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`);
-  } else {
-    return [rgb[0], rgb[1], rgb[2]];
-  }
+	if (rgb.length !== 3 && rgb.length !== 4) {
+		return fallbackRGB(
+			rgb,
+			`Too few values to define rgb: ${rgbAsString} -> ${rgbvalue}`,
+		);
+	}
+	return [rgb[0], rgb[1], rgb[2]];
 }
 
 /**
@@ -33,12 +43,12 @@ export function parseRgb(rgbAsString: string): string[] {
  * @return {Object} an object that contains the r, g and b values as INT8
  */
 export function getRgbValues(rgb: string[]): RGBVALUE {
-  // use the channel key as the new array key
-  return {
-    r: limitValue(Math.round(convertToInt8(rgb[0])), 0, 255) || 0,
-    g: limitValue(Math.round(convertToInt8(rgb[1])), 0, 255) || 0,
-    b: limitValue(Math.round(convertToInt8(rgb[2])), 0, 255) || 0,
-  };
+	// use the channel key as the new array key
+	return {
+		r: limitValue(Math.round(convertToInt8(rgb[0])), 0, 255) || 0,
+		g: limitValue(Math.round(convertToInt8(rgb[1])), 0, 255) || 0,
+		b: limitValue(Math.round(convertToInt8(rgb[2])), 0, 255) || 0,
+	};
 }
 
 /**
@@ -49,5 +59,5 @@ export function getRgbValues(rgb: string[]): RGBVALUE {
  * @return {string} a string representation of the rgb values
  */
 export function RGB(rgb: RGBVALUE): string {
-  return `rgb(${rgb.r},${rgb.g},${rgb.b})`;
+	return `rgb(${rgb.r},${rgb.g},${rgb.b})`;
 }
