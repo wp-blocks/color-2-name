@@ -1,10 +1,24 @@
-import colorSet from "./data/colorSet";
-import { BLACKANDWHITE, hexRegex, hslRegex, rgbRegex, RGBSET } from "./common";
-import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
-import { getRgbValues, parseRgb } from "./rgb-utils";
-import { hslToRgb, parseHsl } from "./hsl-utils";
-import type { COLORDEF, COLORSTRING, HEX, RGBCOLORDEF, RGBDEF, RGBVALUE } from "./types";
 import { getColor, getColors } from "./color-utils";
+import { BLACKANDWHITE, RGBSET, hexRegex, hslRegex, rgbRegex } from "./common";
+import colorSet from "./data/colorSet";
+import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
+import { hslToRgb, parseHsl } from "./hsl-utils";
+import { getRgbValues, parseRgb } from "./rgb-utils";
+import type {
+	COLORDEF,
+	COLORSTRING,
+	ColorParsers,
+	HEX,
+	RGBCOLORDEF,
+	RGBDEF,
+	RGBVALUE,
+} from "./types";
+
+export const colorParsers: ColorParsers[] = [
+	{ regex: hexRegex, parser: parseHex, converter: hexToRgb },
+	{ regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
+	{ regex: hslRegex, parser: parseHsl, converter: hslToRgb },
+];
 
 /**
  * Given a color string, it returns the closest corresponding name of the color.
@@ -22,40 +36,70 @@ import { getColor, getColors } from "./color-utils";
  *
  * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
-function closest(color: string | COLORSTRING, set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[], args?: { info?: boolean }): COLORDEF {
-  let closestGap = Number.MAX_SAFE_INTEGER;
-  const closestColor: COLORDEF = { name: "error", color: "#F00" };
+function closest(
+	color: string | COLORSTRING,
+	set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
+	args?: { info?: boolean },
+): COLORDEF {
+	let closestGap = Number.MAX_SAFE_INTEGER;
+	const closestColor: COLORDEF = { name: "error", color: "#F00" };
 
-  if (set.length < 1) {
-    return closestColor;
-  }
+	if (set.length < 1) {
+		return closestColor;
+	}
 
-  const rgbColorValues = Object.values(parseColor(color));
-  // Find the closest color in the color set
-  for (const tested of set) {
-    const gap = distance(rgbColorValues as RGBDEF, tested, true);
-    if (gap < closestGap) {
-      closestGap = gap;
-      closestColor.name = tested[3];
-      closestColor.color = `rgb(${String(tested[0])},${String(tested[1])},${String(tested[2])})`;
-    }
+	const rgbColorValues = Object.values(parseColor(color));
+	const colorSetLength = set.length;
+	// Precompute RGB values if needed
+	const precomputedRGBValues = set.map((item) => [item[0], item[1], item[2]]);
 
-    // TODO: add a minimum acceptable value in order to speed up the calculation. for example #ff0001 should return red since is very very close to red
-    if (gap === 0) {
-      break;
-    }
-  }
+	// Find the closest color in the color set
+	for (let i = 0; i < colorSetLength; i++) {
+		const tested = precomputedRGBValues[i];
+		const gap = distance(rgbColorValues as RGBDEF, tested, true);
+		if (gap < closestGap) {
+			closestGap = gap;
+			closestColor.name = set[i][3];
+			closestColor.color = `rgb(${set[i][0]},${set[i][1]},${set[i][2]})`;
+		}
 
-  if (args?.info) {
-    const colorValue = getColor(closestColor.name, set);
-    return {
-      ...colorValue,
-      ...closestColor,
-      gap: Math.sqrt(closestGap),
-    };
-  }
+		// Break if exact match found
+		if (gap === 0) {
+			break;
+		}
+	}
 
-  return closestColor;
+	if (args?.info) {
+		const colorValue = getColor(closestColor.name, set);
+		return {
+			...colorValue,
+			...closestColor,
+			gap: Math.sqrt(closestGap),
+		};
+	}
+
+	return closestColor;
+}
+
+/**
+ * This function takes a string representing a color (color) and uses regular expressions to check if it matches any of the following formats: hex, hex+alpha, RGB, RGBA, HSL, or HSLA.
+ * If the color string matches one of these formats, the function returns an object with the type of color and the value of the color.
+ * If the color string does not match any of the formats, the function throws an error.
+ *
+ * @param {string} colorString - the color string to test and convert to rgb values
+ *
+ * @return {Object|Error} the object with rgb values of that color
+ */
+export function parseColor(colorString: string): RGBVALUE {
+	for (const { regex, parser, converter } of colorParsers) {
+		if (regex.test(colorString)) {
+			const result = parser(colorString as COLORSTRING);
+			return converter(result);
+		}
+	}
+
+	// If the color string does not match any of the regular expressions, return an error
+	throw new Error(`Invalid color: ${colorString}`);
 }
 
 /**
@@ -68,7 +112,7 @@ function closest(color: string | COLORSTRING, set: RGBCOLORDEF[] | undefined = c
  * @example isLight('#ddd'); // true
  */
 function isLight(color: string): boolean {
-  return closest(color, BLACKANDWHITE).name === "white";
+	return closest(color, BLACKANDWHITE).name === "white";
 }
 
 /**
@@ -81,7 +125,7 @@ function isLight(color: string): boolean {
  * @example isDark('#333'); // true
  */
 function isDark(color: string): boolean {
-  return closest(color, BLACKANDWHITE).name === "black";
+	return closest(color, BLACKANDWHITE).name === "black";
 }
 
 /**
@@ -94,7 +138,7 @@ function isDark(color: string): boolean {
  * @example closestRGB('#f00'); // 'red'
  */
 function closestRGB(color: string): string {
-  return closest(color, RGBSET).name;
+	return closest(color, RGBSET).name;
 }
 
 /**
@@ -111,10 +155,18 @@ function closestRGB(color: string): string {
  *
  * @example distance([10, 20, 30], [120, 120, 120]); // 173.78147196982766
  */
-function distance(rgb1: [number, number, number], rgb2: [number, number, number, string] | number[], fast: boolean = false): number {
-  const [rDiff, gDiff, bDiff] = [rgb2[0] - rgb1[0], rgb2[1] - rgb1[1], rgb2[2] - rgb1[2]];
-  const dist = rDiff * rDiff + gDiff * gDiff + bDiff * bDiff;
-  return fast ? dist : Math.sqrt(dist);
+function distance(
+	rgb1: [number, number, number],
+	rgb2: [number, number, number, string] | number[],
+	fast = false,
+): number {
+	const [rDiff, gDiff, bDiff] = [
+		rgb2[0] - rgb1[0],
+		rgb2[1] - rgb1[1],
+		rgb2[2] - rgb1[2],
+	];
+	const dist = rDiff * rDiff + gDiff * gDiff + bDiff * bDiff;
+	return fast ? dist : Math.sqrt(dist);
 }
 
 /**
@@ -127,40 +179,22 @@ function distance(rgb1: [number, number, number], rgb2: [number, number, number,
  * @example rgbToHex("rgba(100% 0 0 / .5)"); // #FF0000
  */
 function rgbToHex(rgbString: string): HEX | Error {
-  // if is a rgb string
-  if (rgbRegex.test(rgbString)) {
-    const rgb = parseRgb(rgbString);
-    const RgbValues = getRgbValues(rgb);
-    return valuesToHex(RgbValues);
-  }
-  throw new Error(`Invalid color: ${rgbString}`);
+	// if is a rgb string
+	if (rgbRegex.test(rgbString)) {
+		const rgb = parseRgb(rgbString);
+		const RgbValues = getRgbValues(rgb);
+		return valuesToHex(RgbValues);
+	}
+	throw new Error(`Invalid color: ${rgbString}`);
 }
 
-/**
- * This function takes a string representing a color (color) and uses regular expressions to check if it matches any of the following formats: hex, hex+alpha, RGB, RGBA, HSL, or HSLA.
- * If the color string matches one of these formats, the function returns an object with the type of color and the value of the color.
- * If the color string does not match any of the formats, the function throws an error.
- *
- * @param {string} colorString - the color string to test and convert to rgb values
- *
- * @return {Object|Error} the object with rgb values of that color
- */
-export function parseColor(colorString: string): RGBVALUE {
-  // Check if the color string matches any of the regular expressions
-  const colorParsers = [
-    { regex: hexRegex, parser: parseHex, converter: hexToRgb },
-    { regex: rgbRegex, parser: parseRgb, converter: getRgbValues },
-    { regex: hslRegex, parser: parseHsl, converter: hslToRgb },
-  ];
-  for (const { regex, parser, converter } of colorParsers) {
-    if (regex.test(colorString)) {
-      const result = parser(colorString as COLORSTRING);
-      return converter(result);
-    }
-  }
-
-  // If the color string does not match any of the regular expressions, return an error
-  throw new Error(`Invalid color: ${colorString}`);
-}
-
-export { closest, rgbToHex, distance, isLight, isDark, closestRGB, getColor, getColors };
+export {
+	closest,
+	rgbToHex,
+	distance,
+	isLight,
+	isDark,
+	closestRGB,
+	getColor,
+	getColors,
+};
