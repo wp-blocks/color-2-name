@@ -1,36 +1,76 @@
-import b from 'benny'
-import { colord, extend } from 'colord'
-import namesPlugin from "colord/plugins/names"
-import {closest} from "color-2-name"
-import * as fs from "fs";
+import b from "benny";
+import { closest } from "color-2-name";
+import { colord, extend } from "colord";
+import namesPlugin from "colord/plugins/names";
 
-extend([namesPlugin])
+extend([namesPlugin]);
 
-const randomColor = () => '#' + [1,2,3].map(() => Math.floor(Math.random() * 255 ).toString(16).padStart(2, "0") ).join("")
+const randomHex = () =>
+	`#${[1, 2, 3]
+		.map(() =>
+			Math.floor(Math.random() * 255)
+				.toString(16)
+				.padStart(2, "0"),
+		)
+		.join("")}`;
 
-const randoms = new Array(50).fill(0).map(() => randomColor())
+/**
+ * Generate a random RGB or RGBA color.
+ * @param {boolean} includeAlpha - Whether to include alpha value (opacity).
+ * @returns {string} A string representing the generated color.
+ */
+function getRandomColor(includeAlpha = false) {
+	// Generate random values for red, green, and blue components
+	const red = Math.floor(Math.random() * 256);
+	const green = Math.floor(Math.random() * 256);
+	const blue = Math.floor(Math.random() * 256);
 
-console.log('colors used for tests', randoms)
+	// If includeAlpha is true, generate a random alpha value between 0 and 1
+	const alpha = includeAlpha ? Math.random().toFixed(2) : 1;
+
+	// If includeAlpha is true, return RGBA format, otherwise return RGB format
+	return includeAlpha
+		? `rgba(${red}, ${green}, ${blue}, ${alpha})`
+		: `rgb(${red}, ${green}, ${blue})`;
+}
+
+/**
+ * Generate a random HSL color.
+ * @param {boolean} includeAlpha - Whether to include alpha value (opacity).
+ * @returns {string} A string representing the generated color.
+ */
+function getRandomHSLColor(includeAlpha = false) {
+	// Generate random values for hue, saturation, and lightness components
+	const hue = Math.floor(Math.random() * 360); // Hue ranges from 0 to 360
+	const saturation = Math.floor(Math.random() * 101); // Saturation ranges from 0% to 100%
+	const lightness = Math.floor(Math.random() * 101); // Lightness ranges from 0% to 100%
+
+	// If includeAlpha is true, generate a random alpha value between 0 and 1
+	const alpha = includeAlpha ? Math.random().toFixed(2) : 1;
+
+	// If includeAlpha is true, return HSLA format, otherwise return HSL format
+	return includeAlpha
+		? `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
+		: `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
+const randoms = new Array(50).fill(0).map(() => randomHex());
+
+console.log("colors used for tests", randoms);
 
 b.suite(
-  'Convert a random color to a name',
+	"Convert a random color to a name",
 
-  b.add('color2name', () => {
-    randoms.forEach((i) => closest(i))
-  }),
+	b.add("color2name", () => {
+		// biome-ignore lint/complexity/noForEach: <explanation>
+		randoms.forEach((i) => closest(i));
+	}),
 
-  b.add('colord', () => {
-    randoms.forEach((i) => colord(i).toName({ closest: true }))
-  }),
+	b.add("colord", () => {
+		// biome-ignore lint/complexity/noForEach: <explanation>
+		randoms.forEach((i) => colord(i).toName({ closest: true }));
+	}),
 
-  b.cycle(),
-  b.complete()
-).then( () => {
-  // get the benchmark folder path
-  const path = process.cwd() + '/bench'
-  if (fs.existsSync(path)) {
-    console.log('Removing bench folder at ' + path)
-    fs.rmSync(path, {recursive: true})
-  }
-  process.exit()
-} )
+	b.cycle(),
+	b.complete(),
+);
