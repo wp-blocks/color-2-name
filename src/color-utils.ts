@@ -1,8 +1,8 @@
 import colorSet from "./data/colorSet";
-import { RGBCOLORDEF } from "./types";
-import { RGB } from "./rgb-utils";
 import { valuesToHex } from "./hex-utils";
 import { valuesToHsl } from "./hsl-utils";
+import { RGB } from "./rgb-utils";
+import type { RGBCOLORDEF } from "./types";
 
 /**
  * This function was the opposite of the name of the repo and returns the color of the colorSet given the name
@@ -10,29 +10,34 @@ import { valuesToHsl } from "./hsl-utils";
  * @param {string} searchedColor -the name of the color to search for
  * @param {Array} set - the colorSet to search in
  */
-export function getColor(searchedColor: string, set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[]) {
-  const found: RGBCOLORDEF | undefined = set.find((color: RGBCOLORDEF) => color[3] === searchedColor);
+export function getColor(
+	searchedColor: string,
+	set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
+) {
+	const color: RGBCOLORDEF | undefined = set.find(
+		(color: RGBCOLORDEF) => color[3] === searchedColor,
+	);
 
-  if (typeof found !== "undefined") {
-    const [r, g, b] = found;
-    return {
-      hex: valuesToHex({ r, g, b }),
-      rgb: RGB({ r, g, b }),
-      hsl: valuesToHsl({ r, g, b }),
-    };
-  }
+	if (typeof color !== "undefined") {
+		const [r, g, b] = color;
+		return {
+			hex: valuesToHex({ r, g, b }),
+			rgb: RGB({ r, g, b }),
+			hsl: valuesToHsl({ r, g, b }),
+		};
+	}
 
-  throw new Error(`Error: invalid color ${searchedColor} or empty colorSet`);
+	throw new Error(`Error: invalid color ${searchedColor} or empty colorSet`);
 }
 
+/**
+ * Get all the colors from the colorSet
+ */
 export function getColors() {
-  const colors = colorSet.map( (colorData) => {
-    const currentColor = {
-      name: colorData[3],
-      ...getColor(colorData[3] as string)
-    };
-    return currentColor;
-  } );
-
-  return colors
+	return colorSet.map((colorData) => {
+		return {
+			name: colorData[3],
+			...getColor(colorData[3] as string),
+		};
+	});
 }
