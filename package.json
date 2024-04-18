@@ -10,6 +10,7 @@
 	"main": "lib/cjs/index.cjs",
 	"require": "lib/cjs/index.js",
 	"import": "lib/esm/index.js",
+	"types": "lib/@types/index.d.ts",
 	"browser": "lib/browser/color-2-name.min.js",
 	"unpkg": "lib/browser/color-2-name.min.js",
 	"jsdelivr": "lib/browser/color-2-name.js",
@@ -21,14 +22,7 @@
 		"module-tsc": "tsc --declaration --emitDeclarationOnly --outDir lib/@types --rootDir src",
 		"module-rollup": "rollup -c"
 	},
-	"files": [
-		"lib/",
-		"tests/*.ts",
-		"*.json",
-		".gitignore",
-		"LICENSE",
-		"readme.md"
-	],
+	"files": ["lib/", "tests/*.ts", "*.json", "*.md", ".gitignore", "LICENSE"],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/wp-blocks/color-2-name.git"
