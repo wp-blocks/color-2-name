@@ -1,33 +1,17 @@
 {
-  "compilerOptions": {
-    "module": "ES2015",
-    "moduleResolution": "node",    // Search under node_modules for non-relative imports.
-    // Process & infer types from .js files.
-    "pretty": true,
-    "sourceMap": true,
-    "strict": true, // Enable the strictest settings like strictNullChecks & noImplicitAny.
-    "isolatedModules": true, // Disallow features that require cross-file information for emitting.
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "declaration": true,
-    "forceConsistentCasingInFileNames": true,
-    "rootDir": "src",
-    "esModuleInterop": true,
-    // "verbatimModuleSyntax": true,
-    "typeRoots": [
-      "node_modules/@types/"
-    ]
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "coverage",
-    "dist",
-    "docs",
-    "src/color-2-name.ts"
-  ]
+	"compilerOptions": {
+		"module": "ES2022",
+		"target": "ES2022",
+		"moduleResolution": "node",
+		"strict": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
+		"rootDir": "src"
+	},
+	"include": ["src", "test"],
+	"exclude": ["node_modules", "coverage", "dist", "docs"]
 }
