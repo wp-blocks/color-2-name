@@ -66,7 +66,7 @@ To run the script in the browser, add the `color-2-name` add it to the header or
 <script>
     // Then the color-2-name module will be available using the following command:
     // You will find the packed script loaded into window.color2name
-    closest('#123456') // returns "name" : "midnightblue" , "color" : "rgb(25,25,112)"
+    color2name.closest('#123456') // returns "name" : "midnightblue" , "color" : "rgb(25,25,112)"
 </script>
 ```
 
