@@ -1,5 +1,3 @@
-import colorSet from "./data/colorSet";
-
 /**
  * Types definition for common colors formats
  * supported format are: rgb, rgba, hsl, hsla, hex, hex+alpha

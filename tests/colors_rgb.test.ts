@@ -2,10 +2,10 @@
  * COMMON FUNCTIONS TESTING:
  */
 import { describe, expect, it, vi } from "vitest";
-import { parseColor } from "../src";
-import { RGB, getRgbValues, parseRgb } from "../src/rgb-utils";
-import { normalizeRGB } from "./fixtures/functions";
-import { rgb_invalid_tests, rgb_valid_tests } from "./fixtures/rgb_colors";
+import { parseColor } from "../src/index.js";
+import { RGB, getRgbValues, parseRgb } from "../src/rgb-utils.js";
+import { normalizeRGB } from "./fixtures/functions.js";
+import { rgb_invalid_tests, rgb_valid_tests } from "./fixtures/rgb_colors.js";
 
 describe("RGB COMMON", () => {
 	// RGB

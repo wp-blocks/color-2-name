@@ -3,13 +3,18 @@ import { describe, expect, it, vi } from "vitest";
  * COMMON FUNCTIONS TESTING:
  */
 
-import { parseColor } from "../src/";
-import { normalizeDegrees } from "../src/common";
-import { hexToRgb, parseHex, shortHexToLongHex, toHex } from "../src/hex-utils";
-import { RGB } from "../src/rgb-utils";
+import { normalizeDegrees } from "../src/common.js";
+import {
+	hexToRgb,
+	parseHex,
+	shortHexToLongHex,
+	toHex,
+} from "../src/hex-utils.js";
+import { parseColor } from "../src/index.js";
+import { RGB } from "../src/rgb-utils.js";
 import type { COLORSTRING } from "../src/types.js";
-import { normalizeRGB } from "./fixtures/functions";
-import { hex_invalid_tests, hex_valid_tests } from "./fixtures/hex_colors";
+import { normalizeRGB } from "./fixtures/functions.js";
+import { hex_invalid_tests, hex_valid_tests } from "./fixtures/hex_colors.js";
 
 describe("HEX COMMON", () => {
 	// HEX

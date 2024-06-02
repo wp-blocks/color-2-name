@@ -4,8 +4,8 @@ import {
 	convertToInt8,
 	normalizeDegrees,
 	splitValues,
-} from "./common";
-import type { HSLVALUE, RGBVALUE } from "./types";
+} from "./common.js";
+import type { HSLVALUE, RGBVALUE } from "./types.js";
 
 export function fallbackHSL(
 	hsl: string[],
