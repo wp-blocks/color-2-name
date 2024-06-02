@@ -1,6 +1,6 @@
 {
 	"name": "color-2-name",
-	"version": "1.4.3",
+	"version": "1.4.4",
 	"author": "Erik <erik@codekraft.it>",
 	"description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
 	"homepage": "https://wp-blocks.github.io/color-2-name/",
@@ -9,7 +9,7 @@
 	"main": "./lib/index.cjs",
 	"module": "./lib/index.js",
 	"type": "module",
-	"types": "lib/@types/index.d.ts",
+	"types": "lib/index.d.ts",
 	"browser": "lib/browser/color-2-name.min.js",
 	"unpkg": "lib/browser/color-2-name.min.js",
 	"jsdelivr": "lib/browser/color-2-name.js",
