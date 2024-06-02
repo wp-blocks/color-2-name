@@ -2,12 +2,12 @@
  * COMMON FUNCTIONS TESTING:
  */
 import { describe, expect, it, vi } from "vitest";
-import { parseColor } from "../src";
-import { convertToInt8 } from "../src/common";
-import { hslToRgb, parseHsl } from "../src/hsl-utils";
-import { RGB } from "../src/rgb-utils";
-import { normalizeRGB } from "./fixtures/functions";
-import { hsl_invalid_tests, hsl_valid_tests } from "./fixtures/hsl_colors";
+import { convertToInt8 } from "../src/common.js";
+import { hslToRgb, parseHsl } from "../src/hsl-utils.js";
+import { parseColor } from "../src/index.js";
+import { RGB } from "../src/rgb-utils.js";
+import { normalizeRGB } from "./fixtures/functions.js";
+import { hsl_invalid_tests, hsl_valid_tests } from "./fixtures/hsl_colors.js";
 
 describe("HSL COMMON", () => {
 	// HSL

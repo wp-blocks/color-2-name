@@ -1,4 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
+import { getColors } from "../src/color-utils.js";
+import { MAXDISTANCE } from "../src/common.js";
+import ColorSet from "../src/data/colorSet.js";
+import { valuesToHex } from "../src/hex-utils.js";
 import {
 	closest,
 	closestRGB,
@@ -7,11 +11,7 @@ import {
 	isDark,
 	isLight,
 	rgbToHex,
-} from "../src";
-import { getColors } from "../src/color-utils";
-import { MAXDISTANCE } from "../src/common";
-import ColorSet from "../src/data/colorSet";
-import { valuesToHex } from "../src/hex-utils";
+} from "../src/index.js";
 
 describe("Color Conversions functions", () => {
 	it("Returns the correct distance between colors", () => {

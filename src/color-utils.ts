@@ -1,8 +1,8 @@
 import colorSet from "./data/colorSet";
-import { valuesToHex } from "./hex-utils";
-import { valuesToHsl } from "./hsl-utils";
-import { RGB } from "./rgb-utils";
-import type { RGBCOLORDEF } from "./types";
+import { valuesToHex } from "./hex-utils.js";
+import { valuesToHsl } from "./hsl-utils.js";
+import { RGB } from "./rgb-utils.js";
+import type { RGBCOLORDEF } from "./types.js";
 
 /**
  * This function was the opposite of the name of the repo and returns the color of the colorSet given the name

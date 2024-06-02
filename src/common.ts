@@ -1,5 +1,5 @@
 // Regular expressions to match different color formats
-import type { RGBCOLORDEF } from "./types";
+import type { RGBCOLORDEF } from "./types.js";
 
 /** The maximum distance possible between colors */
 export const MAXDISTANCE = 441.6729559300637;

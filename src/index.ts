@@ -1,9 +1,15 @@
-import { getColor, getColors } from "./color-utils";
-import { BLACKANDWHITE, RGBSET, hexRegex, hslRegex, rgbRegex } from "./common";
-import colorSet from "./data/colorSet";
-import { hexToRgb, parseHex, valuesToHex } from "./hex-utils";
-import { hslToRgb, parseHsl } from "./hsl-utils";
-import { getRgbValues, parseRgb } from "./rgb-utils";
+import { getColor, getColors } from "./color-utils.js";
+import {
+	BLACKANDWHITE,
+	RGBSET,
+	hexRegex,
+	hslRegex,
+	rgbRegex,
+} from "./common.js";
+import colorSet from "./data/colorSet.js";
+import { hexToRgb, parseHex, valuesToHex } from "./hex-utils.js";
+import { hslToRgb, parseHsl } from "./hsl-utils.js";
+import { getRgbValues, parseRgb } from "./rgb-utils.js";
 import type {
 	COLORDEF,
 	COLORSTRING,
@@ -12,7 +18,7 @@ import type {
 	RGBCOLORDEF,
 	RGBDEF,
 	RGBVALUE,
-} from "./types";
+} from "./types.js";
 
 export const colorParsers: ColorParsers[] = [
 	{ regex: hexRegex, parser: parseHex, converter: hexToRgb },

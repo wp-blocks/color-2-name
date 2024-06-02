@@ -3,8 +3,8 @@ import {
 	convertToInt8,
 	limitValue,
 	splitValues,
-} from "./common";
-import type { RGBVALUE } from "./types";
+} from "./common.js";
+import type { RGBVALUE } from "./types.js";
 
 export function fallbackRGB(
 	rgb: string[],
