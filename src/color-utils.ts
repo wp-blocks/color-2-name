@@ -1,4 +1,4 @@
-import colorSet from "./data/colorSet";
+import colorSet from "./data/colorSet.js";
 import { valuesToHex } from "./hex-utils.js";
 import { valuesToHsl } from "./hsl-utils.js";
 import { RGB } from "./rgb-utils.js";
