@@ -22,7 +22,7 @@ export const stripComments: RegExp = /(\/\*[^*]*\*\/)|(\/\/[^*]*)/g;
  */
 export const BLACKANDWHITE: RGBCOLORDEF[] = [
 	[255, 255, 255, "white"],
-	[1, 1, 1, "black"],
+	[0, 0, 0, "black"],
 ];
 
 /**

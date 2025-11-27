@@ -11,7 +11,7 @@ export function fallbackRGB(
 	err = "Invalid RGB color",
 ): string[] {
 	console.warn(err);
-	return [rgb[0] ?? 0, rgb[1] ?? 0, rgb[2]];
+	return [rgb[0] ?? 0, rgb[1] ?? 0, rgb[2] ?? 0];
 }
 
 /**
