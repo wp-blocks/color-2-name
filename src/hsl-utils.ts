@@ -63,11 +63,11 @@ export function getHslValues(hsl: string[]): HSLVALUE {
  * @param h Y
  */
 function getHue(c: number, x: number, h: number): [number, number, number] {
-	if (h < 60) return [c, x, 0];
-	if (h < 120) return [x, c, 0];
-	if (h < 180) return [0, c, x];
-	if (h < 240) return [0, x, c];
-	if (h < 300) return [x, 0, c];
+	if (h < 1) return [c, x, 0];
+	if (h < 2) return [x, c, 0];
+	if (h < 3) return [0, c, x];
+	if (h < 4) return [0, x, c];
+	if (h < 5) return [x, 0, c];
 	return [c, 0, x];
 }
 
@@ -86,7 +86,7 @@ export function hslToRgb(hslColor: string[]): RGBVALUE {
 	const x = c * (1 - Math.abs(((hsl.h / 60) % 2) - 1));
 	const m = l - c / 2;
 
-	let [r, g, b] = getHue(c, x, hsl.h);
+	let [r, g, b] = getHue(c, x, (hsl.h / 60) % 6);
 
 	r = Math.round((r + m) * 255);
 	g = Math.round((g + m) * 255);
