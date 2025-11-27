@@ -112,7 +112,7 @@ export function parseColor(colorString: string): RGBVALUE {
 	for (const { regex, parser, converter } of colorParsers) {
 		if (regex.test(colorString)) {
 			const result = parser(colorString as COLORSTRING);
-			return converter(result);
+			return converter(result as COLORSTRING[]);
 		}
 	}
 
