@@ -1,6 +1,6 @@
 {
 	"name": "color-2-name",
-	"version": "1.4.4",
+	"version": "1.5.0",
 	"author": "Erik <erik@codekraft.it>",
 	"description": "Finds the closest color name to a given hex, rgb and hsl color (with and without alpha). It uses the Euclidean distance formula to calculate the distance between colors in the RGB color space",
 	"homepage": "https://wp-blocks.github.io/color-2-name/",
@@ -16,21 +16,22 @@
 	"exports": {
 		".": {
 			"types": "./lib/index.d.ts",
-			"require": {
-				"types": "./lib/index.d.cts",
-				"default": "./lib/index.cjs"
-			},
+			"browser": "./lib/browser/color-2-name.js",
 			"import": {
 				"types": "./lib/index.d.ts",
 				"default": "./lib/index.js"
 			},
-			"browser": "./lib/browser/color-2-name.js"
+			"require": {
+				"types": "./lib/index.d.cts",
+				"default": "./lib/index.cjs"
+			}
 		}
 	},
 	"scripts": {
 		"gen-colorSet": "node ./lib/colorSetUtils.mjs colorSet",
 		"build": "rimraf lib && npm run build-module && npm run build-browser && npm run build-browser-min",
 		"test": "vitest",
+		"testsss": "vitest --run --testNamePattern=^Verification Tests Critical Bugs should throw error for invalid hex$",
 		"test:coverage": "vitest --coverage",
 		"lint": "npx @biomejs/biome lint --apply src",
 		"build-module": "tsup",
@@ -64,14 +65,14 @@
 		"color picker"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "1.7.3",
-		"@types/node": "^20.12.13",
-		"@vitest/coverage-v8": "^1.6.0",
-		"esbuild": "^0.21.4",
-		"rimraf": "^5.0.7",
-		"tsup": "^8.0.2",
-		"typescript": "^5.4.5",
-		"vitest": "^1.6.0"
+		"@biomejs/biome": "2.3.8",
+		"@types/node": "^24.10.1",
+		"@vitest/coverage-v8": "^4.0.14",
+		"esbuild": "^0.27.0",
+		"rimraf": "^6.1.2",
+		"tsup": "^8.5.1",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.14"
 	},
 	"tsup": {
 		"skipNodeModulesBundle": true,
