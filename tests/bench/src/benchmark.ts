@@ -56,19 +56,27 @@ function getRandomHSLColor(includeAlpha = false) {
 
 const randoms = new Array(50).fill(0).map(() => randomHex());
 
-console.log("colors used for tests", randoms);
+// copy the array to avoid mutation
+const randomsCopy = [
+	...randoms,
+	...Array(50)
+		.fill([...randoms].slice(0, 0))
+		.reduce((a, b) => a.concat(b)),
+];
+
+console.log("colors used for tests", randomsCopy, randomsCopy.length);
 
 b.suite(
 	"Convert a random color to a name",
 
 	b.add("color2name", () => {
 		// biome-ignore lint/complexity/noForEach: <explanation>
-		randoms.forEach((i) => closest(i));
+		randomsCopy.forEach((i) => closest(i));
 	}),
 
 	b.add("colord", () => {
 		// biome-ignore lint/complexity/noForEach: <explanation>
-		randoms.forEach((i) => colord(i).toName({ closest: true }));
+		randomsCopy.forEach((i) => colord(i).toName({ closest: true }));
 	}),
 
 	b.cycle(),

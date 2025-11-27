@@ -42,11 +42,18 @@ export const colorParsers: ColorParsers[] = [
  *
  * closest('#f00', undefined, {info:true}); // { name: 'red', color: 'rgb(255,0,0)', hex: '#ff0000', hsl: 'hsl(0, 100%, 50%)', distance: 0 ) }
  */
+const colorCache = new Map<string, COLORDEF>();
+
 function closest(
 	color: string | COLORSTRING,
 	set: RGBCOLORDEF[] | undefined = colorSet as RGBCOLORDEF[],
 	args?: { info?: boolean },
 ): COLORDEF {
+	const cacheKey = `${color}-${args?.info ? "info" : "basic"}`;
+	if (colorCache.has(cacheKey)) {
+		return colorCache.get(cacheKey) as COLORDEF;
+	}
+
 	let closestGap = Number.MAX_SAFE_INTEGER;
 	const closestColor: COLORDEF = { name: "error", color: "#F00" };
 
@@ -54,19 +61,21 @@ function closest(
 		return closestColor;
 	}
 
-	const rgbColorValues = Object.values(parseColor(color));
+	const rgbColorValues = parseColor(color);
 	const colorSetLength = set.length;
-	// Precompute RGB values if needed
-	const precomputedRGBValues = set.map((item) => [item[0], item[1], item[2]]);
 
 	// Find the closest color in the color set
 	for (let i = 0; i < colorSetLength; i++) {
-		const tested = precomputedRGBValues[i];
-		const gap = distance(rgbColorValues as RGBDEF, tested, true);
+		const tested = set[i];
+		const gap = distance(
+			[rgbColorValues.r, rgbColorValues.g, rgbColorValues.b],
+			tested,
+			true,
+		);
 		if (gap < closestGap) {
 			closestGap = gap;
-			closestColor.name = set[i][3];
-			closestColor.color = `rgb(${set[i][0]},${set[i][1]},${set[i][2]})`;
+			closestColor.name = tested[3];
+			closestColor.color = `rgb(${tested[0]},${tested[1]},${tested[2]})`;
 		}
 
 		// Break if exact match found
@@ -77,13 +86,16 @@ function closest(
 
 	if (args?.info) {
 		const colorValue = getColor(closestColor.name, set);
-		return {
+		const result = {
 			...colorValue,
 			...closestColor,
 			gap: Math.sqrt(closestGap),
 		};
+		colorCache.set(cacheKey, result);
+		return result;
 	}
 
+	colorCache.set(cacheKey, closestColor);
 	return closestColor;
 }
 
@@ -100,7 +112,7 @@ export function parseColor(colorString: string): RGBVALUE {
 	for (const { regex, parser, converter } of colorParsers) {
 		if (regex.test(colorString)) {
 			const result = parser(colorString as COLORSTRING);
-			return converter(result);
+			return converter(result as COLORSTRING[]);
 		}
 	}
 
@@ -166,12 +178,10 @@ function distance(
 	rgb2: [number, number, number, string] | number[],
 	fast = false,
 ): number {
-	const [rDiff, gDiff, bDiff] = [
-		rgb2[0] - rgb1[0],
-		rgb2[1] - rgb1[1],
-		rgb2[2] - rgb1[2],
-	];
-	const dist = rDiff * rDiff + gDiff * gDiff + bDiff * bDiff;
+	const rd = rgb2[0] - rgb1[0];
+	const gd = rgb2[1] - rgb1[1];
+	const bd = rgb2[2] - rgb1[2];
+	const dist = rd * rd + gd * gd + bd * bd;
 	return fast ? dist : Math.sqrt(dist);
 }
 

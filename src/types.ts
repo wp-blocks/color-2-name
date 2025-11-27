@@ -4,7 +4,7 @@
  */
 export type RGB = `rgb(${string},${string},${string})`;
 export type HSL = `hsl(${string},${string},${string})`;
-export type HEX = `#${string}` | string;
+export type HEX = `#${string}`;
 
 export type WithAlpha<O> = O & { a: number };
 export type RGBA = WithAlpha<RGB>;
@@ -41,8 +41,8 @@ export interface COLORDEF {
 
 export interface ColorParsers {
 	regex: RegExp;
-	parser: (color: string) => string[];
-	converter: (colorSet: string[]) => RGBVALUE;
+	parser: (color: COLORSTRING) => string[];
+	converter: (colorSet: COLORSTRING[]) => RGBVALUE;
 }
 
 export type colorListHEX = Array<{ name: string; color: string }>;

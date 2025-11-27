@@ -19,7 +19,7 @@ export function shortHexToLongHex(value: string): string[] {
  * @return {boolean} Returns true if the string is a valid hexadecimal number, false otherwise.
  */
 export function isHex(num: string): boolean {
-	return Boolean(num.match(/^[0-9a-f]+$/i));
+	return Boolean(num.match(/^[0-9a-f]{3,8}$/i));
 }
 
 /**
