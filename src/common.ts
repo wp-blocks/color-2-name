@@ -13,7 +13,7 @@ export const hslRegex: RegExp = /^hsla?\(([^)]+)\)/i;
 /** A regex to match strings that are only valid numbers with and without decimals and the number can be negative and without the 0 in the beginning  */
 export const isNumeric: RegExp = /^-?\d*\.?\d+$/i;
 /** Remove comments from string */
-export const stripComments: RegExp = /(\/\*[^*]*\*\/)|(\/\/[^*]*)/g;
+export const stripComments: RegExp = /(\/\*[^*]*\*\/)|(\/\/.*)/g;
 
 /**
  * This set is used to detect if the color is bright or dark
