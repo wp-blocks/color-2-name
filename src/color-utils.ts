@@ -34,10 +34,14 @@ export function getColor(
  * Get all the colors from the colorSet
  */
 export function getColors() {
-	return colorSet.map((colorData) => {
+	return (colorSet as RGBCOLORDEF[]).map((colorData) => {
+		const [r, g, b, name] = colorData;
+		const rgb = { r, g, b };
 		return {
-			name: colorData[3],
-			...getColor(colorData[3] as string),
+			name,
+			hex: valuesToHex(rgb),
+			rgb: RGB(rgb),
+			hsl: valuesToHsl(rgb),
 		};
 	});
 }
