@@ -13,10 +13,10 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 
 ### Features:
 
-- 🚀 **Fast** - The distance between colors in the RGB color space is provided with the fastest algorithm available (check below)
-- 😎 **Ally** - So that your app is equally useful for everyone
+- 🚀 **Fast** - The distance between colors in the RGB color space is provided with the fastest algorithm available (see benchmarks below)
+- 😎 **A11y** - So that your app is equally useful for everyone
 - 📒 **Well Documented** - Checkout the [documentation](https://wp-blocks.github.io/color-2-name/) with examples, demo and code references
-- 🪶 **Lightweight** - The module WITH the 140 css colors definitions [weights 3.5kb gzipped](https://bundlephobia.com/package/color-2-name)!
+- 🪶 **Lightweight** - The module WITH the 140 css colors definitions [weighs 3.5kb gzipped](https://bundlephobia.com/package/color-2-name)!
 - 📦 **Bundled** - Optimized and minified build, with ESM, CJS and iife browser versions available!
 - 💪️ **Typed** - Written in typescript (with types included)
 - 🛡️️ **Tested** - Over 4000 tests (most of all from [wpt](https://github.com/web-platform-tests/wpt/)) with 100% coverage to ensure the full adherence to the css standards
@@ -24,7 +24,7 @@ It uses the Euclidean distance formula to calculate the distance between colors 
 
 ## 🚀 Benchmarks
 
-Designed with the performance in mind, it is 10 times faster than the self-proclaimed fastest color conversion plugin!
+Designed with performance in mind, it is 10 times faster than the self-proclaimed fastest color conversion plugin!
 
 | Library                                                            | <nobr>Operations/sec</nobr>                                | Size<br /> (minified)                                                                                                           | Size<br /> (gzipped)                                                                                                                                                                       |
 |--------------------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -32,8 +32,8 @@ Designed with the performance in mind, it is 10 times faster than the self-procl
 | <nobr>[colord](https://www.npmjs.com/package/colord) v2.9.3</nobr> | <nobr>🔴 736 ops/s, ±0.29%        ( 90.21%% slower)</nobr> | [![colord](https://snyk.io/advisor/npm-package/colord/badge.svg)](https://snyk.io/advisor/npm-package/colord)                   | [![](https://badgen.net/bundlephobia/minzip/colord?color=6ead0a&label=)](https://bundlephobia.com/result?p=colord) + [plugins](https://github.com/omgovich/colord/tree/master/src/plugins) |
 
 - The performance results were generated on a common Intel i5 by running `npm run benchmark` in the library folder. See [benchmarks](https://github.com/wp-blocks/color-2-name/blob/main/tests/bench/src/benchmark.ts).
-- For the test we are generating 50 random colors to make sure that no internal mechanism is benefited
-- The Size for the `colord` package is meant without the color definitions while `color-2-name` already has everything you need bundled inside
+- For the tests, we generate 50 random colors to make sure that no internal mechanism is benefited
+- The Size for the `colord` package is calculated without the color definitions while `color-2-name` already has everything you need bundled inside
 
 ## Installation
 
@@ -45,7 +45,7 @@ To install the package, run the following command:
 npm install color-2-name
 ```
 
-Then you can import or require the color-2-name function e.g. `closest` function from the color-2-name package:
+Then you can import the functions, for example `closest`, from the package:
 
 ```js
 // ESM (import) - tree shakable
@@ -59,7 +59,7 @@ color2Name.closest('#abcdef')
 
 ### Browser
 
-To run the script in the browser, add the `color-2-name` add it to the header or footer like below
+To run the script in the browser, add the `color-2-name` script to the header or footer like below
 
 ```js
 <script src="https://www.unpkg.com/color-2-name"></script>
@@ -95,8 +95,8 @@ Returns the closest color name
 const closestColor = closest('#ff8800');
 console.log(closestColor); // { name: 'red', color: 'rgb(255,0,0)' }
 
-// You can also use your custom set as comparation
-return closest('#ff8800', [
+// You can also use your custom set as comparison
+closest('#ff8800', [
   [255, 0, 0, 'red'],
   [0, 255, 0, 'green']
 ]); // -> { name: 'red', color: 'rgb(255,0,0)' }
@@ -120,7 +120,7 @@ Arguments:
 - `color`: a string representing a color, accepts hexadecimal, rgb and hsl with and without alpha channel (e.g. `#ff0000` for hex red).
 - `colors`: (optional) you can provide to this function a custom list of color names to be used (replaces the default)
 - `args`: (optional) an Object that contains setup for this module
-- `args.info`: (optional) set to true to display additional information the found color, like the hex value and the distance from the original
+- `args.info`: (optional) set to true to display additional information about the found color, like the hex value and the distance from the original
 
 **RETURNS** an object with the name and nearest color that is closest to the given color. (eg. `{ name: 'red', color: 'rgb(255,0,0)' }`)
 
@@ -150,7 +150,7 @@ Arguments:
 Convert a rgb color into hexadecimal color
 
 ```js
-// note: the rgb value is converted without take into account the alpha channel
+// note: the rgb value is converted without taking into account the alpha channel
 const hex = rgbToHex('rgb(255,255,255)')
 const hex2 = rgbToHex('rgb(255 255 255 / .5)')
 // prints the hex result
@@ -171,12 +171,12 @@ Arguments:
 search into ColorSet for the given color
 
 ```js
-// note: the rgb value is converted without take into account the alpha channel
+// note: the rgb value is converted without taking into account the alpha channel
 const white = getColor('white') // {"hex": "#ffffff", "hsl": "hsl(0,0%,100%)", "rgb": "rgb(255,255,255)"}
 const alertColor = getColor('red') // {"hex": "#ff0000", "hsl": "hsl(0,100%,50%)", "rgb": "rgb(255,0,0)"}
 
 // prints the hex result
-console.log(alertColor.hsl); // #FFFFFF
+console.log(alertColor.hsl); // hsl(0,100%,50%)
 console.log(alertColor.hex); // #FF0000
 console.log("transparent red: " + alertColor.hex + "88"); // #FF000088
 ```
@@ -210,7 +210,7 @@ Arguments:
 Examples:
 
 ```js
-// note: the rgb value is converted without take into account the alpha channel
+// note: the rgb value is converted without taking into account the alpha channel
 isLight('#fff') // true
 isDark('#fff') // false
 closestRGB('#FF1234') // red
@@ -220,13 +220,13 @@ closestRGB('#FF1234') // red
 
 #### 💡Build your own color set
 
-First thing, clone the color-2-name package with `git clone https://github.com/wp-blocks/color-2-name.git` then cd into color-2-name folder.
+First, clone the color-2-name package with `git clone https://github.com/wp-blocks/color-2-name.git` then cd into color-2-name folder.
 
 In order to build a color set you need a json object with the following properties:
 - `name` - the name of the color (like "Orange")
 - `color` - the hex color value (like #FFAA00)
 
-save it into ./src/data/ as "myNewColorSet.json". the file will contain something like this:
+Save it into `./src/data/` as "myNewColorSet.json". The file should contain something like this:
 
 ```json
 [
@@ -240,7 +240,7 @@ save it into ./src/data/ as "myNewColorSet.json". the file will contain somethin
 
 ```bash
 # then run the following command
-$ node colorSetUtils.mjs myNewColorSet
+$ node ./lib/colorSetUtils.mjs myNewColorSet
 ```
 
 **RETURNS** A new file called "myNewColorSet.ts" containing the data for this module will be written inside the ./src/data/ folder
