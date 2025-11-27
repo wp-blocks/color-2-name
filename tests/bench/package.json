@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"tsc": "tsc -p ./tsconfig.benchmark.json",
-		"benchmark": "node dist/benchmark.js"
+		"benchmark": "npm run tsc && node dist/benchmark.js"
 	},
 	"dependencies": {
 		"benny": "^3.7.1",

@@ -51,6 +51,30 @@ describe("Color Conversions functions", () => {
 		expect(closest("rgba(255 255 255 /.1)")).toMatchObject({ name: "white" });
 		// HSL
 		expect(closest("hsl(255,0%,100%,.1)")).toMatchObject({ name: "white" });
+		expect(closest("hsl(0,0%,0%,.1)")).toMatchObject({ name: "black" });
+		expect(closest("hsl(0,0%,50%,.1)")).toMatchObject({ name: "grey" });
+		expect(closest("hsl(30,100%,50%,.1)")).toMatchObject({
+			name: "darkorange",
+		});
+		expect(closest("hsl(60,100%,50%,.1)")).toMatchObject({ name: "yellow" });
+		expect(closest("hsl(90,100%,50%,.1)")).toMatchObject({
+			name: "chartreuse",
+		});
+		expect(closest("hsl(120,100%,50%,.1)")).toMatchObject({ name: "lime" });
+		expect(closest("hsl(150,100%,50%,.1)")).toMatchObject({
+			name: "springgreen",
+		});
+		expect(closest("hsl(180,100%,50%,.1)")).toMatchObject({ name: "cyan" });
+		expect(closest("hsl(210,100%,50%,.1)")).toMatchObject({
+			name: "dodgerblue",
+		});
+		expect(closest("hsl(240,100%,50%,.1)")).toMatchObject({ name: "blue" });
+		expect(closest("hsl(270,100%,50%,.1)")).toMatchObject({
+			name: "darkviolet",
+		});
+		expect(closest("hsl(300,100%,50%,.1)")).toMatchObject({ name: "magenta" });
+		expect(closest("hsl(330,100%,50%,.1)")).toMatchObject({ name: "deeppink" });
+		expect(closest("hsl(360,100%,50%,.1)")).toMatchObject({ name: "red" });
 		// INFO
 		expect(closest("rgb(255,0,255)", undefined, { info: true })).toMatchObject({
 			name: "magenta",

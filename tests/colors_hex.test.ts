@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from "vitest";
 /**
  * COMMON FUNCTIONS TESTING:
  */
-
 import { normalizeDegrees } from "../src/common.js";
 import {
 	hexToRgb,
@@ -12,9 +11,9 @@ import {
 } from "../src/hex-utils.js";
 import { parseColor } from "../src/index.js";
 import { RGB } from "../src/rgb-utils.js";
-import type { COLORSTRING } from "../src/types.js";
-import { normalizeRGB } from "./fixtures/functions.js";
 import { hex_invalid_tests, hex_valid_tests } from "./fixtures/hex_colors.js";
+import { normalizeRGB } from "./fixtures/functions.js";
+import type { COLORSTRING } from "../lib/types";
 
 describe("HEX COMMON", () => {
 	// HEX
