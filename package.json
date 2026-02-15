@@ -6,42 +6,47 @@
 	"homepage": "https://wp-blocks.github.io/color-2-name/",
 	"license": "ISC",
 	"sideEffects": false,
+	"type": "module",
 	"main": "./lib/index.cjs",
 	"module": "./lib/index.js",
-	"type": "module",
-	"types": "lib/index.d.ts",
-	"browser": "lib/browser/color-2-name.min.js",
-	"unpkg": "lib/browser/color-2-name.min.js",
-	"jsdelivr": "lib/browser/color-2-name.js",
+	"types": "./lib/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./lib/index.d.ts",
-			"browser": "./lib/browser/color-2-name.js",
-			"import": {
-				"types": "./lib/index.d.ts",
-				"default": "./lib/index.js"
+			"types": {
+				"import": "./lib/index.d.ts",
+				"require": "./lib/index.d.cts"
 			},
-			"require": {
-				"types": "./lib/index.d.cts",
-				"default": "./lib/index.cjs"
-			}
+			"import": "./lib/index.js",
+			"require": "./lib/index.cjs"
+		},
+		"./*": {
+			"types": "./lib/*.d.ts",
+			"import": "./lib/*.js",
+			"require": "./lib/*.cjs"
 		}
 	},
 	"scripts": {
 		"gen-colorSet": "node ./lib/colorSetUtils.mjs colorSet",
 		"build": "rimraf lib && npm run build-module && npm run build-browser && npm run build-browser-min",
 		"test": "vitest",
-		"testsss": "vitest --run --testNamePattern=^Verification Tests Critical Bugs should throw error for invalid hex$",
+		"prepublish": "npx publint",
 		"test:coverage": "vitest --coverage",
 		"lint": "npx @biomejs/biome lint --apply src",
-		"build-module": "tsup",
+		"build-module": "tsdown",
 		"build-browser": "esbuild src/index.ts --outfile=lib/browser/color-2-name.js --global-name=color2name --allow-overwrite --bundle --sourcemap",
 		"build-browser-min": "esbuild src/index.ts --outfile=lib/browser/color-2-name.min.js --global-name=color2name --allow-overwrite --bundle --minify"
 	},
-	"files": ["lib/", "tests/*.ts", "*.json", "*.md", ".gitignore", "LICENSE"],
+	"files": [
+		"lib/",
+		"tests/*.ts",
+		"*.json",
+		"*.md",
+		".gitignore",
+		"LICENSE"
+	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wp-blocks/color-2-name.git"
+		"url": "git+https://github.com/wp-blocks/color-2-name.git"
 	},
 	"bugs": {
 		"url": "https://github.com/wp-blocks/color-2-name/issues"
@@ -70,23 +75,8 @@
 		"@vitest/coverage-v8": "^4.0.14",
 		"esbuild": "^0.27.0",
 		"rimraf": "^6.1.2",
-		"tsup": "^8.5.1",
+		"tsdown": "^0.20.3",
 		"typescript": "^5.9.3",
 		"vitest": "^4.0.14"
-	},
-	"tsup": {
-		"skipNodeModulesBundle": true,
-		"dts": true,
-		"bundle": false,
-		"treeshake": true,
-		"minify": true,
-		"shims": true,
-		"cjsInterop": true,
-		"target": "node16",
-		"moduleName": "color2name",
-		"format": ["esm", "cjs"],
-		"tsconfig": "./tsconfig.json",
-		"entry": ["src/**/*.ts"],
-		"outDir": "lib"
 	}
 }
