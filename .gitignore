@@ -82,3 +82,6 @@ web_modules/
 .pnp.*
 
 .npmrc
+
+## Angular
+.angular
