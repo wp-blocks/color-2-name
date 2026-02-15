@@ -29,7 +29,7 @@
 		"gen-colorSet": "node ./lib/colorSetUtils.mjs colorSet",
 		"build": "rimraf lib && npm run build-module && npm run build-browser && npm run build-browser-min",
 		"test": "vitest",
-		"prepublish": "npx publint",
+		"pre-publish": "npm run build && npx publint",
 		"test:coverage": "vitest --coverage",
 		"lint": "npx @biomejs/biome lint --apply src",
 		"build-module": "tsdown",
