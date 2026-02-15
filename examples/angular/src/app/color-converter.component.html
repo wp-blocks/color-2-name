@@ -1,0 +1,49 @@
+<div class="color-converter">
+  <h2>Color Converter</h2>
+  
+  <div class="input-section">
+    <label for="colorInput">Enter a hex color:</label>
+    <div class="input-group">
+      <input 
+        type="text" 
+        id="colorInput"
+        [(ngModel)]="colorInput" 
+        (keyup.enter)="convertColor()"
+        placeholder="#F00 or #FF0000"
+        #colorInputField
+      />
+      <button (click)="convertColor()" class="convert-btn">Convert</button>
+    </div>
+  </div>
+
+  <div class="predefined-colors">
+    <h3>Quick Examples:</h3>
+    <div class="color-buttons">
+      <button 
+        *ngFor="let color of predefinedColors" 
+        (click)="setPredefinedColor(color.hex)"
+        class="color-btn"
+        [style.background-color]="color.hex"
+        [title]="color.name + ' (' + color.hex + ')'"
+      >
+        {{ color.name }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="colorResult && !error" class="result">
+    <h3>Conversion Result:</h3>
+    <div class="result-card">
+      <div class="color-preview" [style.background-color]="colorResult.hex"></div>
+      <div class="color-info">
+        <p><strong>Hex:</strong> {{ colorResult.hex }}</p>
+        <p><strong>Name:</strong> {{ colorResult.name }}</p>
+        <p><strong>RGB:</strong> {{ colorResult.rgb }}</p>
+      </div>
+    </div>
+  </div>
+</div>
