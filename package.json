@@ -10,6 +10,8 @@
 	"main": "./lib/index.cjs",
 	"module": "./lib/index.js",
 	"types": "./lib/index.d.ts",
+  "unpkg": "lib/browser/color-2-name.min.js",
+  "jsdelivr": "lib/browser/color-2-name.js",
 	"exports": {
 		".": {
 			"types": {
