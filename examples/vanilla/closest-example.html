@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color2Name Closest Function Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .example {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .result {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .color-display {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color2Name Closest Function Example</h1>
+        <p>This example demonstrates how to use the <code>closest</code> function from the color-2-name library.</p>
+
+        <div class="example">
+            <h3>Basic Usage</h3>
+            <p>Finding the closest color name for <code>#ff8800</code>:</p>
+            <div id="basic-example"></div>
+        </div>
+
+        <div class="example">
+            <h3>Custom Color Set</h3>
+            <p>Using a custom set of colors for comparison:</p>
+            <div id="custom-example"></div>
+        </div>
+
+        <div class="example">
+            <h3>Additional Info</h3>
+            <p>Getting additional information about the closest color:</p>
+            <div id="info-example"></div>
+        </div>
+
+        <div class="example">
+            <h3>Try It Yourself</h3>
+            <p>Enter a color value to find its closest name:</p>
+            <input type="text" id="colorInput" placeholder="#ff8800" style="padding: 5px; width: 150px;">
+            <button onclick="findClosestColor()" style="padding: 5px 15px;">Find Closest Color</button>
+            <div id="user-result" style="margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the closest function from the local source
+        import { closest } from '../../lib/index.js';
+
+        // Basic example
+        const closestColor = closest('#ff8800');
+        document.getElementById('basic-example').innerHTML = `
+            <span class="color-display" style="background-color: #ff8800;"></span>
+            <code>closest('#ff8800')</code> →
+            <span class="result">${JSON.stringify(closestColor)}</span>
+        `;
+
+        // Custom color set example
+        const customResult = closest('#ff8800', [
+            [255, 0, 0, 'red'],
+            [0, 255, 0, 'green'],
+            [0, 0, 255, 'blue']
+        ]);
+        document.getElementById('custom-example').innerHTML = `
+            <span class="color-display" style="background-color: #ff8800;"></span>
+            <code>closest('#ff8800', [red, green, blue])</code> →
+            <span class="result">${JSON.stringify(customResult)}</span>
+        `;
+
+        // Additional info example
+        const infoResult = closest('#ff8800', undefined, { info: true });
+        document.getElementById('info-example').innerHTML = `
+            <span class="color-display" style="background-color: #ff8800;"></span>
+            <code>closest('#ff8800', undefined, {info: true})</code> →
+            <span class="result">${JSON.stringify(infoResult)}</span>
+        `;
+
+        // Make the function available globally for the interactive example
+        window.findClosestColor = () => {
+            const input = document.getElementById('colorInput').value.trim();
+            if (!input) {
+                document.getElementById('user-result').innerHTML = '<span style="color: red;">Please enter a color value</span>';
+                return;
+            }
+
+            try {
+                const result = closest(input);
+                document.getElementById('user-result').innerHTML = `
+                    <span class="color-display" style="background-color: ${input};"></span>
+                    <code>closest('${input}')</code> →
+                    <span class="result">${JSON.stringify(result)}</span>
+                `;
+            } catch (error) {
+                document.getElementById('user-result').innerHTML = `<span style="color: red;">Error: ${error.message}</span>`;
+            }
+        };
+
+        // Run example on page load with default value
+        window.findClosestColor();
+    </script>
+</body>
+</html>
